@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/18 15:36:33 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/07/21 18:27:48 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,17 @@ SRC_DIR	=	src/
 OBJ_DIR	=	obj/
 INC_DIR =	includes/
 
-SRC_FILES	=	ft_split.c \
+SRC_FILES	=	ft_split.c path.c parsing.c builtins.c main.c \
 							
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
-INC			=	-I $(INC_DIR)
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
 DEP			=	$(OBJ:.o=.d)
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -g3
-LIBFT_PATH	=	./libft
+CFLAGS		=	-Wall -Wextra -Werror -g3 -l readline
+LIBFT_PATH	=	../libft
+CPPFLAGS	=	-I $(INC_DIR) -I $(LIBFT_PATH)
 LIBFT		=	$(LIBFT_PATH)/libft.a
 
 all:	$(LIBFT) $(NAME) 
@@ -40,7 +40,7 @@ $(NAME): $(OBJ) $(LIBFT)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INC) -MMD -MP -o $@ -c $<
+	$(CC) $(CFLAGS) $(CPPFLAGS) -MMD -MP -o $@ -c $<
 	
 -include $(DEP)
 

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/18 14:14:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/21 16:57:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,9 @@ typedef struct s_token
     char    *value;
 }   t_token;
 
+typedef struct s_info
+{
+    char    **cmd;
+    
+}   t_info;
 #endif
