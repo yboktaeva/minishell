@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/21 18:27:48 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/07/21 18:44:19 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 -include $(DEP)
 
 clean:
-	make clean -C &(LIBFT_PATH)
+	make clean -C $(LIBFT_PATH)
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
