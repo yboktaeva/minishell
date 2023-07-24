@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/21 18:44:19 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/07/24 18:05:45 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,8 @@ SRC_DIR	=	src/
 OBJ_DIR	=	obj/
 INC_DIR =	includes/
 
-SRC_FILES	=	ft_split.c path.c parsing.c builtins.c main.c \
+SRC_FILES	=	split_quotes.c path.c check_input.c parsing.c builtins.c main.c \
 							
-
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
 DEP			=	$(OBJ:.o=.d)

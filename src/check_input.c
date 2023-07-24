@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 16:46:39 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/24 15:10:43 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/07/24 18:05:05 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/07/24 19:05:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/struct.h"
-#include <stddef.h>
+#include <stdio.h>
 
-// char	*get_path(char **envp)
-// {
-// 	if (!envp || !(*envp))
-// 		return (NULL);
-// 	while (*envp)
-// 	{
-// 		if (ft_strncmp("PATH=", *envp, 5) == 0)
-// 			return (*envp + 5);
-// 		envp++;
-// 	}
-// 	return (NULL);
-// }
+int check_quotes(char *s)
+{
+    int i;
+
+    i = 0;
+
+    while (s[i])
+    {
+        if (s[i] == '\'')
+        {
+            if (s[i + 1] == '\'')
+                return (1);
+        }
+        else if (s[i] =='\"')
+        {
+            if (s[i + 1] == '\"')
+                return (1);
+        }
+        else
+            return (0);
+        i++;
+    }
+}

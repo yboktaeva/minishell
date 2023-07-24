@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 14:46:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/18 14:49:10 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/07/24 15:27:53 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/07/24 18:52:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,51 @@ static int	word_count(char const *s, char c)
 
 static int	len_word(char const *s, char c)
 {
-	int	i;
+	int		i;
+	char	quote;
 
 	i = 0;
 	while (s[i] && s[i] != c)
+	{
+		if (s[i] == '\'' || s[i] == '\"')
+		{
+			quote = s[i];
+			i++;
+			while (s[i] && s[i] != quote)
+				i++;
+		}
 		i++;
+	}
 	return (i);
 }
 
 static char	*word(char const *s, char c)
 {
 	int		i;
+	char	quote;
 	char	*word;
 
 	i = 0;
 	word = (char *)malloc(sizeof(char) * (len_word(s, c) + 1));
 	if (!word)
 		return (NULL);
-	while (i < len_word(s, c))
+	while (s[i] && s[i] != c)
 	{
-		word[i] = s[i];
-		i++;
+		if (s[i] == '\'' || s[i] == '\"')
+		{
+			quote = s[i];
+			i++;
+			while (s[i] && s[i] != quote)
+			{
+				word[i - 1] = s[i];
+				i++;
+			}
+		}
+		else
+		{
+			word[i] = s[i];
+			i++;
+		}
 	}
 	word[i] = '\0';
 	return (word);
@@ -73,7 +97,7 @@ static char	*free_arr(char **arr, int i)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_quotes(char const *s, char c)
 {
 	int		i;
 	char	**arr;

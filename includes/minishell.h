@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/21 18:20:36 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:06:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define MINISHELL_H
 
 # include "../../libft/libft.h"
+
 /*UTILS*/
-char	**ft_split(char const *s, char c);
+char	**ft_split_quotes(char const *s, char c);
+/*CHECK*/
+int check_quotes(char *s);
 
 #endif
