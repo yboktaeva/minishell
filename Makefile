@@ -6,36 +6,41 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/24 18:05:45 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/07/25 18:09:55 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	minishell
+NAME		=	minishell
 
-SRC_DIR	=	src/
-OBJ_DIR	=	obj/
-INC_DIR =	includes/
+SRC_DIR		=	src/
+OBJ_DIR		=	obj/
+INC_DIR 	=	includes/
+LIBFT_PATH	=	libft/
+READLINE_LIB	=	-lreadline -lhistory -L/usr/local/lib
 
-SRC_FILES	=	split_quotes.c path.c check_input.c parsing.c builtins.c main.c \
-							
+
+SRC_FILES	=	main.c split_quotes.c path.c check_input.c parsing.c builtins/echo.c \
+				builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
+				builtins/env.c builtins/exit.c \
+
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
 DEP			=	$(OBJ:.o=.d)
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror -g3 -l readline
-LIBFT_PATH	=	../libft
-CPPFLAGS	=	-I $(INC_DIR) -I $(LIBFT_PATH)
+RM			=	rm -f
+CFLAGS		=	-Wall -Wextra -Werror -g3
+CPPFLAGS	=	-I/usr/local/include -I$(LIBFT_PATH) -I$(INC_DIR) 
 LIBFT		=	$(LIBFT_PATH)/libft.a
 
-all:	$(LIBFT) $(NAME) 
+all:	 $(NAME) $(LIBFT)
 
 $(LIBFT):
-	make -C $(LIBFT_PATH)
+	$(MAKE) -C $(LIBFT_PATH)
 	ar rcs $(LIBFT)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(CFLAGS) -o $(NAME) $(LIBFT)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(READLINE_LIB) -o $@ $(OBJ) $(LIBFT)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
@@ -44,13 +49,13 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 -include $(DEP)
 
 clean:
-	make clean -C $(LIBFT_PATH)
-	rm -rf $(OBJ_DIR)
+	$(MAKE) clean -C $(LIBFT_PATH)
+	$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	make fclean -C $(LIBFT_PATH)
-	rm -f $(NAME)
+	$(MAKE) fclean -C $(LIBFT_PATH)
+	$(RM) $(NAME) $(LIBFT)
 
-re: fclean all
+re: fclean all 
 
 .PHONY: all clean fclean re

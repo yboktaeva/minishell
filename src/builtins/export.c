@@ -1,15 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 15:50:11 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/21 15:50:14 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/07/25 18:07:10 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/07/25 18:10:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/struct.h"
-#include <stdio.h>
+#include "minishell.h"

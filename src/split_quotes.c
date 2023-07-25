@@ -6,12 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:27:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/24 18:52:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:00:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/struct.h"
+#include "minishell.h"
 #include <stdlib.h>
 #include <stddef.h>
 

@@ -6,12 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:05 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/24 19:05:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:01:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include "../includes/struct.h"
+#include "minishell.h"
 #include <stdio.h>
 
 int check_quotes(char *s)
@@ -36,4 +35,5 @@ int check_quotes(char *s)
             return (0);
         i++;
     }
+    return (0);
 }
