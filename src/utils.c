@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/26 16:20:46 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/07/26 16:18:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "struct.h"
-# include "../libft/libft.h"
+int	ft_isspace(char c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (TRUE);
+	return (FAULSE);
+}
 
-# define TRUE 1
-# define FAULSE 0
+int	empty_line(char *line)
+{
+	int		i;
 
-/*ENV*/
-char	*get_path(char **envp);
-/*LEXER_PARSER*/
-char    **ft_split_quotes(char const *s, char c);
-int     check_quotes(char *s);
-int     check_double_quotes(char *s);
-/*UTILS*/
-int     ft_isspace(char c);
-int     empty_line(char *line);
-
-#endif
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == ' ' || line[i] == '\t')
+			return (TRUE);
+        i++;
+	}
+	return (FAULSE);
+}

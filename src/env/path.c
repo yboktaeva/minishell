@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/26 16:20:46 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/07/18 16:46:39 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/07/26 16:19:35 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
+#include <stddef.h>
 
-# include "struct.h"
-# include "../libft/libft.h"
-
-# define TRUE 1
-# define FAULSE 0
-
-/*ENV*/
-char	*get_path(char **envp);
-/*LEXER_PARSER*/
-char    **ft_split_quotes(char const *s, char c);
-int     check_quotes(char *s);
-int     check_double_quotes(char *s);
-/*UTILS*/
-int     ft_isspace(char c);
-int     empty_line(char *line);
-
-#endif
+char	*get_path(char **envp)
+{
+	if (!envp || !(*envp))
+		return (NULL);
+	while (*envp)
+	{
+		if (ft_strncmp("PATH=", *envp, 5) == 0)
+			return (*envp + 5);
+		envp++;
+	}
+	return (NULL);
+}

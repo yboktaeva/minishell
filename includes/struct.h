@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/24 15:59:47 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:28:00 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 typedef enum s_type
 {
     WORD,
-    REDIRECT,
+    LESS,
+    GREAT,
+    LESSLESS,
+    GREATGREAT,
+    S_QUOT,
+    D_QUOT,
     PIPE
 }   t_type;
 
@@ -26,10 +31,10 @@ typedef struct s_token
     char    *value;
 }   t_token;
 
-typedef struct s_info
+typedef struct s_table
 {
-    char    **cmd;
+    char    **args;
     char    *cmd_path;
     
-}   t_info;
+}   t_table;
 #endif

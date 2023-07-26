@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:45:57 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/25 18:54:11 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/07/26 12:12:11 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC		=		ft_isalpha.c \
 	  			ft_tolower.c \
 	  			ft_strchr.c \
 	  			ft_strrchr.c \
+				ft_strcmp.c \
 	  			ft_strncmp.c \
 	  			ft_memchr.c \
 	  			ft_memcmp.c \

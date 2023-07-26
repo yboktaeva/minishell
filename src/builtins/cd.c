@@ -6,8 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:06:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/25 18:10:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:13:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// int chdir(const char *path)
+// {
+    
+// }
