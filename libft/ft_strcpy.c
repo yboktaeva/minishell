@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 15:28:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/27 13:39:58 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/07/27 14:04:19 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/07/27 14:07:07 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h>
+#include "libft.h"
 
-// int check_input(char *line)
-// {
-//     int i;
+char    *ft_strcpy(char *dst, const char *src)
+{
+    int i;
 
-//     i = 0;
-//     if (line)
-//     {
-        
-//     }
-// }
+    i = 0;
+    while (src[i])
+    {
+        dst[i] = src[i];
+        i++;
+    }
+    dst[i] = '\0';
+    return (dst);
+}

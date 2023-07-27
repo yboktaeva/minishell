@@ -6,9 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/26 10:44:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:00:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// void    ft_error(void)
+// {
+    
+// }

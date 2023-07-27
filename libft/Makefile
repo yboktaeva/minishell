@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:45:57 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/26 12:12:11 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/07/27 14:08:23 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC		=		ft_isalpha.c \
 	  			ft_bzero.c \
 	  			ft_memcpy.c \
 	  			ft_memmove.c \
+				ft_strcpy.c \
 	  			ft_strlcpy.c \
 	  			ft_strlcat.c \
 	  			ft_toupper.c \

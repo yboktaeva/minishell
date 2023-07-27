@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/26 16:20:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:55:57 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ char	*get_path(char **envp);
 char    **ft_split_quotes(char const *s, char c);
 int     check_quotes(char *s);
 int     check_double_quotes(char *s);
+int     check_up(char *line);
+int     ft_init(char **args, char *line);
+int     check_input(char *line);
 /*UTILS*/
 int     ft_isspace(char c);
 int     empty_line(char *line);
