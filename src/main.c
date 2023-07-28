@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/27 15:01:12 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/28 17:40:41 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,44 +20,45 @@
 
 int  check_up(char *line)
 {
-    if (!check_quotes(line) || !check_double_quotes(line))
+    if (check_quotes(line) == -1)
     {
-        ft_putendl_fd("error: quotes are not valid", 2);
-        free(line);
-        return (FAULSE);
+        ft_putendl_fd("error: quotes are not closed", 2);
+        return (-1);
     }
-    // if (check_input(*args))
-    // {
-    //     ft_putendl_fd("minishell: syntax error", 2);
-    //     free(line);
-    //     free(args);
-    //     return (FAULSE);
-    // }
-    return (TRUE);
+    if (check_input(line) < 0)
+    {
+        ft_putendl_fd("minishell: syntax error", 2);
+        return (-1);
+    }
+    return (0);
 }
 
-int ft_init(char **args, char *line)
+int ft_init(char **cmds, char *line)
 {
     int i;
 
     i = 0;
-    if (empty_line(line))
+    if (line == NULL)
     {
         free(line);
-        return (FAULSE);
+        return (-1);
     }
     if (line)
     {
         add_history(line);
-        if (!check_up(line))
-            return (FAULSE);
-        while (line[i])
+        if (check_up(line) < 0)
         {
-            args = ft_split_quotes(line, ' ');
+            free(line);
+            return (-1);
+        }
+        cmds = ft_split_quotes(line, ' ');
+        while (cmds[i])
+        {
+            printf("%s\n", cmds[i]);
             i++;
         }
     }
-    return (TRUE);   
+    return (0);   
 }
 
 int main(int ac, char **av, char **envp)
@@ -65,9 +66,9 @@ int main(int ac, char **av, char **envp)
     (void)av;
     (void)envp;
     char *prompt;
-    char **args;
+    char **cmds;
     
-    args = NULL;
+    cmds = NULL;
     if (ac != 1 || av[1] != NULL)
     {
         ft_putendl_fd("Program does not accept any arguments", 1);
@@ -81,8 +82,7 @@ int main(int ac, char **av, char **envp)
             ft_putendl_fd("exit", 1);
             break ;
         }
-        else
-            ft_init(args, prompt);
+        ft_init(cmds, prompt);
     }
     free(prompt);
     return (EXIT_SUCCESS);

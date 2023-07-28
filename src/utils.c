@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/27 14:57:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/28 15:30:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_isspace(char c)
 {
 	if (c == ' ' || (c >= 9 && c <= 13))
-		return (TRUE);
-	return (FAULSE);
+		return (1);
+	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:27:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/25 18:00:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/28 12:13:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,27 @@ static int	word_count(char const *s, char c)
 	{
 		while (s[i] && s[i] == c)
 			i++;
-		if (s[i])
-			nb++;
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] != '\'' && s[i] != '\0')
+				nb++;
+			if (s[i] == '\'')
+				i++;
+		}
+		else if (s[i] == '\"')
+		{
+			i++;
+			while (s[i] != '\"' && s[i] != '\0')
+				nb++;
+			if (s[i] == '\"')
+				i++;
+		}
+		else 
+		{
+			if (s[i])
+				nb++;
+		}
 		while (s[i] && s[i] != c)
 			i++;
 	}
@@ -45,10 +64,11 @@ static int	len_word(char const *s, char c)
 		{
 			quote = s[i];
 			i++;
-			while (s[i] && s[i] != quote)
+			while (s[i] != quote && s[i] != '\0')
 				i++;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (i);
 }

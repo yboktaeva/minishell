@@ -6,20 +6,10 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:28:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/27 13:39:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/28 14:38:48 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-// int check_input(char *line)
-// {
-//     int i;
-
-//     i = 0;
-//     if (line)
-//     {
-        
-//     }
-// }

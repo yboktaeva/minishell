@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:05:05 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/27 14:55:35 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/28 17:08:12 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,35 @@
 int check_quotes(char *s)
 {
     int i;
-    int n;
+    int flag;
     
     i = 0;
-    n = 0;
+    flag = -1;
     while (s[i])
     {
         if (s[i] == '\'')
-            n++;
+        {
+            flag = 1;
+            i++;
+            while (s[i] && s[i] != '\'')
+                i++;
+            if (!s[i])
+                flag = 0;
+        }
+        else if (s[i] == '\"')
+        {
+            flag = 1;
+            i++;
+            while (s[i] && s[i] != '\"')
+                i++;
+            if (!s[i])
+                flag = 0;
+        }
         i++;
     }
-    if (n != 2)
-        return (FAULSE);
-    return (TRUE);
-}
-
-int check_double_quotes(char *s)
-{
-    int i;
-    int n;
-    
-    i = 0;
-    n = 0;
-    while (s[i])
-    {
-        if (s[i] == '\"')
-            n++;
-        i++;
-    }
-    if (n != 2)
-        return (FAULSE);
-    return (TRUE);
+    if (flag == 0)
+        return (-1);
+    return (0);
 }
 
 int	empty_line(char *line)
@@ -57,8 +55,25 @@ int	empty_line(char *line)
 	while (line[i])
 	{
 		if (line[i] == ' ' || line[i] == '\t')
-			return (TRUE);
+			return (1);
         i++;
 	}
-	return (FAULSE);
+	return (0);
+}
+
+int check_input(char *line)
+{
+    int i;
+
+    i = 0;
+    if (line)
+    {
+        while (line[i])
+        {
+            if (line[i] == '\\' || line[i] == ';' || line[i] == '.' || (line[i] == '|' && line[i + 1] == '|'))
+                return (-1);
+            i++;
+        }
+    }
+    return (0);
 }

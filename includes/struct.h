@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/26 15:28:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/07/28 17:30:00 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ typedef struct s_token
 
 typedef struct s_table
 {
-    char    **args;
+    char    **cmds;
     char    *cmd_path;
-    
 }   t_table;
 #endif
