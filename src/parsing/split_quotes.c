@@ -6,138 +6,148 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:27:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/28 12:13:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/02 19:20:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-static int	word_count(char const *s, char c)
+static int word_count(char const *s, char c)
 {
-	int	i;
-	int	nb;
+    int count = 0;
+    int in_word = 0;
+    int in_quote = 0;
 
-	i = 0;
-	nb = 0;
-	while (s[i])
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i] == '\'')
-		{
-			i++;
-			while (s[i] != '\'' && s[i] != '\0')
-				nb++;
-			if (s[i] == '\'')
-				i++;
-		}
-		else if (s[i] == '\"')
-		{
-			i++;
-			while (s[i] != '\"' && s[i] != '\0')
-				nb++;
-			if (s[i] == '\"')
-				i++;
-		}
-		else 
-		{
-			if (s[i])
-				nb++;
-		}
-		while (s[i] && s[i] != c)
-			i++;
-	}
-	return (nb);
+    while (*s)
+    {
+        if (*s == '\'' || *s == '\"')
+        {
+            if (!in_quote)
+            	in_quote = *s;
+            else if (in_quote == *s)   
+                in_quote = 0;
+        }
+        if (!in_quote && *s == c)
+        {
+            if (in_word)
+            {
+                count++;
+                in_word = 0;
+            }
+        }
+        else
+            in_word = 1;
+        s++;
+    }
+    if (in_word)
+    	count++;
+    return count;
 }
 
-static int	len_word(char const *s, char c)
+static char	*copy_word(char const *s, char c)
 {
-	int		i;
-	char	quote;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-	{
-		if (s[i] == '\'' || s[i] == '\"')
-		{
-			quote = s[i];
-			i++;
-			while (s[i] != quote && s[i] != '\0')
-				i++;
-		}
-		else
-			i++;
-	}
-	return (i);
-}
-
-static char	*word(char const *s, char c)
-{
-	int		i;
-	char	quote;
 	char	*word;
-
-	i = 0;
-	word = (char *)malloc(sizeof(char) * (len_word(s, c) + 1));
+	int		len;
+	
+	len = 0;
+	while (*s && *s == c)
+		s++;
+	while (*s && *s != c)
+	{
+		len++;
+		s++;	
+	}
+	word = (char *)malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
-	while (s[i] && s[i] != c)
-	{
-		if (s[i] == '\'' || s[i] == '\"')
+	s -= len;
+	int i = 0;
+	while (*s && *s != c)
+    {
+        if (*s == '\'' || *s == '\"')
 		{
-			quote = s[i];
-			i++;
-			while (s[i] && s[i] != quote)
-			{
-				word[i - 1] = s[i];
-				i++;
-			}
+			if (s[0] == s[1])
+            	s++;
 		}
-		else
-		{
-			word[i] = s[i];
-			i++;
-		}
-	}
+        else
+            word[i++] = *s;
+        s++;
+    }
 	word[i] = '\0';
 	return (word);
 }
 
-static char	*free_arr(char **arr, int i)
+static void	free_array(char **arr, int count)
 {
-	while (i > 0)
-	{
-		free (arr[i - 1]);
-		i--;
-	}
-	free (arr);
-	return (NULL);
-}
-
-char	**ft_split_quotes(char const *s, char c)
-{
-	int		i;
-	char	**arr;
+	int	i;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	arr = (char **)malloc(sizeof(char *) * (word_count(s, c) + 1));
-	if (!arr)
-		return (NULL);
-	while (*s)
+	while (i < count)
 	{
-		while (*s && *s == c)
-			s++;
-		if (*s)
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+char **ft_split_quotes(char const *s, char c)
+{
+    int i;
+    int count;
+    char **arr;
+	char	quote;
+	int		len;
+	const char *start;
+	
+	count = word_count(s, c);
+	arr = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!arr)
+        return NULL;
+	i = 0;
+	while (*s && i < count)
+	{
+        if (*s == '\'' || *s == '\"')
 		{
-			arr[i] = word(s, c);
+            quote = *s;
+            s++;
+            len = 0;
+            start = s;
+            while (*s && *s != quote)
+            {
+                len++;
+				s++;
+			}
+            s++;
+            arr[i] = (char *)malloc(sizeof(char) * (len + 1));
+            if (!arr[i])
+            {
+                free_array(arr, i);
+                return NULL;
+            }
+			// int j = 0;
+			// while (j < len)
+			// {
+			// 	if (start[j] != quote)
+			// 		arr[i][j] = start[j];
+			// 	j++;
+			// }
+            ft_strlcpy(arr[i], start, len + 1);
+            arr[i][len] = '\0';
+        }
+		else
+		{
+			arr[i] = copy_word(s, c);
 			if (!arr[i])
-				return (free_arr(arr, i), NULL);
-			i++;
+			{
+				free_array(arr, i);
+					return (NULL);
+			}
+			s += ft_strlen(arr[i]);
 		}
+		i++;
 		while (*s && *s != c)
 			s++;
 	}
