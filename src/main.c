@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/28 17:40:41 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:16:11 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ int ft_init(char **cmds, char *line)
         }
         cmds = ft_split_quotes(line, ' ');
         while (cmds[i])
-        {
-            printf("%s\n", cmds[i]);
-            i++;
-        }
+            printf("%s\n", cmds[i++]);
     }
     return (0);   
 }

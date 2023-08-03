@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:27:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/02 19:20:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:07:55 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ static char	*copy_word(char const *s, char c)
 {
 	char	*word;
 	int		len;
+	int		i;
+	int		in_quote;
 	
 	len = 0;
+	in_quote = 0;
 	while (*s && *s == c)
 		s++;
 	while (*s && *s != c)
@@ -60,20 +63,27 @@ static char	*copy_word(char const *s, char c)
 		len++;
 		s++;	
 	}
+	printf("LEN - %d\n", len);
 	word = (char *)malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
 	s -= len;
-	int i = 0;
+	i = 0;
 	while (*s && *s != c)
     {
-        if (*s == '\'' || *s == '\"')
-		{
-			if (s[0] == s[1])
-            	s++;
-		}
+        if ((*s == '\'' || *s == '\"') && s[0] == s[1])
+            s++;
         else
+		{
+			if (*s == '\'' || *s == '\"')
+			{
+				if (!in_quote)
+					in_quote = *s;
+				else if (in_quote == *s)
+					in_quote = 0;
+			}
             word[i++] = *s;
+		}
         s++;
     }
 	word[i] = '\0';
@@ -121,20 +131,21 @@ char **ft_split_quotes(char const *s, char c)
 				s++;
 			}
             s++;
+			printf("LEN - %d\n", len);
             arr[i] = (char *)malloc(sizeof(char) * (len + 1));
             if (!arr[i])
             {
                 free_array(arr, i);
                 return NULL;
             }
-			// int j = 0;
-			// while (j < len)
-			// {
-			// 	if (start[j] != quote)
-			// 		arr[i][j] = start[j];
-			// 	j++;
-			// }
-            ft_strlcpy(arr[i], start, len + 1);
+			int j = 0;
+			while (j < len)
+			{
+				if (start[j] != quote)
+					arr[i][j] = start[j];
+				j++;
+			}
+            //ft_strlcpy(arr[i], start, len + 1);
             arr[i][len] = '\0';
         }
 		else
@@ -150,6 +161,11 @@ char **ft_split_quotes(char const *s, char c)
 		i++;
 		while (*s && *s != c)
 			s++;
+		 if (*s == ' ' || *s == '\t')
+		 {
+			while (*s && (*s == ' ' || *s == '\t'))
+				s++;
+		 }
 	}
 	arr[i] = NULL;
 	return (arr);
