@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:27:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/03 11:07:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:53:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static char	*copy_word(char const *s, char c)
 		len++;
 		s++;	
 	}
-	printf("LEN - %d\n", len);
 	word = (char *)malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
@@ -131,7 +130,6 @@ char **ft_split_quotes(char const *s, char c)
 				s++;
 			}
             s++;
-			printf("LEN - %d\n", len);
             arr[i] = (char *)malloc(sizeof(char) * (len + 1));
             if (!arr[i])
             {
@@ -145,7 +143,6 @@ char **ft_split_quotes(char const *s, char c)
 					arr[i][j] = start[j];
 				j++;
 			}
-            //ft_strlcpy(arr[i], start, len + 1);
             arr[i][len] = '\0';
         }
 		else

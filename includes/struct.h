@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/28 17:30:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:01:21 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 typedef enum s_type
 {
     WORD,
+    OPTION,
+    PIPE,
     LESS,
     GREAT,
     LESSLESS,
     GREATGREAT,
     S_QUOT,
-    D_QUOT,
-    PIPE
+    D_QUOT
 }   t_type;
 
 typedef struct s_token
@@ -36,4 +37,5 @@ typedef struct s_table
     char    **cmds;
     char    *cmd_path;
 }   t_table;
+
 #endif

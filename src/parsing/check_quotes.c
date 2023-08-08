@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 18:05:05 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/02 10:29:20 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/08/08 09:48:33 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,60 @@ int check_quotes(const char *s)
     return (0);
 }
 
-int	empty_line(char *line)
-{
-	int		i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == ' ' || line[i] == '\t')
-			return (1);
-        i++;
-	}
-	return (0);
-}
-
-int check_input(char *line)
+void    remove_empty_quotes(char *s)
 {
     int i;
+    int j;
+    int len;
 
     i = 0;
-    if (line)
+    j = 0;
+    len = ft_strlen(s);
+    while (i < len)
     {
-        while (line[i])
-        {
-            if (line[i] == '\\' || line[i] == ';' || line[i] == '.' || (line[i] == '|' && line[i + 1] == '|'))
-                return (-1);
+        if ((s[i] == '\'' && s[i + 1] == '\'') || (s[i] == '\"' && s[i + 1] == '\"'))
             i++;
-        }
+        else
+            s[j++] = s[i];
+        i++;
     }
-    return (0);
+    s[j] = '\0';
+}
+
+void remove_same_quotes(char *s)
+{
+    int i;
+    int j;
+    int quote; 
+    int len;
+
+    i = 0;
+    j = 0;
+    quote = 0;
+    len = ft_strlen(s);
+    char temp[len + 1];
+    remove_empty_quotes(s);
+    while (i < len)
+    {
+        if (s[i] == '\'' || s[i] == '\"')
+        {
+            if (quote == 0)
+            {
+                quote = s[i];
+                temp[j++] = s[i];
+            }
+            else if (s[i] == quote && (s[i + 1] == ' ' || s[i + 1] == '\0' || s[i + 1] == '\'' || s[i + 1] == '\"'))
+            {
+                quote = 0;
+                temp[j++] = s[i];
+            }
+            // else if (quote != 0 && s[i] != quote)
+            //     temp[j++] = s[i];          
+        }
+        else
+            temp[j++] = s[i];
+        i++;
+    }
+    temp[j] = '\0';
+    ft_strcpy(s, temp);
 }
