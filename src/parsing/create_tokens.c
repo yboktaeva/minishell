@@ -6,80 +6,74 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/08 19:50:47 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:11:48 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
-
-t_token *create_token(t_type type, char *value)
-{
-    t_token *tok;
-
-    tok = malloc(sizeof(t_token));
-    tok->type = type;
-    tok->value = ft_strdup(value);
-    return (tok);
-}
+#include <stddef.h>
+#include <stdio.h>
 
 void    free_token(t_token *tok)
 {
-    free(tok->value);
     free(tok);
 }
+t_type identify_token_type(const char *line)
+{
+    if (ft_strcmp(line, "<") == 0)
+        return (LESS);
+    else if (ft_strcmp(line, "<<") == 0)
+        return (LESSLESS);
+    else if (ft_strcmp(line, ">") == 0)
+        return (GREAT);
+    else if (ft_strcmp(line, ">>") == 0)
+        return (GREATGREAT);
+    else if (ft_strcmp(line, "|") == 0)
+        return (PIPE);
+    else if (ft_strcmp(line, "'") == 0)
+        return (S_QUOT);
+    else if (ft_strcmp(line, "\"") == 0)
+        return (D_QUOT);
+    else if (ft_strcmp(line, "-") == 0)
+        return (OPTION);
+    else
+        return (WORD);
+}
 
-// void tokenize_cmd(const char *command, t_token **tokens)
-// {
-//     const char *start;
-//     const char *end;
-//     int count;
-//     int len;
+
+void tokenize_cmd(char *line, t_table *info)
+{
+    int count;
+    int len;
+    int i;
     
-//     count = 0;
-//     start = command;
-//     while (*start)
-//     {
-//         if (*start == ' ')
-//             start++;
-//         if (*start == '<')
-//         {
-//             if (*(start + 1) == '<')
-//                 (*tokens)->type = LESSLESS;
-//             else
-//                 (*tokens)->type = LESS;
-//         }
-//         else if (*start == '>')
-//         {
-//             if (*(start + 1) == '>')
-//                 (*tokens)->type = GREATGREAT;
-//             else
-//                 (*tokens)->type = GREAT;
-//         }
-//         else if (*start == '|')
-//             (*tokens)->type = PIPE;
-//         else if (*start == '\'')
-//             (*tokens)->type = S_QUOT;
-//         else if (*start == '\"')
-//             (*tokens)->type = D_QUOT;
-//         else if (*start == '-')
-//             (*tokens)->type = OPTION;
-//         else
-//             (*tokens)->type = WORD;
-//         end = start;
-//         while (*end && *end != ' ')
-//             ++end;
-//         len = end - start;
-//         if (len >= MAX_TOKEN_LENGTH)
-//         {
-//             printf("Error: Token length exceeds max limit\n");
-//             exit(1);
-//         }
-//         char value[MAX_TOKEN_LENGTH];
-//         ft_strncpy(value, start, len);
-//         value[len] = '\0';
-//         tokens[count] = create_token((*tokens)->type, value);
-//         ++count;
-//         start = end;
-//     }
-// }
+    i = 0;
+    count = 0;
+    len = ft_strlen(line);
+    info->tok = malloc(sizeof(t_token) * (len + 1));
+    if (!info->tok)
+        exit (EXIT_FAILURE);
+    while (i < len)
+    {
+        while (ft_isspace(line[i]))
+            i++;
+        if (line[i])
+        {
+            info->tok[count].value = &line[i];
+            info->tok[count].type = identify_token_type(&line[i]);
+            count++;
+            while (line[i])
+            {
+                if (ft_isspace(line[i]))
+                {
+                    line[i] = '\0';
+                    i++;
+                    break ;
+                }
+                i++;
+            }
+        }
+    }
+    info->tok[count].value = NULL;
+}

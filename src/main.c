@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/08 20:05:47 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/09 19:50:50 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ int  check_up(char *line)
     return (0);
 }
 
-int ft_init(char **cmds, char *line)
+int ft_init(char *line, t_table *info)
 {
-    int     i;
-    char    *buf;
-
+    size_t     i;
+    //char    *buf;
     i = 0;
     if (line == NULL)
     {
@@ -53,11 +52,16 @@ int ft_init(char **cmds, char *line)
             return (-1);
         }
         remove_same_quotes(line);
-        //printf("%s\n", line++);
-        buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        cmds = ft_split_quotes(buf, ' ');
-        while (cmds[i])
-            printf("%s\n", cmds[i++]);
+        //buf = add_space(line, "&/|/>/</<</>>/&&/||");
+        tokenize_cmd(line, info);
+        //info->cmds = ft_split_quotes(buf, ' ');
+        // while (info->cmds[i])
+        //     printf("%s\n", info->cmds[i++]);
+        while (info->tok[i].value != NULL)
+        {
+            printf("Token %zu: Type = %d, Value = %s\n", i, info->tok[i].type, info->tok[i].value);
+            i++;
+        }
     }
     return (0);   
 }
@@ -67,9 +71,8 @@ int main(int ac, char **av, char **envp)
     (void)av;
     (void)envp;
     char *prompt;
-    char **cmds;
+    t_table info;
     
-    cmds = NULL;
     if (ac != 1 || av[1] != NULL)
     {
         ft_putendl_fd("Program does not accept any arguments", 1);
@@ -83,8 +86,9 @@ int main(int ac, char **av, char **envp)
             ft_putendl_fd("exit", 1);
             break ;
         }
-        ft_init(cmds, prompt);
+        ft_init(prompt, &info);
     }
     free(prompt);
+    free_token(info.tok);
     return (EXIT_SUCCESS);
 }
