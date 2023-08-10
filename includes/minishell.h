@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/09 19:12:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:14:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ int     find_symbol(char c, const char *sym);
 char    *add_space(char *s, const char *sym);
 void    remove_empty_quotes(char *s);
 void    remove_same_quotes(char *s);
+t_node  *create_node(t_table *info);
+t_node  *parse_helper(t_table *info);
+
 /*TOKEN*/
 void    free_token(t_token *tok);
 t_type  identify_token_type(const char *line);
-void    tokenize_cmd(char *line, t_table *info);
+void    tokenize_input(char *line, t_table *info);
 /*UTILS*/
 int     ft_isspace(char c);
 int     empty_line(char *line);

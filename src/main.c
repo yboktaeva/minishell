@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/09 19:50:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:12:39 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int  check_up(char *line)
 int ft_init(char *line, t_table *info)
 {
     size_t     i;
-    //char    *buf;
+    char    *buf;
     i = 0;
     if (line == NULL)
     {
@@ -51,9 +51,9 @@ int ft_init(char *line, t_table *info)
             free(line);
             return (-1);
         }
-        remove_same_quotes(line);
-        //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        tokenize_cmd(line, info);
+        //remove_same_quotes(line);
+        buf = add_space(line, "&/|/>/</<</>>/&&/||");
+        tokenize_input(buf, info);
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);
@@ -62,8 +62,9 @@ int ft_init(char *line, t_table *info)
             printf("Token %zu: Type = %d, Value = %s\n", i, info->tok[i].type, info->tok[i].value);
             i++;
         }
+        
     }
-    return (0);   
+    return (0);
 }
 
 int main(int ac, char **av, char **envp)
