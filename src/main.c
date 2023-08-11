@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/10 17:12:39 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:05:48 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int ft_init(char *line, t_table *info)
             free(line);
             return (-1);
         }
-        //remove_same_quotes(line);
+        remove_empty_quotes(line);
         buf = add_space(line, "&/|/>/</<</>>/&&/||");
         tokenize_input(buf, info);
         //info->cmds = ft_split_quotes(buf, ' ');
@@ -62,7 +62,6 @@ int ft_init(char *line, t_table *info)
             printf("Token %zu: Type = %d, Value = %s\n", i, info->tok[i].type, info->tok[i].value);
             i++;
         }
-        
     }
     return (0);
 }

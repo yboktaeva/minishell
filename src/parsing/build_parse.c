@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   build_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/21 15:28:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/10 17:15:19 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/08/11 17:16:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ t_node  *create_node(t_table *info)
     return (p_node);
 }
 
-t_node  *parse_helper(t_table *info)
+t_node  *build_tree(t_table *info)
 {
-    t_node *left;
+    t_node  *left;
     t_node  *right;
     
     left = create_node(info);
@@ -43,5 +43,28 @@ t_node  *parse_helper(t_table *info)
         left->pipe_node = right;
         left = right;
     }
+    if (info->tok[info->count].type == INPUT)
+    {
+        info->count++;
+        left->input_redirect = info->tok[info->count].value;
+        info->count++;
+    }
+    if (info->tok[info->count].type == OUTPUT ||
+        info->tok[info->count].type == APPEND)
+    {
+        info->count++;
+        left->output_redirect = info->tok[info->count].value;
+        info->count++;
+    }
     return (left);
 }
+
+// void print_parse_tree(t_node *p_node, int level)
+// {
+//     t_table info;
+//     if (p_node == NULL)
+//         return ;
+//     t_node *root = parse_helper(&info);
+//     printf("Level %d: Commande: %s\n", level, p_node->cmd);
+//     print_parse_tree(p_node->pipe_node, level + 1);
+// }

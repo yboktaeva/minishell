@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/08 09:48:33 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:05:16 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void remove_same_quotes(char *s)
     quote = 0;
     len = ft_strlen(s);
     char temp[len + 1];
-    remove_empty_quotes(s);
+    //remove_empty_quotes(s);
     while (i < len)
     {
         if (s[i] == '\'' || s[i] == '\"')

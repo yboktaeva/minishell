@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/10 16:42:37 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:56:57 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ t_type identify_token_type(const char *line)
      if (*line == '<')
     {
         if (*(line + 1) == '<')
-        return (HEREDOC);
+            return (HEREDOC);
         else
            return (INPUT);
     }
     else if (*line == '>')
     {
         if (*(line + 1) == '>')
-        return (APPEND);
+            return (APPEND);
         else
             return (OUTPUT);
     }
@@ -39,10 +39,10 @@ t_type identify_token_type(const char *line)
 
 void tokenize_input(char *line, t_table *info)
 {
-    int i;
-    int len;
-    int count;
-    int start_token;
+    int     i;
+    int     len;
+    int     count;
+    int     start_token;
     char    quote;
     
     i = 0;
@@ -81,6 +81,14 @@ void tokenize_input(char *line, t_table *info)
     info->tok[count].value = NULL;
 }
 
+void    error_handle(t_table *info)
+{
+    while (info->tok[info->count].value != NULL)
+    {
+        if (info->tok[info->count].type == INPUT && info->tok[info->count + 1].type != WORD)
+        
+    }
+}
 void    free_token(t_token *tok)
 {
     free(tok);
