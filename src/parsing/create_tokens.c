@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/11 17:56:57 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:30:46 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 t_type identify_token_type(const char *line)
 {
-     if (*line == '<')
+    if (*line == '<')
     {
         if (*(line + 1) == '<')
             return (HEREDOC);
@@ -37,58 +37,65 @@ t_type identify_token_type(const char *line)
         return (WORD);
 }
 
-void tokenize_input(char *line, t_table *info)
+void tokenize_input(const char *line, t_table *info)
 {
     int     i;
     int     len;
+    size_t  token_len;
+    size_t  operator_len;
     int     count;
-    int     start_token;
     char    quote;
+    char    *tmp;
+    char    *start;
     
     i = 0;
     count = 0;
     quote = '\0';
-    start_token = 0;
     len = ft_strlen(line);
+    tmp = ft_strdup(line);
+    operator_len = 0;
     info->tok = malloc(sizeof(t_token) * (len + 1));
     if (!info->tok)
         exit (EXIT_FAILURE);
-    while (line[i])
+    while (tmp[i])
     {
-        while (ft_isspace(line[i]) && quote == '\0')
-            i++;
-        if (line[i])
+        if (identify_token_type(&tmp[i]) != WORD)
         {
-            info->tok[count].value = (char *)&line[i];
-            info->tok[count].type = identify_token_type(&line[i]);
+            operator_len = 1;
+            if (identify_token_type(&tmp[i]) == HEREDOC || identify_token_type(&tmp[i]) == APPEND)
+                operator_len = 2;
+            ft_strlcpy(info->tok[count].value, &tmp[i], operator_len);
+            info->tok[count].value[operator_len] = '\0';
+            info->tok[count].type = identify_token_type(&tmp[i]);
             count++;
-            while (line[i])
-            {
-                if (line[i] == quote)
-                    quote = '\0';
-                else if ((line[i] == '\'' || line[i] == '\"') && quote == '\0')
-                    quote = line[i];
-                else if (ft_isspace(line[i]) && quote == '\0')
-                {
-                    line[i] = '\0';
-                    i++;
-                    break ;
-                }
-                i++;
-            }
+            i++;
         }
+        start = &tmp[i];
+        token_len = 0;
+        while (tmp[i] && !(ft_isspace(tmp[i]) && quote == '\0') && identify_token_type(&tmp[i]) == WORD)
+        {
+            if (tmp[i] == quote)
+                quote = '\0';
+            else if ((tmp[i] == '\'' || tmp[i] == '\"') && quote == '\0')
+                quote = tmp[i];
+            i++;
+            token_len++;
+        }
+        ft_strlcpy(info->tok[count].value, start, token_len);
+        info->tok[count].value[token_len] = '\0';
+        info->tok[count].type = identify_token_type(info->tok[count].value);
+        count++;
     }
-    info->tok[count].value = NULL;
 }
 
-void    error_handle(t_table *info)
-{
-    while (info->tok[info->count].value != NULL)
-    {
-        if (info->tok[info->count].type == INPUT && info->tok[info->count + 1].type != WORD)
+// void    error_handle(t_table *info)
+// {
+//     while (info->tok[info->count].value != NULL)
+//     {
+//         if (info->tok[info->count].type == INPUT && info->tok[info->count + 1].type != WORD)
         
-    }
-}
+//     }
+// }
 void    free_token(t_token *tok)
 {
     free(tok);

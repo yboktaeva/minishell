@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:24:27 by yuboktae          #+#    #+#             */
-/*   Updated: 2022/12/01 15:26:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:25:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t				i;
 
-	if (!dest || !src)
-		return (NULL);
+	// if (!dest || !src)
+	// 	return (NULL);
 	i = 0;
 	while (i < n)
 	{

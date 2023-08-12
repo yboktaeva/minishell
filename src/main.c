@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/11 15:05:48 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/12 16:07:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int  check_up(char *line)
 int ft_init(char *line, t_table *info)
 {
     size_t     i;
-    char    *buf;
+    //char    *buf;
     i = 0;
     if (line == NULL)
     {
@@ -52,8 +52,8 @@ int ft_init(char *line, t_table *info)
             return (-1);
         }
         remove_empty_quotes(line);
-        buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        tokenize_input(buf, info);
+        //buf = add_space(line, "&/|/>/</<</>>/&&/||");
+        tokenize_input(line, info);
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);

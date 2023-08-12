@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:25:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/08 19:51:59 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/12 15:57:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,23 @@ char *add_space(char *s, const char *sym)
     new_len = len;
     while (i < len)
     {
-        if (((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>') || \
-             (s[i] == '&' && s[i + 1] == '&') || (s[i] == '|' && s[i + 1] == '|')))
+        if (i > 0 && i < len)
         {
-            if (!ft_isspace(s[i - 1]) || !ft_isspace(s[i + 2]))
-                new_len += 1;
-            else if (!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 2]))
-                new_len += 2;
-        }
-        else if (find_symbol(s[i], sym))
-        {
-            if (!ft_isspace(s[i - 1]) || !ft_isspace(s[i + 1]))
-                new_len += 1;
-            else if (!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 1]))
-                new_len += 2;
+            if (((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>') || \
+                (s[i] == '&' && s[i + 1] == '&') || (s[i] == '|' && s[i + 1] == '|')))
+            {
+                if (!ft_isspace(s[i - 1]) || !ft_isspace(s[i + 2]))
+                    new_len += 1;
+                else if (!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 2]))
+                    new_len += 2;
+            }
+            else if (find_symbol(s[i], sym))
+            {
+                if (!ft_isspace(s[i - 1]) || !ft_isspace(s[i + 1]))
+                    new_len += 1;
+                else if (!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 1]))
+                    new_len += 2;
+            }
         }
         i++;
     }
@@ -93,40 +96,43 @@ char *add_space(char *s, const char *sym)
     j = 0;
     while (i < len)
     {
-        if (((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>') || \
-             (s[i] == '&' && s[i + 1] == '&') || (s[i] == '|' && s[i + 1] == '|')))
+        if (i > 0 && i < len)
         {
-            if ((!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 2])) || !ft_isspace(s[i - 1]) || !ft_isspace(s[i + 2]))
+            if (((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>') || \
+                (s[i] == '&' && s[i + 1] == '&') || (s[i] == '|' && s[i + 1] == '|')))
             {
-                if (i != 0)
-                    str[j++] = ' ';
-                str[j++] = s[i];
-                str[j++] = s[i + 1];
-                if (i != len - 2)
-                    str[j++] = ' ';
+                if ((!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 2])) || !ft_isspace(s[i - 1]) || !ft_isspace(s[i + 2]))
+                {
+                    if (i != 0)
+                        str[j++] = ' ';
+                    str[j++] = s[i];
+                    str[j++] = s[i + 1];
+                    if (i != len - 2)
+                        str[j++] = ' ';
+                }
+                else
+                {
+                    str[j++] = s[i];
+                    str[j++] = s[i + 1];
+                }
+                i++;
+            }
+            else if (find_symbol(s[i], sym))
+            {
+                if ((!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 1])) || !ft_isspace(s[i - 1]) || !ft_isspace(s[i + 1]))
+                {
+                    if (i != 0)
+                        str[j++] = ' ';
+                    str[j++] = s[i];
+                    if (i != len - 1)
+                        str[j++] = ' ';
+                }
+                else
+                    str[j++] = s[i];
             }
             else
-            {
-                str[j++] = s[i];
-                str[j++] = s[i + 1];
-            }
-            i++;
-        }
-        else if (find_symbol(s[i], sym))
-        {
-            if ((!ft_isspace(s[i - 1]) && !ft_isspace(s[i + 1])) || !ft_isspace(s[i - 1]) || !ft_isspace(s[i + 1]))
-            {
-                if (i != 0)
-                    str[j++] = ' ';
-                str[j++] = s[i];
-                if (i != len - 1)
-                    str[j++] = ' ';
-            }
-            else
                 str[j++] = s[i];
         }
-        else
-            str[j++] = s[i];
         i++;
     }
     str[j] = '\0';
