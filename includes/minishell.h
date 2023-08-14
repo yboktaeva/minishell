@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/12 15:18:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/14 19:06:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_node  *parse_helper(t_table *info);
 /*TOKEN*/
 void    free_token(t_token *tok);
 t_type  identify_token_type(const char *line);
-void    tokenize_input(const char *line, t_table *info);
+void    tokenize_input(char *line, t_table *info);
 /*UTILS*/
 int     ft_isspace(char c);
 int     empty_line(char *line);
