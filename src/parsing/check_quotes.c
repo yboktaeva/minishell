@@ -6,14 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/11 15:05:16 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:42:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-int check_quotes(const char *s)
+int check_quotes(char *s)
 {
     int i;
     int flag;

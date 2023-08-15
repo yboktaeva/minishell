@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/09 17:19:37 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:14:46 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strndup(const char *s, size_t n)
 {
 	size_t	i;
 	size_t	len;
-	char *ret;
+	char	*ret;
 
 	i = 0;
 	len = 0;
@@ -43,12 +43,12 @@ char	*ft_strndup(const char *s, size_t n)
 	return (ret);
 }
 
-int ft_arrlen(char **arr) 
+int	ft_arrlen(char **arr)
 {
-    size_t count;
-	
+	size_t count;
+
 	count = 0;
-    while (arr[count]) 
-        count++;
-    return (count);
+	while (arr[count])
+		count++;
+	return (count);
 }

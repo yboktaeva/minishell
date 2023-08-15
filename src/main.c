@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 16:47:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/12 16:07:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:17:30 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,43 @@
 
 int  check_up(char *line)
 {
-    if (check_quotes(line) == -1)
+    if (check_quotes(line) < 0)
     {
-        ft_putendl_fd("error: quotes are not closed", 2);
+        quote_error();
         return (-1);
     }
     if (check_input(line) < 0)
     {
-        ft_putendl_fd("minishell: syntax error", 2);
+        syntax_error();
         return (-1);
     }
     return (0);
+}
+
+char    *ft_readline(char *prompt)
+{
+    char    *line;
+    
+    line = (char *)malloc(sizeof(char) * (ft_strlen(prompt) + 1));
+    if (!line)
+        return (NULL);
+    line = readline(prompt);
+    if (!line)
+    {
+        ft_putendl_fd("exit", 1);
+        free(line);
+        return(NULL) ;
+    }
+    else
+    {
+        add_history(line);
+        if (check_up(line) < 0)
+        {
+            free(line);
+            return (NULL);
+        }
+    }
+    return (line);
 }
 
 int ft_init(char *line, t_table *info)
@@ -38,19 +64,8 @@ int ft_init(char *line, t_table *info)
     size_t     i;
     //char    *buf;
     i = 0;
-    if (line == NULL)
-    {
-        free(line);
-        return (-1);
-    }
     if (line)
     {
-        add_history(line);
-        if (check_up(line) < 0)
-        {
-            free(line);
-            return (-1);
-        }
         remove_empty_quotes(line);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
         tokenize_input(line, info);
@@ -59,7 +74,7 @@ int ft_init(char *line, t_table *info)
         //     printf("%s\n", info->cmds[i++]);
         while (info->tok[i].value != NULL)
         {
-            printf("Token %zu: Type = %d, Value = %s\n", i, info->tok[i].type, info->tok[i].value);
+            printf("Count %d: Token %zu: Type = %d, Value = %s\n", info->count, i, info->tok[i].type, info->tok[i].value);
             i++;
         }
     }
@@ -80,12 +95,7 @@ int main(int ac, char **av, char **envp)
     }
     while (1)
     {
-        prompt = readline("minishell$> ");
-        if (!prompt)
-        {
-            ft_putendl_fd("exit", 1);
-            break ;
-        }
+        prompt = ft_readline("minishell$> ");
         ft_init(prompt, &info);
     }
     free(prompt);

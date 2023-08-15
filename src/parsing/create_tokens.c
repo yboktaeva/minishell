@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/14 19:10:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/15 19:10:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 
-t_type identify_token_type(const char *line)
+t_type identify_token_type(char *line)
 {
     if (*line == '<')
     {
@@ -34,93 +34,100 @@ t_type identify_token_type(const char *line)
     }
     else if (*line == '|')
         return (PIPE);
+    else if (ft_isspace(*line))
+        return (DELIMETER);
+    else if (*line == '\'')
+        return (FIELD);
+    else if (*line == '\"')
+        return (EXP_FIELD);
     else
         return (WORD);
 }
 
-// void tokenize_input(const char *line, t_table *info)
+void tokenize_input(char *line, t_table *info)
+{
+    int     i;
+    int     count;
+    char    quote;
+
+    i = 0;
+    count = 0;
+    info->tok = malloc(sizeof(t_token) * (ft_strlen(line) + 1));
+    if (!info->tok)
+        exit(EXIT_FAILURE);
+    while (line[i])
+    {
+        info->tok[count].value = &line[i];
+        info->tok[count].type = identify_token_type(&line[i]);
+        count++;
+        if (info->tok[count].type == FIELD || info->tok[count].type == EXP_FIELD)
+        {
+            quote = line[i];
+            i++;
+            while (line[i] && line[i] != quote)
+            {
+                //if (!ft_isspace(line[i]))
+                {
+                    info->tok[count].value = &line[i];
+                    info->tok[count].type = WORD; 
+                    count++;
+                }
+                i++;
+            }
+            if (line[i] == quote)
+            {
+                info->tok[count].value = &line[i];
+                if (line[i] == '\'')
+                    info->tok[count].type = FIELD;
+                else if (line[i] == '\"')
+                    info->tok[count].type = EXP_FIELD;
+                count++;
+            }
+        }
+        else if (info->tok[count].type == DELIMETER)
+        {
+            info->tok[count].value = &line[i];
+            count++;
+        } 
+        line[i++] = '\0';
+        i++;
+    }
+    info->tok[count].value = NULL;
+}
+
+
+// void tokenize_input(char *line, t_table *info)
 // {
 //     int     i;
 //     int     len;
-//     size_t  token_len;
-//     size_t  operator_len;
 //     int     count;
 //     char    quote;
-//     char    *tmp;
-//     //char    *start;
     
 //     i = 0;
 //     count = 0;
 //     quote = '\0';
 //     len = ft_strlen(line);
-//     tmp = ft_strdup(line);
-//     operator_len = 0;
 //     info->tok = malloc(sizeof(t_token) * (len + 1));
 //     if (!info->tok)
 //         exit (EXIT_FAILURE);
-//     while (tmp[i])
+//     while (line[i])
 //     {
-//         if (identify_token_type(&tmp[i]) != WORD)
-//         {
-//             operator_len = 1;
-//             if (identify_token_type(&tmp[i]) == HEREDOC || identify_token_type(&tmp[i]) == APPEND)
-//                 operator_len = 2;
-//             info->tok[count].value = ft_strndup(tmp, operator_len);
-//             info->tok[count].type = identify_token_type(&tmp[i]);
-//             count++;
-//             i++;
-//         }
-//         //start = &tmp[i];
-//         token_len = 0;
-//         while (tmp[i] && !(ft_isspace(tmp[i]) && quote == '\0') && identify_token_type(&tmp[i]) == WORD)
-//         {
-//             if (tmp[i] == quote)
-//                 quote = '\0';
-//             else if ((tmp[i] == '\'' || tmp[i] == '\"') && quote == '\0')
-//                 quote = tmp[i];
-//             i++;
-//             token_len++;
-//         }
-//         info->tok[count].value = ft_strndup(tmp, token_len);
-//         info->tok[count].type = identify_token_type(info->tok[count].value);
+//         info->tok[count].type = identify_token_type(&line[i]);
+//         info->tok[count].value = &line[i];
 //         count++;
+//         if (ft_isspace(line[i]))
+//             line[i++] = '\0';
+//         else
+//         {
+//             while (line[i] && !ft_isspace(line[i]))
+//                 i++;
+//             if (line[i])
+//                 line[i++] = '\0';
+//         }
 //     }
+//     info->tok[count].value = NULL;
 // }
-void tokenize_input(char *line, t_table *info)
-{
-    int count;
-    int len;
-    int i;
-    
-    i = 0;
-    count = 0;
-    len = ft_strlen(line);
-    info->tok = malloc(sizeof(t_token) * (len + 1));
-    if (!info->tok)
-        exit (EXIT_FAILURE);
-    while (i < len)
-    {
-        while (ft_isspace(line[i]))
-            i++;
-        if (line[i])
-        {
-            info->tok[count].type = identify_token_type(&line[i]);
-            info->tok[count].value = &line[i];
-            count++;
-            while (line[i])
-            {
-                if (ft_isspace(line[i]))
-                {
-                    line[i] = '\0';
-                    i++;
-                    break ;
-                }
-                i++;
-            }
-        }
-    }
-    info->tok[count].value = NULL;
-}
+
 // void    error_handle(t_table *info)
 // {
 //     while (info->tok[info->count].value != NULL)
@@ -134,3 +141,23 @@ void    free_token(t_token *tok)
     if (tok != NULL)
         free(tok);
 }
+
+// < infile 'cat' '| ls' << EOF
+// Token 0: Type = 5, Value = <
+// Token 1: Type = 1, Value =  
+// Token 2: Type = 0, Value = infile
+// Token 3: Type = 1, Value =  
+// Token 4: Type = 2, Value = '
+// Token 5: Type = 0, Value = cat
+// Token 6: Type = 2, Value = '
+// Token 7: Type = 1, Value =  
+// Token 8: Type = 2, Value = '
+// Token 9: Type = 4, Value = |
+// Token 10: Type = 1, Value =  
+// Token 11: Type = 0, Value = ls
+// Token 12: Type = 2, Value = '
+// Token 13: Type = 1, Value =  
+// Token 14: Type = 7, Value = <<
+// Token 15: Type = 1, Value =  
+// Token 16: Type = 0, Value = EOF
+
