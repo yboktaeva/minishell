@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/15 19:10:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/16 17:45:00 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ t_type identify_token_type(char *line)
     }
     else if (*line == '|')
         return (PIPE);
-    else if (ft_isspace(*line))
-        return (DELIMETER);
     else if (*line == '\'')
         return (FIELD);
     else if (*line == '\"')
@@ -44,15 +42,26 @@ t_type identify_token_type(char *line)
         return (WORD);
 }
 
+t_token *create_token(t_type type, char *value)
+{
+    t_token *tok;
+    
+    tok = malloc(sizeof(t_token));
+    tok->type = type;
+    tok->value = ft_strdup(value);
+    return (tok);
+}
+
 void tokenize_input(char *line, t_table *info)
 {
     int     i;
     int     count;
     char    quote;
+    char    *start;
 
     i = 0;
     count = 0;
-    info->tok = malloc(sizeof(t_token) * (ft_strlen(line) + 1));
+    info->tok = malloc(sizeof(t_token));
     if (!info->tok)
         exit(EXIT_FAILURE);
     while (line[i])
@@ -64,11 +73,13 @@ void tokenize_input(char *line, t_table *info)
         {
             quote = line[i];
             i++;
+            start = &line[i];
+            info->tok[count].len = line - start;
             while (line[i] && line[i] != quote)
             {
-                //if (!ft_isspace(line[i]))
+                if (!ft_isspace(line[i]))
                 {
-                    info->tok[count].value = &line[i];
+                    info->tok[count].value = ft_strndup(start, info->tok[count].len);
                     info->tok[count].type = WORD; 
                     count++;
                 }
@@ -76,7 +87,7 @@ void tokenize_input(char *line, t_table *info)
             }
             if (line[i] == quote)
             {
-                info->tok[count].value = &line[i];
+                info->tok[count].value = ft_strndup(start, info->tok[count].len);
                 if (line[i] == '\'')
                     info->tok[count].type = FIELD;
                 else if (line[i] == '\"')
@@ -84,11 +95,6 @@ void tokenize_input(char *line, t_table *info)
                 count++;
             }
         }
-        else if (info->tok[count].type == DELIMETER)
-        {
-            info->tok[count].value = &line[i];
-            count++;
-        } 
         line[i++] = '\0';
         i++;
     }
@@ -139,7 +145,10 @@ void tokenize_input(char *line, t_table *info)
 void    free_token(t_token *tok)
 {
     if (tok != NULL)
+    {
+        free(tok->value);
         free(tok);
+    }
 }
 
 // < infile 'cat' '| ls' << EOF

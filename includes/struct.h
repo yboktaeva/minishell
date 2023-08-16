@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/15 18:09:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/16 17:54:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 typedef enum s_type
 {
 	WORD,
-	DELIMETER,
-	FIELD,
-	EXP_FIELD,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
 	HEREDOC,
-	APPEND
+	APPEND,
+	FIELD,
+	EXP_FIELD
 }			t_type;
 
 typedef struct s_token
@@ -52,6 +51,7 @@ typedef struct s_table
 {
 	char			**cmds;
 	char			*cmd_path;
+	char			**envp;
 	t_token			*tok;
 	t_node			*cmd_node;
 	int				count;

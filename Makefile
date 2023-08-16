@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/08/15 14:17:07 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/08/16 17:57:40 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ READLINE_LIB	=	-lreadline -lhistory -L/usr/local/lib
 
 
 SRC_FILES	=	env/path.c parsing/check_line.c parsing/check_quotes.c parsing/split_quotes.c \
-				parsing/build_parse.c parsing/create_tokens.c builtins/echo.c builtins/cd.c builtins/pwd.c\
-				builtins/export.c builtins/unset.c builtins/env.c builtins/exit.c errors/ft_errors.c \
-				main.c utils.c \
+				parsing/build_parse.c parsing/create_tokens.c execution/cmd_path.c execution/path_utils.c \
+				execution/one_cmd_exec.c execution/ft_split_ignore_spaces.c \
+				builtins/echo.c builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
+				builtins/env.c builtins/exit.c errors/ft_errors.c minishell.c main.c utils.c \
 				
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
