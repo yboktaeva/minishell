@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/15 17:54:02 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/20 19:52:41 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_node	*create_node(t_table *info)
 	cmd_node = malloc(sizeof(struct s_node));
 	if (!cmd_node)
 		return (NULL);
-	cmd_node->cmd_args[0] = info->tok[info->count].value;
+	cmd_node->cmd_args[0] = info->tokens[info->n_tokens].value;
 	cmd_node->redirect_in_node = NULL;
 	cmd_node->redirect_out_node = NULL;
     cmd_node->heredoc_node = NULL;

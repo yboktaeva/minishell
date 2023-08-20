@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/16 17:54:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/20 22:24:17 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,39 @@ typedef struct s_token
 	int		len;
 }				t_token;
 
-// typedef struct	s_list /*important for ENVP*/
-// {
-// 	void	*key;
-// 	void	*value;
-// }				t_list;
+typedef struct s_redir /*structure for redirections IN, OUT, HEREDOC, APPEND*/
+{
+	t_type	type;
+	char	*file_name;
+}				t_redir;
 
 typedef struct s_node
 {
-	char			**cmd_args;
-	void	*redirect_in_node;
-	void	*redirect_out_node;
-	void	*heredoc_node;
+	char	**cmd_args;
 	void	*pipe_node;
-}					t_node;
+	t_redir	*input;
+	t_redir	*output;
+}				t_node;
 
 typedef struct s_table
 {
 	char			**cmds;
 	char			*cmd_path;
 	char			**envp;
-	t_token			*tok;
+	t_token			*tokens;
 	t_node			*cmd_node;
 	int				count;
+	int				n_tokens;
 	// int				*builtin_ptr[7];
 	// char			*reserved_names[7];
-}					t_table;
+}				t_table;
+
+// typedef struct	s_env /*important for ENVP*/
+// {
+//		char	*str;
+// 		void	*key;
+// 		void	*value;
+//		struct s_env	*next;
+// }				t_env;
 
 #endif

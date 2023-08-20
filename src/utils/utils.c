@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/15 14:14:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/20 19:27:00 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,24 @@ int	ft_isspace(char c)
 	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
+}
+
+char *my_strncpy(char *dest, const char *src, size_t n)
+{
+    size_t	i;
+	
+	i = 0;
+    while (i < n && src[i] != '\0')
+	{
+        dest[i] = src[i];
+		i++;
+    }
+    while (i < n)
+	{
+        dest[i] = '\0';
+		i++;
+	}
+    return (dest);
 }
 
 char	*ft_strndup(const char *s, size_t n)
@@ -41,14 +59,4 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	ret[i] = '\0';
 	return (ret);
-}
-
-int	ft_arrlen(char **arr)
-{
-	size_t count;
-
-	count = 0;
-	while (arr[count])
-		count++;
-	return (count);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/16 17:53:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/21 00:10:55 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char    *ft_readline(char *prompt)
     {
         ft_putendl_fd("exit", 1);
         free(line);
-        return(NULL) ;
+        return(NULL);
     }
     else
     {
@@ -44,22 +44,24 @@ char    *ft_readline(char *prompt)
     return (line);
 }
 
-int ft_init(char *line, t_table *info)
+int shell_loop(char *line, t_table *info)
 {
-    size_t     i;
+    int    i;
+    t_token *tokens;
     //char    *buf;
     i = 0;
+    tokens = NULL;
     if (line)
     {
         remove_empty_quotes(line);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        tokenize_input(line, info);
+        split_tokens(line, info->tokens);
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);
-        while (info->tok[i].value != NULL)
+        while (info->tokens[i].value != NULL)
         {
-            printf("Token %zu: Type = %d, Value = %s\n", i, info->tok[i].type, info->tok[i].value);
+            printf("Token %d: Type = %d, Value = %s\n", i, info->tokens[i].type, info->tokens[i].value);
             i++;
         }
     }
@@ -68,22 +70,21 @@ int ft_init(char *line, t_table *info)
 
 int main(int ac, char **av, char **envp)
 {
-    (void)av;
     (void)envp;
     char *prompt;
     t_table info;
     
-    if (ac != 1 || av[1] != NULL)
+    if (ac > 2 || av[1] != NULL)
     {
         ft_putendl_fd("Program does not accept any arguments", 1);
-        exit (EXIT_SUCCESS);
+        exit (EXIT_FAILURE);
     }
     while (1)
     {
         prompt = ft_readline("minishell$> ");
-        ft_init(prompt, &info);
+        shell_loop(prompt, &info);
     }
     free(prompt);
-    free_token(info.tok);
+    free_token(&info);
     return (EXIT_SUCCESS);
 }

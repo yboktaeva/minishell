@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 10:14:59 by yuboktae          #+#    #+#             */
-/*   Updated: 2022/11/10 13:50:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/19 00:53:15 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 			dst[i] = src[i];
 			i++;
 		}
-	dst[i] = '\0';
+		dst[i] = '\0';
 	}
 	return (j);
 }
