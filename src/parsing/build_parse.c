@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 19:51:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/21 23:51:21 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,22 @@ t_node	*create_node(char **cmd_args, void *pipe_node, t_redir *input, t_redir *o
 	return (cmd_node);
 }
 
-t_node	*generate_tree(t_token *tokens)
+t_node	*generate_tree(char *line, t_token *tokens)
 {
 	t_node	*ast;
 	t_node	*curr;
     t_redir *redir;
     int     pipex_count;
+    int     n_tokens;
     int     cmd_count;
     int     i;
     
-    i = -1;
+    i = 0;
     ast = NULL;
     curr = NULL;
     pipex_count = -1;
-	while (++i < 100)
+    n_tokens = split_tokens(line, tokens);
+	while (i < n_tokens)
 	{
         if (tokens[i].type == PIPE)
         {
@@ -90,6 +92,7 @@ t_node	*generate_tree(t_token *tokens)
             curr->cmd_args[cmd_count] = tokens[i].value;
             cmd_count++;
         }
+        i++;
 	}
 	if (curr != NULL)
         curr->cmd_args[cmd_count] = NULL;

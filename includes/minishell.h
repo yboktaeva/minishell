@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 19:48:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/21 23:47:41 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void    remove_empty_quotes(char *s);
 void    remove_same_quotes(char *s);
 t_redir *create_redir(t_type type, char *file_name);
 t_node	*create_node(char **cmd_args, void *pipe_node, t_redir *input, t_redir *output);
-t_node	*generate_tree(t_token *tokens);
+t_node	*generate_tree(char *line, t_token *tokens);
 void    print_parse_tree(t_node *cmd_node, int level);
 /*TOKEN*/
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 19:50:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/21 23:51:43 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,22 @@ int shell_loop(char *line, t_table *info)
     (void)info;
     
     i = 0;
-    int j = 0;
+    //int j = 0;
     tokens = malloc(sizeof(t_token) * 100); // MULTIPLIER par find_array_size (split prompt " ")
     if (line)
     {
         //remove_empty_quotes(line);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        j = split_tokens(line, tokens);
+        //j = split_tokens(line, tokens);
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);
-        while (i < j)
-        {
-            printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
-            i++;
-        }
-        cmd_node = generate_tree(tokens);
+        // while (i < j)
+        // {
+        //     printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
+        //     i++;
+        // }
+        cmd_node = generate_tree(line, tokens);
         print_parse_tree(cmd_node, 0);
     }
     return (0);

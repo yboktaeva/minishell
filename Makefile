@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
+#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/08/21 10:08:36 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/08/21 23:58:02 by yuliaboktae      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,7 @@ LIBFT		=	$(LIBFT_PATH)/libft.a
 all:	 $(NAME) $(LIBFT)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
-	ar rcs $(LIBFT)
+	$(MAKE) -C $(LIBFT_PATH) all
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(READLINE_LIB) -o $@ $(OBJ) $(LIBFT)

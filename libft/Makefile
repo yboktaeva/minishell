@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
+#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 19:45:57 by yuboktae          #+#    #+#              #
-#    Updated: 2023/07/27 14:08:23 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/08/21 23:56:06 by yuliaboktae      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ all:	$(NAME)
 		@$(CC) -c $(CFLAGS) -o $@ $<
 		
 $(NAME): $(OBJ) $(OBJ_BONUS)
-		@ar -ru $(NAME) $^
+		@ar rc $(NAME) $^
 
 clean:
 	@rm -f $(OBJ) $(OBJ_BONUS)
