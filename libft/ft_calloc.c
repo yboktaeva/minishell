@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:12:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/25 16:11:27 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/21 19:33:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*s;
 
-	if (nmemb >= SIZE_MAX || size >= SIZE_MAX)
+	if (nmemb * size / size != nmemb)
 		return (NULL);
 	s = (void *)malloc(nmemb * size);
 	if (!s)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
+#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/08/20 19:25:45 by yuliaboktae      ###   ########.fr        #
+#    Updated: 2023/08/21 10:08:36 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT_PATH	=	libft/
 READLINE_LIB	=	-lreadline -lhistory -L/usr/local/lib
 
 
-SRC_FILES	=	main/minishell.c main/main.c env/path.c parsing/check_line.c parsing/check_quotes.c \
+SRC_FILES	=	main/minishell.c main/main.c env/get_env.c init/init_all.c parsing/check_line.c parsing/check_quotes.c \
 				parsing/split_quotes.c parsing/build_parse.c parsing/create_tokens.c execution/cmd_path.c \
 				execution/path_utils.c execution/one_cmd_exec.c execution/ft_split_ignore_spaces.c \
 				builtins/echo.c builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \

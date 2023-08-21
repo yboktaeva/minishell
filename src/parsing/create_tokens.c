@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 00:11:57 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/08/21 19:40:50 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int split_tokens(char *line, t_token *tokens)
     j = 0;
     start = line;
     quote_start = NULL;
-    while (*start != '\0')
+    while (*start)
     {
         while (ft_isspace(*start))
             start++;
@@ -65,7 +65,7 @@ void token_quotes(char **start, char **quote_start, t_token *tokens, int *j)
         (*start)++;
     len = *start - *quote_start;
     tokens[*j].type = WORD;
-    tokens[*j].value = calloc(len, sizeof(char));
+    tokens[*j].value = ft_calloc(len + 1, sizeof(char));
     my_strncpy(tokens[*j].value, *quote_start + 1, len - 1);
     (*j)++;
     *quote_start = NULL;
@@ -97,7 +97,7 @@ void token_redirection(char **start, char **end, t_token *tokens, int *j)
         else
             tokens[*j].type = REDIR_OUT;
     }
-    tokens[*j].value = calloc(len + 1, sizeof(char));
+    tokens[*j].value = ft_calloc(len + 1, sizeof(char));
     my_strncpy(tokens[*j].value, *start, len);
     (*j)++;
     (*start)++;
@@ -114,7 +114,7 @@ void token_pipe(char **start, t_token *tokens, int *j)
     {
         tokens[*j].type = PIPE;
         len += 1;
-        tokens[*j].value = calloc(len + 1, sizeof(char));
+        tokens[*j].value = ft_calloc(len + 1, sizeof(char));
         my_strncpy(tokens[*j].value, *start, len);
         (*j)++;
     }
@@ -127,8 +127,8 @@ void token_word(char **start, char **end, t_token *tokens, int *j)
            **end != '<' && **end != '>' && **end != '|' && !ft_isspace(**end))
         (*end)++;
     tokens[*j].type = WORD;
-    tokens[*j].value = calloc(*end - *start + 1, sizeof(char));
-    strncpy(tokens[*j].value, *start, *end - *start);
+    tokens[*j].value = ft_calloc(*end - *start + 1, sizeof(char));
+    my_strncpy(tokens[*j].value, *start, *end - *start);
     (*j)++;
-    *start = *end;
+    *start = *end - 1;
 }

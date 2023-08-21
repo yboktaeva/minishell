@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 00:10:55 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/08/21 19:50:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,73 +18,74 @@
 #include <signal.h>
 #include <unistd.h>
 
-char    *ft_readline(char *prompt)
+void    ft_readline(char *line)
 {
-    char    *line;
-    
-    line = (char *)malloc(sizeof(char) * (ft_strlen(prompt) + 1));
-    if (!line)
-        return (NULL);
-    line = readline(prompt);
     if (!line)
     {
         ft_putendl_fd("exit", 1);
         free(line);
-        return(NULL);
+        return ;
     }
     else
     {
         add_history(line);
         if (check_up(line) < 0)
         {
-            free(line);
-            return (NULL);
+            //free(line);
+            return ;
         }
     }
-    return (line);
 }
 
 int shell_loop(char *line, t_table *info)
 {
-    int    i;
+    int i;
     t_token *tokens;
+    t_node  *cmd_node;
     //char    *buf;
+    (void)info;
+    
     i = 0;
-    tokens = NULL;
+    int j = 0;
+    tokens = malloc(sizeof(t_token) * 100); // MULTIPLIER par find_array_size (split prompt " ")
     if (line)
     {
-        remove_empty_quotes(line);
+        //remove_empty_quotes(line);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        split_tokens(line, info->tokens);
+        j = split_tokens(line, tokens);
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);
-        while (info->tokens[i].value != NULL)
+        while (i < j)
         {
-            printf("Token %d: Type = %d, Value = %s\n", i, info->tokens[i].type, info->tokens[i].value);
+            printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
             i++;
         }
+        cmd_node = generate_tree(tokens);
+        print_parse_tree(cmd_node, 0);
     }
     return (0);
 }
 
-int main(int ac, char **av, char **envp)
+int main(int ac, char **argv, char **envp)
 {
-    (void)envp;
     char *prompt;
     t_table info;
     
-    if (ac > 2 || av[1] != NULL)
+    if (ac > 2 || argv[1] != NULL)
     {
         ft_putendl_fd("Program does not accept any arguments", 1);
         exit (EXIT_FAILURE);
     }
     while (1)
     {
-        prompt = ft_readline("minishell$> ");
+        prompt = readline("minishell$> ");
+        ft_readline(prompt);
+        init_main_table(&info, argv, envp);
         shell_loop(prompt, &info);
+        //free(prompt);
     }
     free(prompt);
-    free_token(&info);
+    free_all(prompt, &info, info.cmd_node);
     return (EXIT_SUCCESS);
 }

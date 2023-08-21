@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/20 19:52:41 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/08/21 19:51:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,69 +14,95 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_node	*create_node(t_table *info)
+t_redir *create_redir(t_type type, char *file_name)
+{
+    t_redir *redir;
+
+    redir = malloc(sizeof(t_redir));
+    if (!redir)
+        return (NULL);
+    redir->type = type;
+    redir->file_name = file_name;
+    return (redir);
+}
+
+t_node	*create_node(char **cmd_args, void *pipe_node, t_redir *input, t_redir *output)
 {
 	t_node	*cmd_node;
 
 	cmd_node = malloc(sizeof(struct s_node));
 	if (!cmd_node)
 		return (NULL);
-	cmd_node->cmd_args[0] = info->tokens[info->n_tokens].value;
-	cmd_node->redirect_in_node = NULL;
-	cmd_node->redirect_out_node = NULL;
-    cmd_node->heredoc_node = NULL;
-	cmd_node->pipe_node = NULL;
-	info->count = 0;
+	cmd_node->cmd_args = cmd_args;
+	cmd_node->pipe_node = pipe_node;
+	cmd_node->input = input;
+	cmd_node->output = output;
 	return (cmd_node);
 }
 
-// t_node	*build_tree(t_table *info)
-// {
-// 	t_node	*left;
-// 	t_node	*right;
+t_node	*generate_tree(t_token *tokens)
+{
+	t_node	*ast;
+	t_node	*curr;
+    t_redir *redir;
+    int     pipex_count;
+    int     cmd_count;
+    int     i;
+    
+    i = -1;
+    ast = NULL;
+    curr = NULL;
+    pipex_count = -1;
+	while (++i < 100)
+	{
+        if (tokens[i].type == PIPE)
+        {
+            curr = create_node(NULL, NULL, NULL, NULL);
+            cmd_count = 0;
+            if (ast == NULL)
+                ast = curr;
+            else
+                ast->pipe_node = curr;
+            pipex_count = i;
+        }
+        else if (tokens[i].type == REDIR_IN || tokens[i].type == REDIR_OUT || tokens[i].type == HEREDOC || tokens[i].type == APPEND)
+        {
+            redir = create_redir(tokens[i].type, tokens[i].value);
+            if (curr != NULL)
+            {
+                if (tokens[i].type == REDIR_IN)
+                    curr->input = redir;
+                else if (tokens[i].type == REDIR_IN)
+                    curr->output = redir;
+                else if (tokens[i].type == HEREDOC)
+                    curr->input = redir;
+                else if (tokens[i].type == APPEND)
+                    curr->output = redir;
+            }
+        }
+        else
+        {
+            if (curr == NULL)
+            {
+                curr = create_node(NULL, NULL, NULL, NULL);
+                ast = curr;
+            }
+            curr->cmd_args[cmd_count] = tokens[i].value;
+            cmd_count++;
+        }
+	}
+	if (curr != NULL)
+        curr->cmd_args[cmd_count] = NULL;
+	return (ast);
+}
 
-// 	left = create_node(info);
-// 	while (info->tok[info->count].type == PIPE)
-// 	{
-// 		info->count++;
-// 		right = create_node(info);
-// 		left->pipe_node = right;
-// 		left = right;
-// 	}
-// 	if (info->tok[info->count].type == REDIR_IN)
-// 	{
-// 		info->count++;
-// 		left->redirect_in_node = info->tok[info->count].value;
-// 		info->count++;
-// 	}
-// 	if (info->tok[info->count].type == REDIR_OUT
-// 		|| info->tok[info->count].type == APPEND)
-// 	{
-// 		info->count++;
-// 		left->redirect_out_node = info->tok[info->count].value;
-// 		info->count++;
-// 	}
-// 	return (left);
-// }
-
-void    free_node(t_node *cmd_node)
+void print_parse_tree(t_node *cmd_node, int level)
 {
     if (cmd_node == NULL)
         return ;
-    //free all data in the node before free node
-    //free(cmd_node->cmd);
-    //free(cmd_node->args);
-    //free(cmd_node->redirect_in_node);
-    //free(cmd_node->redirect_out_node);
-    //free(cmd_node->heredoc_node);
-    free(cmd_node);
+    printf("LEVEL %d: COMMAND: ", level);
+    for (int i = 0; cmd_node->cmd_args[i] != NULL; i++)
+        printf("%s ", cmd_node->cmd_args[i]);
+    printf("\n");
+    print_parse_tree(cmd_node->pipe_node, level + 1);
 }
-// void print_parse_tree(t_node *cmd_node, int level)
-// {
-//     t_table info;
-//     if (cmd_node == NULL)
-//         return ;
-//     t_node *root = parse_helper(&info);
-//     printf("Level %d: Commande: %s\n", level, cmd_node->cmd);
-//     print_parse_tree(cmd_node->pipe_node, level + 1);
-// }

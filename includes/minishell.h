@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 00:11:37 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/08/21 19:48:58 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 # define TRUE 1
 # define FAULSE 0
 
-/*READ_LINE*/
-char    *ft_readline(char *prompt);
-int     shell_loop(char *line,t_table *info);
+/*READLINE_INIT*/
+void    init_main_table(t_table *info, char **argv, char **envp);
+void    ft_readline(char *line);
+int     shell_loop(char *line, t_table *info);
 /*ENV*/
-char	*get_path(char **envp);
+int	*get_env(char **envp);
 /*LEXER_PARSER*/
 char    **ft_split_quotes(char const *s, char c);
 int     check_quotes(char *s);
@@ -32,8 +33,10 @@ int     check_input(char *line);
 int     find_symbol(char c, const char *sym);
 void    remove_empty_quotes(char *s);
 void    remove_same_quotes(char *s);
-t_node  *create_node(t_table *info);
-t_node  *parse_helper(t_table *info);
+t_redir *create_redir(t_type type, char *file_name);
+t_node	*create_node(char **cmd_args, void *pipe_node, t_redir *input, t_redir *output);
+t_node	*generate_tree(t_token *tokens);
+void    print_parse_tree(t_node *cmd_node, int level);
 /*TOKEN*/
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);
 void    token_redirection(char **start, char **end, t_token *tokens, int *j);
@@ -61,9 +64,9 @@ int     builtin_cd();
 void    *quote_error(void);
 void    *syntax_error(void);
 /*DESTRUCTOR*/
-void    free_all(char *line, t_token *tokens, t_tree *parsing);
-void    free_token(t_table *info);
-void    free_parse_tree();
+void    free_all(char *line, t_table *info, t_node *cmd_node);
+void    free_token(t_token *tokens, int n_tokens);
+void    free_parse_tree(t_node *cmd_node);
 /*UTILS*/
 int     ft_isspace(char c);
 int     empty_line(char *line);
