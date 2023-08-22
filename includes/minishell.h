@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 23:47:41 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/08/22 20:10:24 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void    init_main_table(t_table *info, char **argv, char **envp);
 void    ft_readline(char *line);
 int     shell_loop(char *line, t_table *info);
 /*ENV*/
-int	*get_env(char **envp);
+t_env   *create_env(void *key, void *value);
+t_env   *get_last(t_env *env);
+void    env_add_back(t_env **env, t_env *new);
+int     env_size(t_env *env);
+t_env     *get_env(char **envp);
 /*LEXER_PARSER*/
 char    **ft_split_quotes(char const *s, char c);
 int     check_quotes(char *s);
@@ -34,7 +38,7 @@ int     find_symbol(char c, const char *sym);
 void    remove_empty_quotes(char *s);
 void    remove_same_quotes(char *s);
 t_redir *create_redir(t_type type, char *file_name);
-t_node	*create_node(char **cmd_args, void *pipe_node, t_redir *input, t_redir *output);
+t_node	*create_node(char **cmd_args);
 t_node	*generate_tree(char *line, t_token *tokens);
 void    print_parse_tree(t_node *cmd_node, int level);
 /*TOKEN*/
@@ -67,9 +71,11 @@ void    *syntax_error(void);
 void    free_all(char *line, t_table *info, t_node *cmd_node);
 void    free_token(t_token *tokens, int n_tokens);
 void    free_parse_tree(t_node *cmd_node);
+void    free_env(t_env **head);
 /*UTILS*/
 int     ft_isspace(char c);
 int     empty_line(char *line);
+size_t	ft_arrlen(char **arr);
 char    *my_strncpy(char *dest, const char *src, size_t n);
 char	*ft_strndup(const char *s, size_t n);
 #endif

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 16:22:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/22 18:39:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,16 @@ typedef struct s_node
 	t_redir	*output;
 }			t_node;
 
+typedef struct	s_env /*extract ENVP in structure*/
+{
+	char	*key;
+	char	*value;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct s_table
 {
-	char			**envp;
+	t_env			*env;
 	char			**cmds;
 	char			*path;
 	t_token			*tokens;
@@ -56,12 +63,5 @@ typedef struct s_table
 	// char			*reserved_names[7];
 }			t_table;
 
-// typedef struct	s_env /*extract ENVP in structure*/
-// {
-//		char	*str;
-// 		void	*key;
-// 		void	*value;
-//		struct s_env	*next;
-// }				t_env;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/21 18:01:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:57:11 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    free_all(char *line, t_table *info, t_node *cmd_node)
     if (line != NULL)
     {
         free(line);
-        //line = NULL;
+        line = NULL;
     }
     if (info->tokens != NULL)
         free_token(info->tokens, info->n_tokens);
@@ -59,5 +59,5 @@ void    free_parse_tree(t_node *cmd_node)
         free(cmd_node->output);
     free(cmd_node->pipe_node);
     free(cmd_node); 
-     return ;
+    return ;
 }

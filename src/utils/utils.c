@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 19:18:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/22 20:10:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,16 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	ret[i] = '\0';
 	return (ret);
+}
+
+size_t	ft_arrlen(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	if (arr == NULL)
+		return (0);
+	while (arr[i] != NULL)
+		i++;
+	return (i);
 }

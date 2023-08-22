@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 23:51:43 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/08/22 20:50:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void    ft_readline(char *line)
 int shell_loop(char *line, t_table *info)
 {
     int i;
+    //int level = 0;
     t_token *tokens;
-    t_node  *cmd_node;
+    t_node  *cmd_node = NULL;
     //char    *buf;
     (void)info;
     
@@ -62,7 +63,16 @@ int shell_loop(char *line, t_table *info)
         //     i++;
         // }
         cmd_node = generate_tree(line, tokens);
-        print_parse_tree(cmd_node, 0);
+        // printf("LEVEL %d: COMMAND: ", level);
+        // for (int i = 0; cmd_node->cmd_args[i] != NULL; i++)
+        // printf("%s ", cmd_node->cmd_args[i]);
+        // // printf("INPUT: %s\n", root->input->file_name);
+        // // printf("OUTPUT: %s\n", root->output->file_name);
+        // // printf("HEREDOC: %s\n", root->input->file_name);
+        // // printf("APPEND: %s\n", root->output->file_name);
+        // printf("\n");
+        // if (cmd_node->pipe_node != NULL)
+        //     print_parse_tree(cmd_node->pipe_node, level + 1);
     }
     return (0);
 }
@@ -83,9 +93,10 @@ int main(int ac, char **argv, char **envp)
         ft_readline(prompt);
         init_main_table(&info, argv, envp);
         shell_loop(prompt, &info);
-        //free(prompt);
+        free(prompt);
     }
-    free(prompt);
+   // free(prompt);
     free_all(prompt, &info, info.cmd_node);
+    free_env(&info.env);
     return (EXIT_SUCCESS);
 }

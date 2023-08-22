@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_all.c                                         :+:      :+:    :+:   */
+/*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/22 17:47:51 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/08/22 15:55:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
-void init_main_table(t_table *info, char **argv, char **envp)
+void    free_env(t_env **head)
 {
-    (void)argv;
-    //t_token tokens;
+    t_env   *tmp;
+    t_env   *stock;
     
-    info->env = get_env(envp);
-    //info->cmds =;
-   // info->path = get_executable_path();
-    //info->tokens = NULL;
-    //info->n_tokens = 0;
-    info->cmd_count = 0;
-    info->cmd_node = NULL;
+    if (!(*head))
+        return ;
+    tmp = *head;
+    stock = NULL;
+    while (tmp != NULL)
+    {
+        stock = tmp->next;
+        free(tmp);
+        tmp = stock;
+    }
+    *head = NULL;
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
+#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/08/21 23:58:02 by yuliaboktae      ###   ########.fr        #
+#    Updated: 2023/08/22 18:46:50 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC_FILES	=	main/minishell.c main/main.c env/get_env.c init/init_all.c parsing/c
 				parsing/split_quotes.c parsing/build_parse.c parsing/create_tokens.c execution/cmd_path.c \
 				execution/path_utils.c execution/one_cmd_exec.c execution/ft_split_ignore_spaces.c \
 				builtins/echo.c builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
-				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c utils/utils.c \
+				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c destructor/free_env.c utils/utils.c \
 				
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -32,7 +32,7 @@ DEP			=	$(OBJ:.o=.d)
 
 CC			=	cc
 RM			=	rm -f
-CFLAGS		=	-Wall -Wextra -Werror -g3
+CFLAGS		=	-Wall -Wextra -Werror -g3 -fsanitize=address
 CPPFLAGS	=	-I/usr/local/include -I$(LIBFT_PATH) -I$(INC_DIR) 
 LIBFT		=	$(LIBFT_PATH)/libft.a
 
