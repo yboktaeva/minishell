@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/22 20:49:21 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:00:47 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ t_node	*generate_tree(char *line, t_token *tokens)
     curr = NULL;
     cmd_count = 0;
     pipe_count = -1;
-    n_tokens = split_tokens(line, tokens);
+    n_tokens = get_tokens_size(line, tokens);
+    if (lexer(tokens, n_tokens) == -1)
+    {
+        return (NULL);
+    }
 	while (i < n_tokens)
 	{
         if (tokens[i].type == PIPE)

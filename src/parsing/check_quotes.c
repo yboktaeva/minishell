@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/15 14:42:19 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:03:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void remove_same_quotes(char *s)
 {
     int i;
     int j;
-    int quote; 
     int len;
+    int quote; 
 
     i = 0;
     j = 0;

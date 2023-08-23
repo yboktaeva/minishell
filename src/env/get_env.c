@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/22 18:43:12 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:38:24 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_env   *create_envp(void *key, void *value)
     new->next = NULL;
     return (new);
 }
+
 t_env   *get_last(t_env *envp)
 {
     if (!envp)

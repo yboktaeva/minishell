@@ -6,20 +6,21 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/15 14:20:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:07:50 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
 void    *quote_error(void)
 {
-    ft_putendl_fd("minishell: quotes are not closed", 2);
+    ft_putendl_fd("minishell: missing closing quote", 2);
     return (NULL);
 }
 
-void    *syntax_error(void)
+void    *syntax_error(char *str)
 {
-    ft_putendl_fd("minishell: syntax error near unexpected token", 2);
+    printf("minishell: syntax error near unexpected token `%s'\n", str);
     return (NULL);
 }

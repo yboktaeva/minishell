@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/22 20:10:24 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:57:44 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_env   *create_env(void *key, void *value);
 t_env   *get_last(t_env *env);
 void    env_add_back(t_env **env, t_env *new);
 int     env_size(t_env *env);
-t_env     *get_env(char **envp);
+t_env   *get_env(char **envp);
 /*LEXER_PARSER*/
 char    **ft_split_quotes(char const *s, char c);
 int     check_quotes(char *s);
@@ -47,6 +47,9 @@ void    token_redirection(char **start, char **end, t_token *tokens, int *j);
 void    token_pipe(char **start, t_token *tokens, int *j);
 void    token_word(char **start, char **end, t_token *tokens, int *j);
 int     split_tokens(char *line, t_token *tokens);
+int     get_tokens_size(char *line, t_token *tokens);
+int     check_lex_errors(t_token *tokens, int *j);
+int     lexer(t_token *tokens, int n_tokens);
 /*EXEC*/
 void	ft_free_str_array(char **str);
 char	**ft_split_ignore_spaces(const char *s, char c);
@@ -66,7 +69,7 @@ int     builtin_exit();
 int     builtin_cd();
 /*ERRORS*/
 void    *quote_error(void);
-void    *syntax_error(void);
+void    *syntax_error(char *str);
 /*DESTRUCTOR*/
 void    free_all(char *line, t_table *info, t_node *cmd_node);
 void    free_token(t_token *tokens, int n_tokens);

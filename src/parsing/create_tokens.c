@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/21 19:40:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 16:43:49 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void token_quotes(char **start, char **quote_start, t_token *tokens, int *j)
     (*start)++;
     while (**start != quote_type && **start != '\0')
         (*start)++;
-    len = *start - *quote_start;
+    len = *start - *quote_start + 1;
     tokens[*j].type = WORD;
     tokens[*j].value = ft_calloc(len + 1, sizeof(char));
-    my_strncpy(tokens[*j].value, *quote_start + 1, len - 1);
+    my_strncpy(tokens[*j].value, *quote_start, len);
     (*j)++;
     *quote_start = NULL;
 }

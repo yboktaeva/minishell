@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:25:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/16 17:47:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 14:43:42 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int  check_up(char *line)
     }
     if (check_input(line) < 0)
     {
-        syntax_error();
+        //syntax_error();
         return (-1);
     }
     return (0);

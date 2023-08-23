@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/22 18:39:31 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:02:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_table
 	t_node			*cmd_node;
 	int				n_tokens;
 	int				cmd_count;
+	int				exit_status;
 	// int			*builtin_ptr[7];
 	// char			*reserved_names[7];
 }			t_table;
