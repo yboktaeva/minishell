@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 16:43:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/24 18:40:28 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void token_word(char **start, char **end, t_token *tokens, int *j);
 
 int split_tokens(char *line, t_token *tokens)
 {
+    int i;
     int j;
     char *start;
     char *end;
     char *quote_start;
 
+    i = 0;
     j = 0;
     start = line;
     quote_start = NULL;
@@ -37,8 +39,14 @@ int split_tokens(char *line, t_token *tokens)
             start++;
         if (*start == '\0')
             break ;
+        remove_empty_quotes(start, &i, &j);
         if (*start == '\'' || *start == '\"')
-            token_quotes(&start, &quote_start, tokens, &j);
+        {
+            if (check_quotes(start) == -1)
+                quote_error();
+            else
+                token_quotes(&start, &quote_start, tokens, &j);
+        }
         else if (quote_start == NULL)
         {
             if (*start == '<' || *start == '>')

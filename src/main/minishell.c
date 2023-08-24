@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 12:32:45 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/24 16:48:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,25 @@
 #include <signal.h>
 #include <unistd.h>
 
-void    ft_readline(char *line)
-{
-    if (!line)
-    {
-        ft_putendl_fd("exit", 1);
-        free(line);
-        return ;
-    }
-    else
-    {
-        add_history(line);
-        if (check_up(line) < 0)
-        {
-            free(line);
-            return ;
-        }
-    }
-}
-
 int shell_loop(char *line, t_table *info)
 {
     int i;
-    //int level = 0;
     t_token *tokens;
     t_node  *cmd_node = NULL;
-    //char    *buf;
     (void)info;
     
     i = 0;
     //int j = 0;
-    tokens = malloc(sizeof(t_token) * 100); // MULTIPLIER par find_array_size (split prompt " ")
-    if (line)
+    tokens = malloc(sizeof(t_token *));
+    if (!line)
     {
-        //remove_empty_quotes(line);
+        ft_putendl_fd("exit", 1); //signal handker for ctrl + D
+        free(line);
+        return (0);
+    }
+    else
+    {
+        add_history(line);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
         //j = split_tokens(line, tokens);
         //info->cmds = ft_split_quotes(buf, ' ');
@@ -90,7 +75,6 @@ int main(int ac, char **argv, char **envp)
     while (1)
     {
         prompt = readline("minishell$> ");
-        ft_readline(prompt);
         init_main_table(&info, argv, envp);
         shell_loop(prompt, &info);
         free(prompt);

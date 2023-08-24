@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 12:38:24 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/24 11:45:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-t_env   *create_envp(void *key, void *value)
+t_env   *create_env(char *key, char *value)
 {
     t_env  *new;
 
@@ -28,37 +28,37 @@ t_env   *create_envp(void *key, void *value)
     return (new);
 }
 
-t_env   *get_last(t_env *envp)
+t_env   *get_last(t_env *env)
 {
-    if (!envp)
+    if (!env)
         return (NULL);
-    while (envp->next != NULL)
-        envp = envp->next;
-    return (envp);
+    while (env->next != NULL)
+        env = env->next;
+    return (env);
 }
 
-void    env_add_back(t_env **envp, t_env *new)
+void    env_add_back(t_env **env, t_env *new)
 {
     t_env   *tmp;
 
     if (new == NULL)
         return ;
-    tmp = *envp;
+    tmp = *env;
     if (!tmp)
     {
-        *envp = new;
+        *env = new;
         return ;
     }
     tmp = get_last(tmp);
     tmp->next = new;
 }
-int     env_size(t_env *envp)
+int     env_size(t_env *env)
 {
     t_env   *tmp;
     int     len;
 
     len = 0;
-    tmp = envp;
+    tmp = env;
     while (tmp != NULL)
     {
         len++;

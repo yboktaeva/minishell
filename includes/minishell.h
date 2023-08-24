@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 14:57:44 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/24 16:48:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,19 @@
 
 /*READLINE_INIT*/
 void    init_main_table(t_table *info, char **argv, char **envp);
-void    ft_readline(char *line);
 int     shell_loop(char *line, t_table *info);
 /*ENV*/
-t_env   *create_env(void *key, void *value);
+t_env   *create_env(char *key, char *value);
 t_env   *get_last(t_env *env);
 void    env_add_back(t_env **env, t_env *new);
 int     env_size(t_env *env);
 t_env   *get_env(char **envp);
 /*LEXER_PARSER*/
-char    **ft_split_quotes(char const *s, char c);
+//char    **ft_split_quotes(char const *s, char c);
 int     check_quotes(char *s);
-int     check_up(char *line);
-int     check_input(char *line);
+int     check_input(char *line, char *check);
 int     find_symbol(char c, const char *sym);
-void    remove_empty_quotes(char *s);
-void    remove_same_quotes(char *s);
+void    remove_empty_quotes(char *s, int *i, int *j);
 t_redir *create_redir(t_type type, char *file_name);
 t_node	*create_node(char **cmd_args);
 t_node	*generate_tree(char *line, t_token *tokens);
@@ -48,8 +45,8 @@ void    token_pipe(char **start, t_token *tokens, int *j);
 void    token_word(char **start, char **end, t_token *tokens, int *j);
 int     split_tokens(char *line, t_token *tokens);
 int     get_tokens_size(char *line, t_token *tokens);
-int     check_lex_errors(t_token *tokens, int *j);
-int     lexer(t_token *tokens, int n_tokens);
+int     syntax_errors(t_token *tokens, int *j);
+int     parser(t_token *tokens, int n_tokens);
 /*EXEC*/
 void	ft_free_str_array(char **str);
 char	**ft_split_ignore_spaces(const char *s, char c);

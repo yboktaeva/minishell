@@ -5,51 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 12:07:48 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 17:23:56 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/08/24 10:43:47 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/08/24 18:35:25 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_lex_errors(t_token *tokens, int *j);
-int get_tokens_size(char *line, t_token *tokens);
+void    remove_quotes(t_token *tokens, int n_tokens);
+void    expand_quoted(t_token *tokens);
+int     type_of_quotes(char *s, int type);
+void    skip_single_quotes(char *s, int *i, int *j);
 
-int lexer(t_token *tokens, int n_tokens)
+int     lexer_shell()
 {
-    int j;
+    
+}
+void    remove_quotes(t_token *tokens, int n_tokens)
+{
+    int i;
 
-    j = 0;
-    while (j < n_tokens)
+    i = 0;
+    while (i < n_tokens)
     {
-        if (check_lex_errors(tokens, &j) != 0)
+        if (tokens[i].type == WORD)
         {
-            syntax_error(tokens[j].value);
-            return (-1);
+            if (type_of_quotes(tokens[i].value, '\''))
+                skip_single_quotes();
+            else if (type_of_quotes(tokens[i].value, '\"'))
+            {
+                if ()
+            }
+                
         }
     }
-    return(0);
 }
 
-int check_lex_errors(t_token *tokens, int *j)
+void    expand_quoted(t_token *tokens)
 {
-    if (tokens[0].type == PIPE || tokens[*j].value == NULL || (tokens[*j].type == PIPE && tokens[*j + 1].type != WORD))
-        return (-1);
-    else if ((tokens[*j].type == REDIR_IN && tokens[*j - 1].type == HEREDOC) ||
-        (tokens[*j].type == REDIR_OUT && tokens[*j - 1].type == APPEND))
-        return (-1);
-    else if ((tokens[*j].type == HEREDOC && tokens[*j + 1].type == HEREDOC) ||
-        (tokens[*j].type == APPEND && tokens[*j + 1].type == APPEND))
-        return (-1);
-    //else if ()
-    (*j)++;
-    return (0);
+    char    *expand_str;
 }
 
-int get_tokens_size(char *line, t_token *tokens)
+int    type_of_quotes(char *str, int type)
 {
-    int count;
+    int type_quote = 0;
+    
+    while (*str)
+    {
+        if (*str == '\'')
+        {
+            if ((*str + 1) == '\'')
+                type_quote = type;
+        }
+        else if (*str == '\"')
+        {
+            if ((*str + 1) == '\"')
+                type_quote = type;
+        }
+    }
+    return (type_quote);
+}
 
-    count = split_tokens(line, tokens);
-    return (count);
+void    skip_single_quotes(char *s, int *i, int *j)
+{
+    if (s[*i + 1] == '\'')
+        (*i)++;
 }

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:25:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 14:43:42 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/24 15:19:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,27 @@ int	empty_line(char *line)
 	return (0);
 }
 
-int	check_input(char *line)
+int	check_input(char *line, char *check)
 {
-	int	i;
-
-	i = 0;
-	while (line[i])
+	while (*line)
 	{
-		if (line[i] == '\\' || line[i] == ';' || (line[i] == '&' && line[i + 1] == '&'))
+		if (*line == *check)
 			return (-1);
-		i++;
+		line++;
 	}
 	return (0);
 }
 
-int  check_up(char *line)
-{
-    if (check_quotes(line) < 0)
-    {
-        quote_error();
-        return (-1);
-    }
-    if (check_input(line) < 0)
-    {
-        //syntax_error();
-        return (-1);
-    }
-    return (0);
-}
-
-int	find_symbol(char c, const char *sym)
-{
-	while (*sym)
-	{
-		if (c == *sym)
-			return (1);
-		sym++;
-	}
-	return (0);
-}
+// int	find_symbol(char c, const char *sym)
+// {
+// 	while (*sym)
+// 	{
+// 		if (c == *sym)
+// 			return (1);
+// 		sym++;
+// 	}
+// 	return (0);
+// }
 
 // char	*add_space(char *s, const char *sym)
 // {
