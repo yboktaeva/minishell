@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/24 11:45:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/25 17:53:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env   *create_env(char *key, char *value)
 {
     t_env  *new;
 
-    new = malloc(sizeof(*new));
+    new = malloc(sizeof(t_env));
     if (!new)
         return (NULL);
     new->key = key;
@@ -52,6 +52,7 @@ void    env_add_back(t_env **env, t_env *new)
     tmp = get_last(tmp);
     tmp->next = new;
 }
+
 int     env_size(t_env *env)
 {
     t_env   *tmp;
@@ -66,6 +67,7 @@ int     env_size(t_env *env)
     }
     return (len);
 }
+
 t_env	*get_env(char **envp)
 {
     t_env   *head;
@@ -81,22 +83,26 @@ t_env	*get_env(char **envp)
         if (sep)
         {
             *sep = '\0';
-            new = create_envp(start, sep + 1);
+            new = create_env(start, sep + 1);
             if (head == NULL)
                 head = new;
             else
-                env_add_back(&head, create_envp(start, sep + 1));
+                env_add_back(&head, create_env(start, sep + 1));
         }
         envp++;
     }
     return (head);
 }
 
-void    print_env(t_table *info)
+void    print_env(t_env *env)
 {
-    while (info->env != NULL)
-        {
-            printf("%s=%s\n", info->env->key, info->env->value);
-            info->env = info->env->next;  
-        }
+    t_env *head;
+    
+    head = env;
+    while (head->next != NULL)
+    {
+        if (head->value != NULL)
+            printf("%s=%s\n", head->key, head->value);
+        head = head->next;
+    }
 }

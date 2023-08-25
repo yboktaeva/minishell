@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/24 16:48:26 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:18:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ t_env   *get_last(t_env *env);
 void    env_add_back(t_env **env, t_env *new);
 int     env_size(t_env *env);
 t_env   *get_env(char **envp);
+void    print_env(t_env *env);
 /*LEXER_PARSER*/
-//char    **ft_split_quotes(char const *s, char c);
-int     check_quotes(char *s);
+char    **ft_split_quotes(char const *s, char c);
+int     check_quotes(char *s, int *i);
 int     check_input(char *line, char *check);
 int     find_symbol(char c, const char *sym);
 void    remove_empty_quotes(char *s, int *i, int *j);

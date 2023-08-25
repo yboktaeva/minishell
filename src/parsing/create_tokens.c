@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/24 18:40:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:42:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ int split_tokens(char *line, t_token *tokens)
     quote_start = NULL;
     while (*start)
     {
+        //remove_empty_quotes(start, &i, &j);
         while (ft_isspace(*start))
             start++;
         if (*start == '\0')
             break ;
-        remove_empty_quotes(start, &i, &j);
         if (*start == '\'' || *start == '\"')
         {
-            if (check_quotes(start) == -1)
-                quote_error();
-            else
+            // if (check_quotes(start, &i) != 0)
+            //     quote_error();
+            // else
                 token_quotes(&start, &quote_start, tokens, &j);
         }
         else if (quote_start == NULL)

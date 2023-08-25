@@ -6,44 +6,32 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/24 18:42:48 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:18:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_quotes(char *s)
+int check_quotes(char *s, int *i)
 {
-    int i;
-    int flag;
+    int single_quote_counter = 0;
+    int double_quote_counter = 0;
     
-    i = 0;
-    flag = -1;
-    while (s[i])
+    single_quote_counter = 0;
+    double_quote_counter = 0;
+    if (s[*i] == '\0')
     {
-        if (s[i] == '\'')
-        {
-            flag = 1;
-            i++;
-            while (s[i] && s[i] != '\'')
-                i++;
-            if (!s[i])
-                flag = 0;
-        }
-        if (s[i] == '\"')
-        {
-            flag = 1;
-            i++;
-            while (s[i] && s[i] != '\"')
-                i++;
-            if (!s[i])
-                flag = 0;
-        }
-        i++;
+        if (single_quote_counter % 2 != 0 || double_quote_counter % 2 != 0)
+            return (-1);
+        else
+            return (0);
     }
-    if (flag == 0)
-        return (-1);
-    return (0);
+    if (s[*i] == '\'')
+        single_quote_counter++;
+    if (s[*i] == '\"')
+        double_quote_counter++;
+    (*i)++;
+    return (check_quotes(s, i));
 }
 
 void    remove_empty_quotes(char *s, int *i, int *j)

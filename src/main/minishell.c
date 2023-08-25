@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/24 16:48:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:42:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 
 int shell_loop(char *line, t_table *info)
 {
+    (void)info;
     int i;
     t_token *tokens;
-    t_node  *cmd_node = NULL;
-    (void)info;
+    //t_node  *cmd_node = NULL;
     
     i = 0;
-    //int j = 0;
+    int j = 0;
     tokens = malloc(sizeof(t_token *));
     if (!line)
     {
@@ -37,17 +37,19 @@ int shell_loop(char *line, t_table *info)
     else
     {
         add_history(line);
+        //remove_empty_quotes(line, &i, &j);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        //j = split_tokens(line, tokens);
+        j = split_tokens(line, tokens);
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);
-        // while (i < j)
-        // {
-        //     printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
-        //     i++;
-        // }
-        cmd_node = generate_tree(line, tokens);
+        while (i < j)
+        {
+            printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
+            i++;
+        }
+        //cmd_node = generate_tree(line, tokens);
+        //print_env(info->env);
         // printf("LEVEL %d: COMMAND: ", level);
         // for (int i = 0; cmd_node->cmd_args[i] != NULL; i++)
         // printf("%s ", cmd_node->cmd_args[i]);
