@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/22 15:57:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:41:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void    free_token(t_token *tokens, int n_tokens)
     int i;
 
     i = 0;
-    while (i < n_tokens)
+    while (tokens && i < n_tokens)
     {
         free(tokens[i].value);
         i++;

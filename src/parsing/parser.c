@@ -6,14 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 10:41:33 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/24 10:41:36 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:45:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int syntax_errors(t_token *tokens, int *j);
-int get_tokens_size(char *line, t_token *tokens);
+int check_syntax_errors(t_token *tokens, int *j);
+//int get_tokens_size(char *line, t_token *tokens);
 
 int parser(t_token *tokens, int n_tokens)
 {
@@ -22,7 +22,7 @@ int parser(t_token *tokens, int n_tokens)
     j = 0;
     while (j < n_tokens)
     {
-        if (syntax_errors(tokens, &j) != 0)
+        if (check_syntax_errors(tokens, &j) != 0)
         {
             syntax_error(tokens[j].value);
             return (-1);
@@ -31,7 +31,7 @@ int parser(t_token *tokens, int n_tokens)
     return(0);
 }
 
-int syntax_errors(t_token *tokens, int *j)
+int check_syntax_errors(t_token *tokens, int *j)
 {
     if (tokens[0].type == PIPE || tokens[*j].value == NULL || (tokens[*j].type == PIPE && tokens[*j + 1].type != WORD))
         return (-1);
@@ -46,10 +46,10 @@ int syntax_errors(t_token *tokens, int *j)
     return (0);
 }
 
-int get_tokens_size(char *line, t_token *tokens)
-{
-    int count;
+// int get_tokens_size(char *line, t_token *tokens)
+// {
+//     int count;
 
-    count = split_tokens(line, tokens);
-    return (count);
-}
+//     count = split_tokens(line, tokens);
+//     return (count);
+// }

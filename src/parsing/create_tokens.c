@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/25 19:42:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:54:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,26 @@ void token_redirection(char **start, char **end, t_token *tokens, int *j);
 void token_pipe(char **start, t_token *tokens, int *j);
 void token_word(char **start, char **end, t_token *tokens, int *j);
 
-int split_tokens(char *line, t_token *tokens)
+t_token *split_tokens(char *line, t_token *tokens)
 {
-    int i;
     int j;
     char *start;
     char *end;
     char *quote_start;
 
-    i = 0;
     j = 0;
     start = line;
     quote_start = NULL;
     while (*start)
     {
-        //remove_empty_quotes(start, &i, &j);
-        while (ft_isspace(*start))
-            start++;
+        start = pass_white_space(start);
         if (*start == '\0')
             break ;
         if (*start == '\'' || *start == '\"')
         {
-            // if (check_quotes(start, &i) != 0)
-            //     quote_error();
-            // else
+            if (check_closed_quotes(start) != 0)
+                return (NULL);
+            else
                 token_quotes(&start, &quote_start, tokens, &j);
         }
         else if (quote_start == NULL)
@@ -58,7 +54,7 @@ int split_tokens(char *line, t_token *tokens)
         }
         start++;
     }
-    return (j);
+    return (tokens);
 }
 
 void token_quotes(char **start, char **quote_start, t_token *tokens, int *j)
@@ -135,7 +131,7 @@ void token_word(char **start, char **end, t_token *tokens, int *j)
            **end != '<' && **end != '>' && **end != '|' && !ft_isspace(**end))
         (*end)++;
     tokens[*j].type = WORD;
-    tokens[*j].value = ft_calloc(*end - *start + 1, sizeof(char));
+    tokens[*j].value = calloc(*end - *start + 1, sizeof(char));
     my_strncpy(tokens[*j].value, *start, *end - *start);
     (*j)++;
     *start = *end - 1;

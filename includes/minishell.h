@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/25 19:18:45 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:00:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,23 @@ t_env   *get_env(char **envp);
 void    print_env(t_env *env);
 /*LEXER_PARSER*/
 char    **ft_split_quotes(char const *s, char c);
-int     check_quotes(char *s, int *i);
+int     count_quotes(char *s);
+int     check_closed_quotes(char *s);
 int     check_input(char *line, char *check);
-int     find_symbol(char c, const char *sym);
 void    remove_empty_quotes(char *s, int *i, int *j);
 t_redir *create_redir(t_type type, char *file_name);
 t_node	*create_node(char **cmd_args);
 t_node	*generate_tree(char *line, t_token *tokens);
+int     check_syntax_errors(t_token *tokens, int *j);
 void    print_parse_tree(t_node *cmd_node, int level);
+int     parser(t_token *tokens, int n_tokens);
 /*TOKEN*/
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);
 void    token_redirection(char **start, char **end, t_token *tokens, int *j);
 void    token_pipe(char **start, t_token *tokens, int *j);
 void    token_word(char **start, char **end, t_token *tokens, int *j);
-int     split_tokens(char *line, t_token *tokens);
-int     get_tokens_size(char *line, t_token *tokens);
-int     syntax_errors(t_token *tokens, int *j);
-int     parser(t_token *tokens, int n_tokens);
+t_token *split_tokens(char *line, t_token *tokens);
+int     count_tokens(char *line);
 /*EXEC*/
 void	ft_free_str_array(char **str);
 char	**ft_split_ignore_spaces(const char *s, char c);
@@ -77,6 +77,7 @@ void    free_env(t_env **head);
 int     ft_isspace(char c);
 int     empty_line(char *line);
 size_t	ft_arrlen(char **arr);
+char	*pass_white_space(char *s);
 char    *my_strncpy(char *dest, const char *src, size_t n);
 char	*ft_strndup(const char *s, size_t n);
 #endif

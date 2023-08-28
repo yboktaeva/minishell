@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/22 20:10:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:59:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ int	ft_isspace(char c)
 	if (c == ' ' || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
+}
+
+char	*pass_white_space(char *s)
+{
+	while (ft_isspace(*s) && *s != '\0')
+		s++;
+	return (s);
 }
 
 char *my_strncpy(char *dest, const char *src, size_t n)

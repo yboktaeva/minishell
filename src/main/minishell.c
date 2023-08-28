@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/25 19:42:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/28 19:56:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@
 
 int shell_loop(char *line, t_table *info)
 {
-    (void)info;
+   // (void)info;
     int i;
-    t_token *tokens;
-    //t_node  *cmd_node = NULL;
+    //t_token *tokens;
     
     i = 0;
-    int j = 0;
-    tokens = malloc(sizeof(t_token *));
     if (!line)
     {
         ft_putendl_fd("exit", 1); //signal handker for ctrl + D
@@ -37,17 +34,26 @@ int shell_loop(char *line, t_table *info)
     else
     {
         add_history(line);
+        int n_tokens = count_tokens(line);
+        info->tokens = malloc(sizeof(struct s_token) * n_tokens);
+        printf("COUNT %d\n", n_tokens);
         //remove_empty_quotes(line, &i, &j);
         //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        j = split_tokens(line, tokens);
+        //tokens = malloc(sizeof(struct s_token) * 100);
+        info->tokens = split_tokens(line, info->tokens);
+        //printf("NUM tokens - %d\n", j);
+        //printf("Token %d: Type = %d, Value = %s\n", j, tokens[j].type, tokens[j].value);
+
+        //info->tokens = malloc(sizeof(t_token *) * j);
+        
         //info->cmds = ft_split_quotes(buf, ' ');
         // while (info->cmds[i])
         //     printf("%s\n", info->cmds[i++]);
-        while (i < j)
-        {
-            printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
-            i++;
-        }
+        // while (i < j)
+        // {
+        //     printf("Token %d: Type = %d, Value = %s\n", i, info->tokens[i].type, info->tokens[i].value);
+        //     i++;
+        // }
         //cmd_node = generate_tree(line, tokens);
         //print_env(info->env);
         // printf("LEVEL %d: COMMAND: ", level);
