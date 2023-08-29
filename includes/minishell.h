@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/28 17:00:18 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/29 20:00:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,20 @@
 # define FAULSE 0
 
 /*READLINE_INIT*/
-void    init_main_table(t_table *info, char **argv, char **envp);
-int     shell_loop(char *line, t_table *info);
+void    init_main_table(t_table *info, char *line, char **argv);
+void    *shell_loop(char *line, t_table *info);
 /*ENV*/
-t_env   *create_env(char *key, char *value);
-t_env   *get_last(t_env *env);
-void    env_add_back(t_env **env, t_env *new);
-int     env_size(t_env *env);
-t_env   *get_env(char **envp);
-void    print_env(t_env *env);
+t_env   *init_env_list(char **envp);
+void    set_env_list(t_env **head, char **envp);
+void	get_env(t_env *head, char *str);
+t_env   *add_env_node(char *str);
+t_env   *copy_env(t_env *env, char *str);
+void    print_env_list(t_env *env);
+char    *env_key(char *str);
+int     env_key_len(char *key);
+char    *env_value(t_env *head, char *key);
 /*LEXER_PARSER*/
-char    **ft_split_quotes(char const *s, char c);
-int     count_quotes(char *s);
-int     check_closed_quotes(char *s);
-int     check_input(char *line, char *check);
-void    remove_empty_quotes(char *s, int *i, int *j);
+/*void    remove_empty_quotes(char *s, int *i, int *j);*/
 t_redir *create_redir(t_type type, char *file_name);
 t_node	*create_node(char **cmd_args);
 t_node	*generate_tree(char *line, t_token *tokens);
@@ -42,6 +41,8 @@ int     check_syntax_errors(t_token *tokens, int *j);
 void    print_parse_tree(t_node *cmd_node, int level);
 int     parser(t_token *tokens, int n_tokens);
 /*TOKEN*/
+int     count_quotes(char *s);
+int     check_input(char *line, char *check);
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);
 void    token_redirection(char **start, char **end, t_token *tokens, int *j);
 void    token_pipe(char **start, t_token *tokens, int *j);

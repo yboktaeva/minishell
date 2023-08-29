@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/23 17:02:03 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:07:47 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct	s_env /*extract ENVP in structure*/
 {
 	char	*key;
 	char	*value;
+	char	*str;
 	struct s_env	*next;
 }				t_env;
 

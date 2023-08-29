@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parse_analyse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 10:41:33 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/28 13:45:15 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/08/29 16:52:43 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
 int check_syntax_errors(t_token *tokens, int *j);
-//int get_tokens_size(char *line, t_token *tokens);
 
 int parser(t_token *tokens, int n_tokens)
 {
@@ -45,11 +45,3 @@ int check_syntax_errors(t_token *tokens, int *j)
     (*j)++;
     return (0);
 }
-
-// int get_tokens_size(char *line, t_token *tokens)
-// {
-//     int count;
-
-//     count = split_tokens(line, tokens);
-//     return (count);
-// }

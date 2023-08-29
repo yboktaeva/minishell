@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/28 12:05:27 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/29 15:26:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,6 @@ int count_quotes(char *s)
         return (-1);
     else
         return (0);
-}
-
-int check_closed_quotes(char *s)
-{
-    if (count_quotes(s) == -1)
-    {
-        quote_error();
-        return (-1);
-    }
-    return (0);
 }
 
 void    remove_empty_quotes(char *s, int *i, int *j)

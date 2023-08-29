@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/28 19:56:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/29 20:00:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,42 +18,31 @@
 #include <signal.h>
 #include <unistd.h>
 
-int shell_loop(char *line, t_table *info)
+void *shell_loop(char *line, t_table *info)
 {
-   // (void)info;
     int i;
-    //t_token *tokens;
     
     i = 0;
     if (!line)
     {
-        ft_putendl_fd("exit", 1); //signal handker for ctrl + D
+        ft_putendl_fd("exit", 1); //signal ctrl + D
         free(line);
-        return (0);
+        return (NULL);
     }
     else
     {
         add_history(line);
-        int n_tokens = count_tokens(line);
-        info->tokens = malloc(sizeof(struct s_token) * n_tokens);
-        printf("COUNT %d\n", n_tokens);
-        //remove_empty_quotes(line, &i, &j);
-        //buf = add_space(line, "&/|/>/</<</>>/&&/||");
-        //tokens = malloc(sizeof(struct s_token) * 100);
+        if (info->n_tokens < 1)
+            return (NULL);
+        info->tokens = malloc(sizeof(struct s_token) * info->n_tokens);
+        if (!info->tokens)
+            return (NULL);
         info->tokens = split_tokens(line, info->tokens);
-        //printf("NUM tokens - %d\n", j);
-        //printf("Token %d: Type = %d, Value = %s\n", j, tokens[j].type, tokens[j].value);
-
-        //info->tokens = malloc(sizeof(t_token *) * j);
-        
-        //info->cmds = ft_split_quotes(buf, ' ');
-        // while (info->cmds[i])
-        //     printf("%s\n", info->cmds[i++]);
-        // while (i < j)
-        // {
-        //     printf("Token %d: Type = %d, Value = %s\n", i, info->tokens[i].type, info->tokens[i].value);
-        //     i++;
-        // }
+        while (i < info->n_tokens)
+        {
+            printf("Token %d: Type = %d, Value = %s\n", i, info->tokens[i].type, info->tokens[i].value);
+            i++;
+        }
         //cmd_node = generate_tree(line, tokens);
         //print_env(info->env);
         // printf("LEVEL %d: COMMAND: ", level);
@@ -67,23 +56,25 @@ int shell_loop(char *line, t_table *info)
         // if (cmd_node->pipe_node != NULL)
         //     print_parse_tree(cmd_node->pipe_node, level + 1);
     }
-    return (0);
+    return (NULL);
 }
 
 int main(int ac, char **argv, char **envp)
 {
     char *prompt;
     t_table info;
+    t_env   *env;
     
     if (ac > 2 || argv[1] != NULL)
     {
         ft_putendl_fd("Program does not accept any arguments", 1);
         exit (EXIT_FAILURE);
     }
+    env = init_env_list(envp);
     while (1)
     {
         prompt = readline("minishell$> ");
-        init_main_table(&info, argv, envp);
+        init_main_table(&info, prompt, argv);
         shell_loop(prompt, &info);
         free(prompt);
     }
