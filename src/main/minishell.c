@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/29 20:00:26 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 17:55:07 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,45 +18,44 @@
 #include <signal.h>
 #include <unistd.h>
 
-void *shell_loop(char *line, t_table *info)
+void shell_loop(t_env *env, char *line, t_table *info)
 {
-    int i;
+    t_token *tokens;
+    t_parse_list *parse_list;
     
-    i = 0;
+    tokens = NULL;
+    parse_list = NULL;
     if (!line)
     {
         ft_putendl_fd("exit", 1); //signal ctrl + D
         free(line);
-        return (NULL);
+        return ;
     }
     else
     {
-        add_history(line);
-        if (info->n_tokens < 1)
-            return (NULL);
-        info->tokens = malloc(sizeof(struct s_token) * info->n_tokens);
-        if (!info->tokens)
-            return (NULL);
-        info->tokens = split_tokens(line, info->tokens);
-        while (i < info->n_tokens)
+        print_env_list(env);
+        tokens = tokenize_input(env, line);
+        if (tokens == NULL)
         {
-            printf("Token %d: Type = %d, Value = %s\n", i, info->tokens[i].type, info->tokens[i].value);
-            i++;
+            add_history(line);
+            free_all(line, tokens, info->n_tokens);
+            return ;
         }
-        //cmd_node = generate_tree(line, tokens);
-        //print_env(info->env);
-        // printf("LEVEL %d: COMMAND: ", level);
-        // for (int i = 0; cmd_node->cmd_args[i] != NULL; i++)
-        // printf("%s ", cmd_node->cmd_args[i]);
-        // // printf("INPUT: %s\n", root->input->file_name);
-        // // printf("OUTPUT: %s\n", root->output->file_name);
-        // // printf("HEREDOC: %s\n", root->input->file_name);
-        // // printf("APPEND: %s\n", root->output->file_name);
-        // printf("\n");
-        // if (cmd_node->pipe_node != NULL)
-        //     print_parse_tree(cmd_node->pipe_node, level + 1);
+        print_tokens(tokens, info->n_tokens);
+        parse_list = parsing_tokens(tokens, info->n_tokens);
+        if (parse_list == NULL)
+        {
+            add_history(line);
+            free_all(line, tokens, info->n_tokens);
+            free_parse_list(parse_list);
+        }
+        /*execution part*/
+        //execute_cmd(parse_list, env);
+        add_history(line);
+        free_all(line, tokens, info->n_tokens);
+        free_parse_list(parse_list);
+        //free_env(&env);
     }
-    return (NULL);
 }
 
 int main(int ac, char **argv, char **envp)
@@ -64,7 +63,9 @@ int main(int ac, char **argv, char **envp)
     char *prompt;
     t_table info;
     t_env   *env;
-    
+    int n_tokens;
+
+    n_tokens = 0;
     if (ac > 2 || argv[1] != NULL)
     {
         ft_putendl_fd("Program does not accept any arguments", 1);
@@ -75,11 +76,8 @@ int main(int ac, char **argv, char **envp)
     {
         prompt = readline("minishell$> ");
         init_main_table(&info, prompt, argv);
-        shell_loop(prompt, &info);
-        free(prompt);
+        shell_loop(env, prompt, &info);
+        //free(prompt);
     }
-   // free(prompt);
-    free_all(prompt, &info, info.cmd_node);
-    free_env(&info.env);
     return (EXIT_SUCCESS);
 }

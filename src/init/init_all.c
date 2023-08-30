@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/29 20:00:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 17:02:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,48 @@ void init_main_table(t_table *info, char *line, char **argv)
 {
     (void)argv;
     //t_token tokens;
-    
     //info->cmds =;
    //info->path = get_executable_path(info->env);
     info->n_tokens = count_tokens(line);
     info->cmd_count = 0;
-    info->cmd_node = NULL;
+
+}
+
+t_parse_list *init_parse_list(void)
+{
+    t_parse_list    *new;
+
+    new = (t_parse_list *)malloc(sizeof(t_parse_list));
+    if (!new)
+        return (NULL);
+    new->one_cmd = NULL;
+    new->input = NULL;
+    new->output = NULL;
+    new->next = NULL;
+    return (new);
+}
+
+t_one_cmd   *init_one_cmd(char *str)
+{
+    t_one_cmd   *new;
+
+    new = (t_one_cmd *)malloc(sizeof(t_one_cmd));
+    if (!new)
+        return (NULL);
+    new->str = str;
+    new->next = NULL;
+    return (new);
+}
+
+t_redir *init_redir_list(t_type type, char *name)
+{
+    t_redir *new;
+
+    new = (t_redir *)malloc(sizeof(t_redir));
+    if (!new)
+        return (new);
+    new->type = type;
+    new->file_name = name;
+    new->next = NULL;
+    return (new);
 }

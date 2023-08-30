@@ -6,51 +6,52 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/29 19:09:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:33:35 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-char    *env_key(char *str)
+char    *env_var_name(char *str)
 {
-    char *key;
+    char *var_name;
 
-    key = ft_substr(str, 0, env_key_len);
-    return (key);
+    var_name = ft_substr(str, 0, env_var_name_len(str));
+    return (var_name);
 }
 
-int	env_key_len(char *key)
+int	env_var_name_len(char *var_name)
 {
 	int	i;
 
 	i = 0;
-	if (*key == '?' || ft_isdigit(*key))
+	if (*var_name == '?' || ft_isdigit(*var_name))
 		return (1);
-	while (key[i] == '_'|| ft_isalpha(key[i]) || ft_isdigit(key[i]))
+	while (var_name[i] == '_'|| ft_isalpha(var_name[i]) || ft_isdigit(var_name[i]))
 		i++;
 	return (i);
 }
 
-char    *env_value(t_env *head, char *key)
+char    *env_var_value(t_env *head, char *var_name)
 {
     t_env   *env;
-    int key_len;
+    int var_name_len;
 
     env = head;
-    key_len = ft_strlen(key);
-    // if (*key == '?')
+    var_name_len = ft_strlen(var_name);
+    // if (*var_name == '?')
     // {
     //      return (ft_itoa(info->exit_status));
     // }
     while (env->next)
     {
-        if (ft_strncmp(key, env->key, key_len + 1) == 0)
+        if (ft_strncmp(var_name, env->var_name, var_name_len + 1) == 0)
         {
-            if (env->value == NULL)
+            if (env->var_value == NULL)
                 return (ft_strdup(""));
-            return (ft_strdup(env->value));
+            return (ft_strdup(env->var_value));
         }
         env = env->next;
     }
@@ -64,8 +65,8 @@ void    print_env_list(t_env *env)
     head = env;
     while (head->next != NULL)
     {
-        if (head->value != NULL)
-            printf("%s=%s\n", head->key, head->value);
+        if (head->var_value != NULL)
+            printf("%s=%s\n", head->var_name, head->var_value);
         head = head->next;
     }
 }

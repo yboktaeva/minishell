@@ -6,42 +6,49 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/29 16:52:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 17:42:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-int check_syntax_errors(t_token *tokens, int *j);
-
-int parser(t_token *tokens, int n_tokens)
+void    if_word_token(t_token *tokens, t_parse_list *parse_list, int *j)
 {
-    int j;
+    t_one_cmd   *one_cmd;
 
-    j = 0;
-    while (j < n_tokens)
-    {
-        if (check_syntax_errors(tokens, &j) != 0)
-        {
-            syntax_error(tokens[j].value);
-            return (-1);
-        }
-    }
-    return(0);
+    one_cmd = init_one_cmd(tokens[*j].value);
+    one_cmd_node(&parse_list->one_cmd, one_cmd);
 }
 
-int check_syntax_errors(t_token *tokens, int *j)
+void    *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j)
 {
-    if (tokens[0].type == PIPE || tokens[*j].value == NULL || (tokens[*j].type == PIPE && tokens[*j + 1].type != WORD))
-        return (-1);
+    t_redir *node;
+    
+    if (!tokens[*j + 1].value || tokens[*j + 1].type != WORD)
+        return (syntax_error(tokens[*j].value));
     else if ((tokens[*j].type == REDIR_IN && tokens[*j - 1].type == HEREDOC) ||
         (tokens[*j].type == REDIR_OUT && tokens[*j - 1].type == APPEND))
-        return (-1);
+        return (syntax_error(tokens[*j].value));
     else if ((tokens[*j].type == HEREDOC && tokens[*j + 1].type == HEREDOC) ||
         (tokens[*j].type == APPEND && tokens[*j + 1].type == APPEND))
-        return (-1);
-    //else if ()
+        return (syntax_error(tokens[*j].value));
+    node = init_redir_list(tokens[*j].type, tokens[*j].value);
+    if (tokens[*j].type == REDIR_IN || tokens[*j].type == HEREDOC)
+        redir_node(&parse_list->input, node);
+    else
+        redir_node(&parse_list->output, node);
     (*j)++;
-    return (0);
+    return (node);
+}
+
+void    *if_pipe_token(t_token *tokens, t_parse_list *parse_list, int *j)
+{
+    t_parse_list    *node;
+    if (tokens[0].type == PIPE || tokens[*j].value == NULL ||
+        (tokens[*j].type == PIPE && tokens[*j + 1].type != WORD))
+        return (syntax_error(tokens[*j].value));
+    node = init_parse_list();
+    add_node(parse_list, node);
+    (*j)++;
+    return (node);
 }

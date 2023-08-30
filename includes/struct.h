@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/29 18:07:47 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:04:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,40 @@ typedef enum s_type
 	PIPE
 }			t_type;
 
-typedef struct s_token
+typedef struct s_token /*lexer part*/
 {
 	t_type	type;
 	char	*value;
 }			t_token;
 
-typedef struct s_redir /*structure for redirections IN, OUT, HEREDOC, APPEND*/
-{
-	t_type	type;
-	char	*file_name;
-}			t_redir;
-
-typedef struct s_node
-{
-	char	**cmd_args;
-	void	*pipe_node;
-	t_redir	*input;
-	t_redir	*output;
-}			t_node;
-
 typedef struct	s_env /*extract ENVP in structure*/
 {
-	char	*key;
-	char	*value;
+	char	*var_name;
+	char	*var_value;
 	char	*str;
 	struct s_env	*next;
 }				t_env;
+
+typedef struct s_redir /*struct for redirections IN, OUT, HEREDOC, APPEND*/
+{
+	t_type	type;
+	char	*file_name;
+	struct	s_redir	*next;
+}			t_redir;
+
+typedef struct s_one_cmd /*parse part*/
+{
+	char	*str;
+	struct s_one_cmd	*next;
+}			t_one_cmd;
+
+typedef struct s_parse_list
+{
+	t_one_cmd	*one_cmd;
+	t_redir		*input;
+	t_redir		*output;
+	struct s_parse_list	*next;
+}			t_parse_list;
 
 typedef struct s_table
 {
@@ -57,7 +64,7 @@ typedef struct s_table
 	char			**cmds;
 	char			*path;
 	t_token			*tokens;
-	t_node			*cmd_node;
+	t_parse_list	*parse_list;
 	int				n_tokens;
 	int				cmd_count;
 	int				exit_status;

@@ -6,27 +6,45 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/28 12:41:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 13:49:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
+void    free_one_cmd_list(t_one_cmd *head);
+void    free_redirect_list(t_redir *head);
 void    free_token(t_token *tokens, int n_tokens);
-void    free_parse_tree(t_node *cmd_node);
 
-void    free_all(char *line, t_table *info, t_node *cmd_node)
+void    free_parse_list(t_parse_list *head)
+{
+    t_parse_list    *tmp;
+    
+    tmp = head;
+    while (head)
+    {
+        tmp = head->next;
+        if (head->one_cmd)
+            free_one_cmd_list(head->one_cmd);
+        if (head->input)
+            free_redirect_list(head->input);
+        if (head->output)
+            free_redirect_list(head->output);
+        free(head);
+        head = tmp;
+    }
+}
+
+void    free_all(char *line, t_token *tokens, int n_tokens)
 {
     if (line != NULL)
     {
         free(line);
         line = NULL;
     }
-    if (info->tokens != NULL)
-        free_token(info->tokens, info->n_tokens);
-    if (cmd_node != NULL)
-        free_parse_tree(cmd_node);
+    if (tokens != NULL)
+        free_token(tokens, n_tokens);
 }
 
 void    free_token(t_token *tokens, int n_tokens)
@@ -43,21 +61,28 @@ void    free_token(t_token *tokens, int n_tokens)
     return ;
 }
 
-void    free_parse_tree(t_node *cmd_node)
+void    free_one_cmd_list(t_one_cmd *head)
 {
-    int i;
+    t_one_cmd   *tmp;
 
-    i = 0;
-    while (cmd_node->cmd_args[i] != NULL)
+    while (head)
     {
-        free(cmd_node->cmd_args[i]);
-        i++;
+        tmp = head->next;
+        free(head);
+        head = tmp;
+        tmp = NULL;
     }
-    if (cmd_node->input != NULL)
-        free(cmd_node->input);
-    if (cmd_node->output != NULL)
-        free(cmd_node->output);
-    free(cmd_node->pipe_node);
-    free(cmd_node); 
-    return ;
+}
+
+void    free_redirect_list(t_redir *head)
+{
+    t_redir *tmp;
+
+    while (head)
+    {
+        tmp = head->next;
+        free(head);
+        head = tmp;
+        tmp = NULL;
+    }
 }

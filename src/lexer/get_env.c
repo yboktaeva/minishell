@@ -6,12 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/29 19:08:48 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:44:02 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -22,17 +21,17 @@ t_env   *copy_env(t_env *env, char *str);
 
 t_env   *init_env_list(char **envp)
 {
-    t_env  *head;
+    t_env  *new;
 
-    head = malloc(sizeof(t_env));
-    if (!head)
+    new = (t_env *)malloc(sizeof(t_env));
+    if (!new)
         return (NULL);
-    head->key = NULL;
-    head->value = NULL;
-    head->str = NULL;
-    head->next = NULL;
-    set_env(head, envp);
-    return (head);
+    new->var_name = NULL;
+    new->var_value = NULL;
+    new->str = NULL;
+    new->next = NULL;
+    set_env_list(&new, envp);
+    return (new);
 }
 
 void    set_env_list(t_env **head, char **envp)
@@ -42,7 +41,7 @@ void    set_env_list(t_env **head, char **envp)
     i = 0;
     while (envp[i])
     {
-        get_env(head, envp[i]);
+        get_env(*head, envp[i]);
         i++;
     }
 }
@@ -57,13 +56,13 @@ void	get_env(t_env *head, char *str)
     index = ft_strchr(str, '=') - str + 1;
     if (copy)
     {
-        if (env_key_len(str) == ft_strlen(str))
+        if ((size_t)env_var_name_len(str) == ft_strlen(str))
             return ;
         free(copy->str);
-        if (copy->value != NULL)
-            free(copy->value);
+        if (copy->var_value != NULL)
+            free(copy->var_value);
         copy->str = ft_strdup(str);
-        copy->value = ft_substr(str, index, ft_strlen(str));
+        copy->var_value = ft_substr(str, index, ft_strlen(str));
         return ;
     }
     start = head;
@@ -82,11 +81,11 @@ t_env   *add_env_node(char *str)
     if (!new)
         return (NULL);
     new->str = ft_strdup(str);
-    new->key = ft_substr(str, 0, env_key_len(str));
+    new->var_name = ft_substr(str, 0, env_var_name_len(str));
     if (!index)
-        new->value = NULL;
+        new->var_value = NULL;
     else
-        new->value = ft_substr(str, index + 1, ft_strlen(str));
+        new->var_value = ft_substr(str, index + 1, ft_strlen(str));
     new->next = NULL;
     return (new);
 }
@@ -94,21 +93,21 @@ t_env   *add_env_node(char *str)
 t_env   *copy_env(t_env *env, char *str)
 {
     t_env   *start;
-    char    *key;
-    int     key_len;
+    char    *var_name;
+    int     var_name_len;
     
-    key = env_key(str);
-    key_len = ft_strlen(key);
-    start = env;
+    var_name = env_var_name(str);
+    var_name_len = ft_strlen(var_name);
+    start = env->next;
     while (start)
     {
-        if (ft_strncmp(start->key, key, key_len + 1) == 0)
+        if (ft_strncmp(start->var_name, var_name, var_name_len + 1) == 0)
         {
-            free(key);
+            free(var_name);
             return (start);
         }
         start = start->next;
     }
-    free(key);
+    free(var_name);
     return (NULL);
 }
