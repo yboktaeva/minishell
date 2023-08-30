@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:36:33 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/07/25 16:11:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:03:51 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ char	*ft_strdup(const char *s)
 	i = 0;
 	while (i < len)
 	{
-			ret[i] = ((char *)s)[i];
-			i++;
+		ret[i] = ((char *)s)[i];
+		i++;
 	}
 	ret[i] = '\0';
 	return (ret);

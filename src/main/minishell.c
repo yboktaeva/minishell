@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 17:55:07 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:38:02 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+
+static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *info)
+{
+    add_history(line);
+    free_all(line, tokens, info->n_tokens);
+    free_parse_list(parse_list);
+    return ;
+}
 
 void shell_loop(t_env *env, char *line, t_table *info)
 {
@@ -33,28 +41,24 @@ void shell_loop(t_env *env, char *line, t_table *info)
     }
     else
     {
-        print_env_list(env);
+        //print_env_list(env);
         tokens = tokenize_input(env, line);
         if (tokens == NULL)
-        {
-            add_history(line);
-            free_all(line, tokens, info->n_tokens);
-            return ;
-        }
-        print_tokens(tokens, info->n_tokens);
-        parse_list = parsing_tokens(tokens, info->n_tokens);
+            is_null(line, tokens, parse_list, info);
+        else
+            //print_tokens(tokens, info->n_tokens);
+            parse_list = parsing_tokens(tokens, info->n_tokens);
         if (parse_list == NULL)
+            is_null(line, tokens, parse_list, info);
+        else
         {
+            /*execution part*/
+            //execute_cmd(parse_list, env);
             add_history(line);
             free_all(line, tokens, info->n_tokens);
             free_parse_list(parse_list);
+            free_env(&env);
         }
-        /*execution part*/
-        //execute_cmd(parse_list, env);
-        add_history(line);
-        free_all(line, tokens, info->n_tokens);
-        free_parse_list(parse_list);
-        //free_env(&env);
     }
 }
 

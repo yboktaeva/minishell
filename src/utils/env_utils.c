@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 16:33:35 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:07:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char    *env_var_name(char *str)
     char *var_name;
 
     var_name = ft_substr(str, 0, env_var_name_len(str));
+    if (var_name == NULL)
+        return (NULL);
     return (var_name);
 }
 
@@ -69,6 +71,7 @@ void    print_env_list(t_env *env)
             printf("%s=%s\n", head->var_name, head->var_value);
         head = head->next;
     }
+    return ;
 }
 
 // int     env_size(t_env *env)

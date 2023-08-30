@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/22 15:55:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 19:31:25 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void    free_env(t_env **head)
     while (tmp != NULL)
     {
         stock = tmp->next;
+        free(tmp->str);
+        free(tmp->var_name);
+        free(tmp->var_value);
         free(tmp);
         tmp = stock;
     }

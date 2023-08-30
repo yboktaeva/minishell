@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 17:42:31 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/30 18:26:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void    *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j)
 void    *if_pipe_token(t_token *tokens, t_parse_list *parse_list, int *j)
 {
     t_parse_list    *node;
-    if (tokens[0].type == PIPE || tokens[*j].value == NULL ||
+    if (tokens[0].type == PIPE || !tokens[(*j)++].value ||
         (tokens[*j].type == PIPE && tokens[*j + 1].type != WORD))
         return (syntax_error(tokens[*j].value));
     node = init_parse_list();
