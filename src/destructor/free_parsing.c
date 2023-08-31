@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/30 13:49:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/31 19:43:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ void    free_parse_list(t_parse_list *head)
     }
 }
 
-void    free_all(char *line, t_token *tokens, int n_tokens)
-{
-    if (line != NULL)
-    {
-        free(line);
-        line = NULL;
-    }
-    if (tokens != NULL)
-        free_token(tokens, n_tokens);
-}
+// void    free_all(char *line, t_token *tokens, int n_tokens)
+// {
+//     if (line != NULL)
+//     {
+//         free(line);
+//         line = NULL;
+//     }
+//     if (tokens != NULL)
+//         free_token(tokens, n_tokens);
+// }
 
 void    free_token(t_token *tokens, int n_tokens)
 {

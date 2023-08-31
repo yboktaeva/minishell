@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:20:47 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 17:21:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:28:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 int     is_redir(t_type type)
 {
-    if (type == REDIR_IN || type == REDIR_OUT
-        || type == HEREDOC || type == APPEND)
+    if (type == REDIR_IN || type == HEREDOC
+        || type == REDIR_OUT || type == APPEND)
         return (1);
+    return (0);
+}
+
+t_type     type_of_redir(t_type type)
+{
+    if (type == REDIR_IN || type == HEREDOC
+        || type == REDIR_OUT || type == APPEND)
+        return (type);
     return (0);
 }
 

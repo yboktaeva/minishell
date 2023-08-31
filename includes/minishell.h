@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 17:34:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/31 19:59:10 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 # define TRUE 1
 # define FAULSE 0
+# define SUCCES ((void*)1)
 
 /*READLINE_INIT*/
-void    init_main_table(t_table *info, char *line, char **argv);
+void    *init_main_table(t_table *info, char *line, char **argv);
 void    shell_loop(t_env *env, char *line, t_table *info);
 /*ENV*/
 t_env   *init_env_list(char **envp);
@@ -38,10 +39,9 @@ t_one_cmd       *init_one_cmd(char *str);
 t_redir         *init_redir_list(t_type type, char *name);
 int             fill_parse_list(t_parse_list *parse_list, t_token *tokens, int n_tokens);
 t_parse_list    *parsing_tokens(t_token *tokens, int n_tokens);
-int             check_syntax_errors(t_token *tokens, int *j);
 void            if_word_token(t_token *tokens, t_parse_list *parse_list, int *j);
-void            *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j);
-void            *if_pipe_token(t_token *tokens, t_parse_list *parse_list, int *j);
+void            *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j, int end);
+void            *if_pipe_token(t_token *tokens, t_parse_list *parse_list, int *j, int end);
 void            one_cmd_node(t_one_cmd **head, t_one_cmd *node);
 void            redir_node(t_redir **head, t_redir *node);
 void            add_node(t_parse_list *parse_list, t_parse_list *node);
@@ -54,7 +54,7 @@ void    token_pipe(char **start, t_token *tokens, int *j);
 void    token_word(char **start, char **end, t_token *tokens, int *j);
 int     count_tokens(char *line);
 t_token *split_tokens(char *line, t_token *tokens);
-t_token *tokenize_input(t_env *env, char *line);
+t_token *tokenize_input(t_env *env, char *line, t_table *info);
 void    print_tokens(t_token *tokens, int n_tokens);
 /*EXEC*/
 void	ft_free_str_array(char **str);
@@ -90,6 +90,7 @@ size_t	ft_arrlen(char **arr);
 char	*pass_white_space(char *s);
 char    *my_strncpy(char *dest, const char *src, size_t n);
 char	*ft_strndup(const char *s, size_t n);
+t_type  type_of_redir(t_type type);
 int     is_redir(t_type type);
 int     is_word(t_type type);
 int     is_pipe(t_type type);

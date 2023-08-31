@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 17:47:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/31 19:22:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_parse_list    *parsing_tokens(t_token *tokens, int n_tokens)
         if (is_correct == -1)
         {
             free_parse_list(parse_list);
-            //free_token(tokens, n_tokens);
             return (NULL);
         }
     }
@@ -45,13 +44,13 @@ int fill_parse_list(t_parse_list *parse_list, t_token *tokens, int n_tokens)
             if_word_token(tokens, parse_list, &i);
         else if (is_redir(tokens[i].type))
         {
-            if (if_redir_token(tokens, parse_list, &i) == NULL)
+            if (if_redir_token(tokens, parse_list, &i, n_tokens) == NULL)
                 return (-1);
             i++;
         }
         else
         {
-            if (if_pipe_token(tokens, parse_list, &i) == NULL)
+            if (if_pipe_token(tokens, parse_list, &i, n_tokens) == NULL)
                 return (-1);
             parse_list = parse_list->next;
         }

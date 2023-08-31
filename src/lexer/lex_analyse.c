@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:53:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 17:08:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:16:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-t_token *tokenize_input(t_env *env, char *line)
+t_token *tokenize_input(t_env *env, char *line, t_table *info)
 {
     (void)env;
     t_token *tokens;
-    int n_tokens;
-
-    n_tokens = count_tokens(line);
-    tokens = malloc(sizeof(struct s_token) * n_tokens);
+    
+    info->n_tokens = count_tokens(line);
+    if (info->n_tokens < 0)
+        return (NULL);
+    tokens = malloc(sizeof(struct s_token) * info->n_tokens);
     if (!tokens)
         return (NULL);
     tokens = split_tokens(line, tokens); /*add expand $ with envp structure*/

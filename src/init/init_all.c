@@ -6,29 +6,29 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/30 17:02:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:16:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-void init_main_table(t_table *info, char *line, char **argv)
+void *init_main_table(t_table *info, char *line, char **argv)
 {
     (void)argv;
+    (void)line;
     //t_token tokens;
     //info->cmds =;
    //info->path = get_executable_path(info->env);
-    info->n_tokens = count_tokens(line);
     info->cmd_count = 0;
-
+    return (SUCCES);
 }
 
 t_parse_list *init_parse_list(void)
 {
     t_parse_list    *new;
 
-    new = (t_parse_list *)malloc(sizeof(t_parse_list));
+    new = malloc(sizeof(t_parse_list));
     if (!new)
         return (NULL);
     new->one_cmd = NULL;
