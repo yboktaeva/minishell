@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:14 by asekmani          #+#    #+#             */
-/*   Updated: 2023/08/16 17:37:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:25:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,3 +98,167 @@
     
     return 0;
 }*/
+
+// static int	word_count(char const *s, char c)
+// {
+// 	int	i;
+// 	int	count;
+
+// 	i = 0;
+// 	count = 0;
+// 	while (s[i])
+// 	{
+// 		while (s[i] == c && s[i])
+// 			i++;
+// 		if (s[i] != c && s[i])
+// 			count++;
+// 		while (s[i] != c && s[i])
+// 			i++;
+// 	}
+// 	return (count);
+// }
+
+// static void	free_words(char **tab, int i)
+// {
+// 	while (i > 0)
+// 	{
+// 		free (tab[i - 1]);
+// 		i--;
+// 	}
+// 	free (tab);
+// }
+
+/*int main(int argc, char **argv, char **const envp)
+{
+    (void)argc;
+    (void)argv;
+    char *buffer;
+    char **cmd;
+    size_t buf_size;
+    size_t len;
+    t_table info;
+    int i;
+
+    i = 0;
+    while (envp[i])
+        i++;
+    info.envp = (char **)malloc((i + 1) * sizeof(char *));
+    if (!info.envp)
+    {
+        perror("Malloc failure");
+        return (EXIT_FAILURE);
+    }
+    ft_memcpy(info.envp, envp, (i + 1) * sizeof(char *));
+    pwd_oldpwd(&info);
+    write(1, "$> ", 3);
+
+    buffer = NULL;
+    buf_size = 2048;
+    cmd = NULL;
+    buffer = (char *)calloc(sizeof(char), buf_size);
+    if (buffer == NULL)
+    {
+        perror("Malloc failure");
+        return (EXIT_FAILURE);
+    }
+    while (getline(&buffer, &buf_size, stdin) > 0)
+    {
+        len = strlen(buffer);
+        if (len > 0 && buffer[len - 1] == '\n')
+            buffer[len - 1] = '\0';
+        cmd = ft_split(buffer, ' ');
+        if (cmd[0] == NULL)
+            printf("Command not found\n");
+        else if (strcmp(cmd[0], "cd") == 0)
+        {
+            char *arg = (cmd[1] != NULL) ? cmd[1] : NULL;
+            printf("Value of PWD: %s\n", print_path("PWD", info.envp));
+            printf("Value of OLDPWD: %s\n", print_path("OLDPWD", info.envp));
+            cmd_cd(&info, arg);
+            printf("Value of PWD: %s\n", print_path("PWD", info.envp));
+            printf("Value of OLDPWD: %s\n", print_path("OLDPWD", info.envp));
+        }
+        else
+        {
+            printf("Command: %s\n", cmd[0]);
+            printf("Command must be : cd\n");
+            break;
+        }
+        write(1, "$> ", 3);
+        free_words(cmd, word_count(buffer, ' '));
+    }
+    free(cmd);
+    free(buffer);
+    free(info.envp);
+    free(info.pwd);
+    free(info.old_pwd);
+    return 0;
+}*/
+
+/*int main(int argc, char **argv, char **envp)
+{
+    (void)argc;
+    (void)argv;
+    t_table info;
+
+    info.env = init_env_list(envp);
+    cmd_env(&info);
+    free_env(&info.env);
+    return (0);
+}*/
+
+/*int main(int argc, char **argv, char **envp)
+{
+    (void)argc;
+    (void)argv;
+    t_table info;
+
+    info.env = init_env_list(envp);
+    cmd_pwd();
+    free_env(&info.env);
+    return (0);
+}*/
+
+// int main(int argc, char **argv)
+// {
+//     (void)argc;
+//     (void)argv;
+//     char *buffer;
+//     char **cmd;
+//     t_table info;
+//     size_t buf_size;
+//     size_t len;
+
+//     buffer = NULL;
+//     buf_size = 2048;
+//     write(1, "$> ", 3);
+//     buffer = (char *)calloc(sizeof(char), buf_size);
+//     if (buffer == NULL)
+//     {
+//         perror("Malloc failure");
+//         return (EXIT_FAILURE);
+//     }
+//     cmd = NULL;
+//     while (getline(&buffer, &buf_size, stdin) > 0)
+//     {
+//         len = strlen(buffer);
+//         if (len > 0 && buffer[len - 1] == '\n')
+//             buffer[len - 1] = '\0';
+//         cmd = ft_split(buffer, ' ');
+//         if (cmd[0] == NULL)
+//             printf("Command not found\n");
+//         else if (strcmp(cmd[0], "echo") == 0)
+//             cmd_echo(&info, cmd);
+//         else
+//         {
+//             printf("Command must be : echo\n");
+//             break;
+//         }
+//         write(1, "$> ", 3);
+//         free_words(cmd, word_count(buffer, ' '));
+//     }
+//     free(cmd);
+//     free(buffer);
+//     return 0;
+// }
+

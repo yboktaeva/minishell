@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/31 19:59:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:34:20 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void            redir_node(t_redir **head, t_redir *node);
 void            add_node(t_parse_list *parse_list, t_parse_list *node);
 /*LEXER_TOKEN*/
 int     count_quotes(char *s);
-int     check_input(char *line, char *check);
+void	*invalid_operator(char *line, char *check);
+int     check_operator(char *line);
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);
 void    token_redirection(char **start, char **end, t_token *tokens, int *j);
 void    token_pipe(char **start, t_token *tokens, int *j);
@@ -65,14 +66,14 @@ char    **prepare_exec_args(int argc, char **argv, const char *executable_path);
 int     one_cmd_exec(const char *path, char **const argv, char **const envp);
 int     two_cmds_exec(const char *cmd1, const char *cmd2, char **const envp, const char *input_file, const char *output_file);
 /*BUILTINS*/
-int     is_biltin(); /*simple cmd, t_env *env*/
-int     builtin_echo();
-int     builtin_env();
-int     builtin_export();
-int     builtin_pwd();
-int     builtin_unset();
-int     builtin_exit();
-int     builtin_cd();
+char    *print_path(char *str, char **envp);
+int     pwd_oldpwd(t_table *info);
+int     cmd_cd(t_table *info, char *arg);
+int     cmd_echo(t_table *info, char **argv);
+int     cmd_env(t_table *info);
+int     cmd_pwd(void);
+
+
 /*ERRORS*/
 void    *quote_error(void);
 void    *syntax_error(char *str);

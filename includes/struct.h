@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 16:04:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/01 15:27:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ typedef struct s_table
 {
 	t_env			*env;
 	char			**cmds;
+	char			**envp;
 	char			*path;
+	char			*pwd;
+	char			*old_pwd;
 	t_token			*tokens;
 	t_parse_list	*parse_list;
 	int				n_tokens;

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:32:08 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/31 19:52:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:23:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int count_tokens(char *line)
         }
         else if (quote_start == NULL)
         {
+            if (check_operator(line) != 0)
+                return (-1);
             if (*start == '<' || *start == '>')
                 count += count_redirection(&start);
             else if (*start == '|')
