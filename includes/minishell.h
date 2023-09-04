@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/01 15:34:20 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/04 19:50:51 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,24 @@ void    print_env_list(t_env *env);
 char    *env_var_name(char *str);
 int     env_var_name_len(char *key);
 char    *env_var_value(t_env *head, char *key);
+char    *find_env_value(t_env* env, char *var_name);
+
 /*PARSER*/
 t_parse_list    *init_parse_list(void);
 t_one_cmd       *init_one_cmd(char *str);
 t_redir         *init_redir_list(t_type type, char *name);
 int             fill_parse_list(t_parse_list *parse_list, t_token *tokens, int n_tokens);
 t_parse_list    *parsing_tokens(t_token *tokens, int n_tokens);
+void            *invalid_operator(t_token *tokens, int *j);
 void            if_word_token(t_token *tokens, t_parse_list *parse_list, int *j);
 void            *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j, int end);
 void            *if_pipe_token(t_token *tokens, t_parse_list *parse_list, int *j, int end);
 void            one_cmd_node(t_one_cmd **head, t_one_cmd *node);
 void            redir_node(t_redir **head, t_redir *node);
 void            add_node(t_parse_list *parse_list, t_parse_list *node);
+void            print_parse_list(t_parse_list *parse_list);
 /*LEXER_TOKEN*/
 int     count_quotes(char *s);
-void	*invalid_operator(char *line, char *check);
-int     check_operator(char *line);
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);
 void    token_redirection(char **start, char **end, t_token *tokens, int *j);
 void    token_pipe(char **start, t_token *tokens, int *j);
@@ -57,6 +59,7 @@ int     count_tokens(char *line);
 t_token *split_tokens(char *line, t_token *tokens);
 t_token *tokenize_input(t_env *env, char *line, t_table *info);
 void    print_tokens(t_token *tokens, int n_tokens);
+char    *expand_variable(t_env *env, char *input);
 /*EXEC*/
 void	ft_free_str_array(char **str);
 char	**ft_split_ignore_spaces(const char *s, char c);
@@ -72,8 +75,6 @@ int     cmd_cd(t_table *info, char *arg);
 int     cmd_echo(t_table *info, char **argv);
 int     cmd_env(t_table *info);
 int     cmd_pwd(void);
-
-
 /*ERRORS*/
 void    *quote_error(void);
 void    *syntax_error(char *str);
@@ -87,7 +88,7 @@ void    free_env(t_env **head);
 /*UTILS*/
 int     ft_isspace(char c);
 int     empty_line(char *line);
-size_t	ft_arrlen(char **arr);
+void	skip_single_quote(char *str, int *i);
 char	*pass_white_space(char *s);
 char    *my_strncpy(char *dest, const char *src, size_t n);
 char	*ft_strndup(const char *s, size_t n);
@@ -95,5 +96,6 @@ t_type  type_of_redir(t_type type);
 int     is_redir(t_type type);
 int     is_word(t_type type);
 int     is_pipe(t_type type);
+int     count_pipes_token(t_token *tokens, int n_tokens);
 
 #endif

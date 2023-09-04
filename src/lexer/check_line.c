@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:25:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/01 14:22:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:30:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,23 @@ int	empty_line(char *line)
 	return (0);
 }
 
-void	*invalid_operator(char *line, char *check)
-{
-	if (ft_strcmp(line, check) == 0)
-		return (syntax_error(check));
-	return (SUCCES);
-}
+// void	*invalid_operator(char *line, char *check)
+// {
+// 	if (ft_strcmp(line, check) == 0)
+// 		return (syntax_error(check));
+// 	else
+// 		return (SUCCES);
+// }
 
-int	check_operator(char *line)
-{
-	if (!invalid_operator(line, "&") || !invalid_operator(line, "&&")
-		|| !invalid_operator(line, "||"))
-		return (-1);
-	return (0);
-}
+// int	check_operator(char *line)
+// {
+// 	while (line)
+// 	{
+// 		if (!invalid_operator(line, "&") || !invalid_operator(line, "&&")
+// 			|| !invalid_operator(line, "||") || !invalid_operator(line, ";")
+// 			|| !invalid_operator(line, "\\"))
+// 			return (-1);
+// 		line++;
+// 	}
+// 	return (0);
+// }

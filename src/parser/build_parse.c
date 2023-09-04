@@ -6,12 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/31 19:22:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:57:46 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 t_parse_list    *parsing_tokens(t_token *tokens, int n_tokens)
 {
@@ -41,12 +42,18 @@ int fill_parse_list(t_parse_list *parse_list, t_token *tokens, int n_tokens)
     while (i < n_tokens)
     {
         if (is_word(tokens[i].type))
-            if_word_token(tokens, parse_list, &i);
+        {
+            if (!invalid_operator(tokens, &i))
+                return (-1);
+            else
+                if_word_token(tokens, parse_list, &i);
+        }
         else if (is_redir(tokens[i].type))
         {
             if (if_redir_token(tokens, parse_list, &i, n_tokens) == NULL)
                 return (-1);
-            i++;
+            if (is_word(tokens[i + 1].type))
+                i++;
         }
         else
         {
@@ -59,13 +66,42 @@ int fill_parse_list(t_parse_list *parse_list, t_token *tokens, int n_tokens)
     return (1);
 }
 
-// void    print_parse_list(t_parse_list *head)
-// {
-//     t_parse_list *curr;
+void    *invalid_operator(t_token *tokens, int *j)
+{
+    if (ft_strcmp(tokens[*j].value, "&") == 0 || ft_strcmp(tokens[*j].value, "&&") == 0
+        || ft_strcmp(tokens[*j].value, ";") == 0 || ft_strcmp(tokens[*j].value, "\\") == 0)
+        return (syntax_error(tokens[*j].value));
+    return (SUCCES);
+}
 
-//     curr = head->next;
-//     while (curr)
-//     {
-//         printf("%s  ")
-//     }
-// }
+void print_parse_list(t_parse_list *parse_list)
+{
+    t_one_cmd *current_cmd;
+    t_redir *current_redir;
+
+    while (parse_list != NULL)
+    {
+        printf("Commands:\n");
+        current_cmd = parse_list->one_cmd;
+        while (current_cmd != NULL)
+        {
+            printf("%s\n", current_cmd->str);
+            current_cmd = current_cmd->next;
+        }
+        printf("Input redirections:\n");
+        current_redir = parse_list->input;
+        while (current_redir != NULL)
+        {
+            printf("Type: %d, File: %s\n", current_redir->type, current_redir->file_name);
+            current_redir = current_redir->next;
+        }
+        printf("Output redirections:\n");
+        current_redir = parse_list->output;
+        while (current_redir != NULL)
+        {
+            printf("Type: %d, File: %s\n", current_redir->type, current_redir->file_name);
+            current_redir = current_redir->next;
+        }
+        parse_list = parse_list->next;
+    }
+}

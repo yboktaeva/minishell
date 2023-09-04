@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:20:47 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/31 17:28:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/04 16:55:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,20 @@ int     is_pipe(t_type type)
     if (type == PIPE)
         return (1);
     return (0);
+}
+
+int     count_pipes_token(t_token *tokens, int n_tokens)
+{
+    int i;
+    int pipe_count;
+
+    i = 0;
+    pipe_count = 0;
+    while (i < n_tokens)
+    {
+        if (is_pipe(tokens[i].type))
+            pipe_count++;
+        i++;
+    }
+    return (pipe_count);
 }

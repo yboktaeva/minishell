@@ -6,13 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/01 15:55:27 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:07:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static void    *syntax_pipe(t_token *tokens, int *j, int end);
 static void    *syntax_redir(t_token *tokens, int *j, int end);
@@ -23,6 +24,7 @@ void    if_word_token(t_token *tokens, t_parse_list *parse_list, int *j)
 
     one_cmd = init_one_cmd(tokens[*j].value);
     one_cmd_node(&parse_list->one_cmd, one_cmd);
+    //printf("Added command: %s\n", one_cmd->str);
 }
 
 void    *if_pipe_token(t_token *tokens, t_parse_list *parse_list, int *j, int end)
@@ -45,7 +47,8 @@ void    *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j, int e
     
     if (syntax_redir(tokens, j, end) == NULL)
         return (NULL);
-    node = init_redir_list(tokens[*j].type, tokens[*j].value);
+    node = init_redir_list(tokens[*j].type, tokens[*j + 1].value);
+    //printf("Added redirection: type: %d, file: %s\n", node->type, node->file_name); 
     if (tokens[*j].type == REDIR_IN || tokens[*j].type == HEREDOC)
         redir_node(&parse_list->input, node);
     else
@@ -56,16 +59,20 @@ void    *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j, int e
 
 static void    *syntax_pipe(t_token *tokens, int *j, int end)
 {
-    if (*j == 0 || tokens[end - 1].type == PIPE)
-        return (syntax_error(tokens[*j].value));
-    else if (is_redir(tokens[*j].type) && tokens[*j + 1].type == PIPE)
-        return (syntax_error("|"));
-    else if (tokens[*j].type == PIPE)
+    if (count_pipes_token(tokens, end) == 1)
     {
-        if (tokens[*j + 1].type == PIPE)
+        if (*j == 0 || tokens[end - 1].type == PIPE)
+            return (syntax_error(tokens[*j].value));
+    }
+    else if (count_pipes_token(tokens, end) == 3)
+    {
+        if (tokens[*j].type == PIPE && tokens[*j + 1].type == PIPE)
+            return (syntax_error(tokens[*j].value));
+    }
+    else if (count_pipes_token(tokens, end) == 2 ||  count_pipes_token(tokens, end) > 3)
+    {
+        if (tokens[*j].type == PIPE && tokens[*j + 1].type == PIPE)
             return (syntax_error("||"));
-        else
-            return (syntax_error("|"));
     }
     return (SUCCES);
 }
@@ -76,18 +83,7 @@ static void *syntax_redir(t_token *tokens, int *j, int end)
         return (syntax_error("newline"));
     else if (is_redir(tokens[*j].type) && is_redir(tokens[*j + 1].type))
         return (syntax_error(tokens[*j + 1].value));
+    else if (is_redir(tokens[*j].type && !is_word(tokens[*j + 1].type)))
+        return (syntax_error(tokens[*j + 1].value));
     return (SUCCES);
 }
-
-
-// static void    *syntax_redir(t_token *tokens, int *j, int end)
-// {
-//     if (is_redir(tokens[end - 1].type)
-//         || (tokens[0].type == REDIR_IN && tokens[end - 1].type == REDIR_OUT))
-//         return (syntax_error("newline"));
-//     else if (tokens[*j + 1].type != WORD)
-//         return (syntax_error(tokens[*j].value));
-//     else if (tokens[*j].type == type_of_redir(tokens[*j].type))
-//         return (syntax_error(tokens[*j].value));
-//     return (SUCCES);
-// }
