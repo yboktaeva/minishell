@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:53:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/04 18:56:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/05 20:06:44 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,78 +14,104 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void    delete_quotes(t_token *tokens, int n_tokens);
+void    get_rid_quotes(char *value);
+void    if_quotes_in_quotes(char *str, char quote_flag, int *i, int *j);
+int     if_quotes_closed(char *str);
+
 t_token *tokenize_input(t_env *env, char *line, t_table *info)
 {
-    (void)env;
     t_token *tokens;
-    char *expand_output;
     info->n_tokens = count_tokens(line);
     if (info->n_tokens < 0)
         return (NULL);
     tokens = malloc(sizeof(struct s_token) * info->n_tokens);
     if (!tokens)
         return (NULL);
-    expand_output = expand_variable(env, line);
-    printf("EXPAND: %s\n", expand_output);
-    tokens = split_tokens(expand_output, tokens); /*add expand $ with envp structure*/
-    //remove_quotes(tokens, n_tokens);/*code this part after expand $ sign*/
+    tokens = split_tokens(line, tokens);
+    expand_word_token(env, tokens, info);
+    delete_quotes(tokens, info->n_tokens);
     return (tokens);
 }
 
-void    print_tokens(t_token *tokens, int n_tokens)
+void    delete_quotes(t_token *tokens, int n_tokens)
 {
     int i;
 
     i = 0;
     while (i < n_tokens)
     {
-        printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
+        if (is_word(tokens[i].type))
+            get_rid_quotes(tokens[i].value);
         i++;
     }
 }
 
-// int    type_of_quotes(char *str, int type)
-// {
-//     int type_quote = 0;
-    
-//     while (*str)
-//     {
-//         if (*str == '\'')
-//         {
-//             if ((*str + 1) == '\'')
-//                 type_quote = type;
-//         }
-//         else if (*str == '\"')
-//         {
-//             if ((*str + 1) == '\"')
-//                 type_quote = type;
-//         }
-//     }
-//     return (type_quote);
-// }
+void    get_rid_quotes(char *value)
+{
+    int i;
+    int j;
 
-// void    skip_single_quotes(char *s, int *i, int *j)
-// {
-//     if (s[*i + 1] == '\'')
-//         (*i)++;
-// }
+    i = 0;
+    j = 0;
+    while (value[i])
+    {
+        if (value[i] == '\'')
+            if_quotes_in_quotes(value, '\'', &i, &j);
+        else if (value[i] == '\"')
+            if_quotes_in_quotes(value, '\"', &i, &j);
+        else
+        {
+            value[j] = value[i];
+            j++;
+            i++;
+        }
+    }
+    value[j] = '\0';
+}
 
-// void    remove_quotes(t_token *tokens, int n_tokens)
-// {
-//     int i;
+void    if_quotes_in_quotes(char *str, char quote_flag, int *i, int *j)
+{
+    if (if_quotes_closed(str + *i))
+    {
+        while (str[*i])
+        {
+            str[*j] = str[*i];
+            (*j)++;
+            (*i)++;
+        }
+    }
+    else
+    {
+        (*i)++;
+        while (str[*i] != quote_flag)
+        {
+            str[*j] = str[*i];
+            (*j)++;
+            (*i)++;
+        }
+        (*i)++;
+    }
+}
 
-//     i = 0;
-//     while (i < n_tokens)
-//     {
-//         if (tokens[i].type == WORD)
-//         {
-//             if (type_of_quotes(tokens[i].value, '\''))
-//                 skip_single_quotes();
-//             else if (type_of_quotes(tokens[i].value, '\"'))
-//             {
-//                 if ()
-//             }
-                
-//         }
-//     }
-// }
+int     if_quotes_closed(char *str)
+{
+    int i;
+    int quote_flag;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+        {
+            quote_flag = str[i];
+            i++;
+            while (str[i] && str[i] != quote_flag)
+                i++;
+            if (str[i] == '\0')
+                return (1);
+            i++;
+        }
+    }
+    return (0);
+}

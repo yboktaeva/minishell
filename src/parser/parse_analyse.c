@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/04 18:07:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/05 10:32:51 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void    *if_redir_token(t_token *tokens, t_parse_list *parse_list, int *j, int e
         redir_node(&parse_list->output, node);
     return (node);
 }
-
 
 static void    *syntax_pipe(t_token *tokens, int *j, int end)
 {

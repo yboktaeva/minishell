@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/04 17:57:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:31:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,17 @@ void print_parse_list(t_parse_list *parse_list)
             current_redir = current_redir->next;
         }
         parse_list = parse_list->next;
+    }
+}
+
+void    print_tokens(t_token *tokens, int n_tokens)
+{
+    int i;
+
+    i = 0;
+    while (i < n_tokens)
+    {
+        printf("Token %d: Type = %d, Value = %s\n", i, tokens[i].type, tokens[i].value);
+        i++;
     }
 }

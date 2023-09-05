@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/04 19:50:51 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:31:37 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define TRUE 1
 # define FAULSE 0
-# define SUCCES ((void*)1)
+# define SUCCES ((void *)1)
 
 /*READLINE_INIT*/
 void    *init_main_table(t_table *info, char *line, char **argv);
@@ -31,10 +31,8 @@ t_env   *add_env_node(char *str);
 t_env   *copy_env(t_env *env, char *str);
 void    print_env_list(t_env *env);
 char    *env_var_name(char *str);
-int     env_var_name_len(char *key);
+int     env_var_name_len(char *var_name);
 char    *env_var_value(t_env *head, char *key);
-char    *find_env_value(t_env* env, char *var_name);
-
 /*PARSER*/
 t_parse_list    *init_parse_list(void);
 t_one_cmd       *init_one_cmd(char *str);
@@ -51,15 +49,22 @@ void            add_node(t_parse_list *parse_list, t_parse_list *node);
 void            print_parse_list(t_parse_list *parse_list);
 /*LEXER_TOKEN*/
 int     count_quotes(char *s);
+int     count_tokens(char *line);
 void    token_quotes(char **start, char **quote_start, t_token *tokens, int *j);
 void    token_redirection(char **start, char **end, t_token *tokens, int *j);
 void    token_pipe(char **start, t_token *tokens, int *j);
 void    token_word(char **start, char **end, t_token *tokens, int *j);
-int     count_tokens(char *line);
+void    print_tokens(t_token *tokens, int n_tokens);
 t_token *split_tokens(char *line, t_token *tokens);
 t_token *tokenize_input(t_env *env, char *line, t_table *info);
-void    print_tokens(t_token *tokens, int n_tokens);
-char    *expand_variable(t_env *env, char *input);
+char    *if_dollar(t_env *env, char *expand_str);
+void    join_before_and_after(t_env *env, char **str, int *i);
+char    *find_var_value(t_env *env, char *str, int *i);
+void    *expand_word_token(t_env *env, t_token *tokens, t_table *info);
+void    delete_quotes(t_token *tokens, int n_tokens);
+void    get_rid_quotes(char *value);
+void    if_quotes_in_quotes(char *str, char quote_flag, int *i, int *j);
+int     if_quotes_closed(char *str);
 /*EXEC*/
 void	ft_free_str_array(char **str);
 char	**ft_split_ignore_spaces(const char *s, char c);

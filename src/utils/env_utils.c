@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/04 19:08:34 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:32:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	env_var_name_len(char *var_name)
 	i = 0;
 	if (*var_name == '?' || ft_isdigit(*var_name))
 		return (1);
-	while (var_name[i] == '_'|| ft_isalpha(var_name[i]) || ft_isdigit(var_name[i]))
+	while (var_name[i] == '_' || ft_isalpha(var_name[i]) || ft_isdigit(var_name[i]))
 		i++;
 	return (i);
 }
@@ -41,13 +41,13 @@ char    *env_var_value(t_env *head, char *var_name)
     t_env   *env;
     int var_name_len;
 
-    env = head;
+    env = head->next;
     var_name_len = ft_strlen(var_name);
     // if (*var_name == '?')
     // {
     //      return (ft_itoa(info->exit_status));
     // }
-    while (env->next)
+    while (env)
     {
         if (ft_strncmp(var_name, env->var_name, var_name_len + 1) == 0)
         {
