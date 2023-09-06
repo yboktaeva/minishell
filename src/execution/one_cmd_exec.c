@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asekmani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/08/02 11:57:32 by asekmani         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:35:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,14 @@ char **prepare_exec_args(int argc, char **argv, const char *executable_path)
     args[argc] = NULL;
     //printf("args = %s", args[0]);
     return args;
+}
+
+void cmd_execution(t_parse_list *parse_list, t_env *env)
+{
+    if (is_builtin(parse_list->one_cmd))
+        execute_builtin(parse_list->one_cmd, env);
+    // else
+    // {
+    //     execute_multi_pipe();
+    // }
 }

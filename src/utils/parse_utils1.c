@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_line.c                                       :+:      :+:    :+:   */
+/*   parse_utils1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/04 16:25:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 18:59:38 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/09/06 11:18:25 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/09/06 12:58:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-int	empty_line(char *line)
+char	*ft_strcat(char *dest, char *src)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (line[i])
-	{
-		if (line[i] == ' ' || line[i] == '\t')
-			return (1);
+	while (dest[i] != '\0')
 		i++;
+	j = 0;
+	while (src[j] != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
 	}
-	return (0);
+	dest[i] = '\0';
+	return (dest);
 }

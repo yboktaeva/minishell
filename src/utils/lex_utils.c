@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 15:35:01 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/04 19:50:31 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/09/06 11:17:16 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/09/06 19:48:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ char	*pass_white_space(char *s)
 	return (s);
 }
 
-char *my_strncpy(char *dest, const char *src, size_t n)
+char	*my_strncpy(char *dest, const char *src, size_t n)
 {
-    size_t	i;
-	
+	size_t	i;
+
 	i = 0;
-    while (i < n && src[i] != '\0')
+	while (i < n && src[i] != '\0')
 	{
-        dest[i] = src[i];
-		i++;
-    }
-    while (i < n)
-	{
-        dest[i] = '\0';
+		dest[i] = src[i];
 		i++;
 	}
-    return (dest);
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }
 
 char	*ft_strndup(const char *s, size_t n)
@@ -72,5 +72,5 @@ void	skip_single_quote(char *str, int *i)
 {
 	while (str[*i + 1] != '\'')
 		(*i)++;
-	(*i)++; 
+	(*i)++;
 }

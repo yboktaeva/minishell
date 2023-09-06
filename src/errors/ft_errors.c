@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/31 18:27:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/06 19:39:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void    *quote_error(void)
+void	*quote_error(void)
 {
-    ft_putendl_fd("minishell: missing closing quote", 2);
-    return (NULL);
+	ft_putendl_fd("minishell: missing closing quote", 2);
+	return (NULL);
 }
 
-void    *syntax_error(char *str)
+void	*syntax_error(char *str)
 {
-    printf("minishell: syntax error near unexpected token `%s'\n", str);
-    return (NULL) ;
+	printf("minishell: syntax error near unexpected token `%s'\n", str);
+	return (NULL);
 }

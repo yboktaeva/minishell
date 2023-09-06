@@ -6,12 +6,16 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/01 15:27:26 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/06 17:38:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef enum s_type
 {
@@ -21,42 +25,42 @@ typedef enum s_type
 	HEREDOC,
 	APPEND,
 	PIPE
-}			t_type;
+}		t_type;
 
 typedef struct s_token /*lexer part*/
 {
 	t_type	type;
 	char	*value;
-}			t_token;
+}		t_token;
 
-typedef struct	s_env /*extract ENVP in structure*/
+typedef struct	s_env /*dup ENVP in linked list*/
 {
-	char	*var_name;
-	char	*var_value;
-	char	*str;
+	char			*var_name;
+	char			*var_value;
+	char			*str;
 	struct s_env	*next;
-}				t_env;
+}		t_env;
 
 typedef struct s_redir /*struct for redirections IN, OUT, HEREDOC, APPEND*/
 {
-	t_type	type;
-	char	*file_name;
-	struct	s_redir	*next;
-}			t_redir;
+	t_type			type;
+	char			*file_name;
+	struct s_redir	*next;
+}		t_redir;
 
-typedef struct s_one_cmd /*parse part*/
+typedef struct s_one_cmd /*node of one cmd*/
 {
-	char	*str;
+	char				*str;
 	struct s_one_cmd	*next;
-}			t_one_cmd;
+}		t_one_cmd;
 
-typedef struct s_parse_list
+typedef struct s_parse_list/*parsing linked list*/
 {
 	t_one_cmd	*one_cmd;
 	t_redir		*input;
 	t_redir		*output;
 	struct s_parse_list	*next;
-}			t_parse_list;
+}		t_parse_list;
 
 typedef struct s_table
 {
@@ -66,11 +70,11 @@ typedef struct s_table
 	char			*path;
 	char			*pwd;
 	char			*old_pwd;
-	t_token			*tokens;
 	t_parse_list	*parse_list;
 	int				n_tokens;
 	int				cmd_count;
 	int				exit_status;
+	pid_t			pid;
 	// int			*builtin_ptr[7];
 	// char			*reserved_names[7];
 }			t_table;

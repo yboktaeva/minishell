@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/04 17:37:38 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/06 15:23:07 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,11 @@ SRC_FILES	=	main/minishell.c main/main.c init/init_all.c lexer/get_env.c\
 				lexer/create_tokens.c lexer/expand_token.c lexer/lex_analyse.c \
 				parser/add_parse_node.c parser/build_parse.c parser/parse_analyse.c \
 				execution/cmd_path.c execution/path_utils.c execution/one_cmd_exec.c \
-				execution/ft_split_ignore_spaces.c builtins/echo.c builtins/cd.c \
-				builtins/pwd.c builtins/export.c builtins/unset.c builtins/env.c \
-				builtins/exit.c errors/ft_errors.c destructor/free_parsing.c \
-				destructor/free_env.c utils/utils.c	utils/env_utils.c utils/parse_utils.c
+				execution/ft_split_ignore_spaces.c builtins/builtin.c builtins/echo.c \
+				builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
+				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c \
+				destructor/free_env.c utils/lex_utils.c utils/env_utils.c utils/parse_utils.c\
+				utils/parse_utils1.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
