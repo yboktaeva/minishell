@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/08/31 20:16:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:28:37 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void *init_main_table(t_table *info, char *line, char **argv)
 {
     (void)argv;
     (void)line;
-    //t_token tokens;
-    //info->cmds =;
-   //info->path = get_executable_path(info->env);
+    // t_token tokens;
+    // info->cmds =;
+    // info->path = get_executable_path(info->env);
     info->cmd_count = 0;
     return (SUCCES);
 }

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:47:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:30:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*env_var_value(t_env *head, char *var_name)
 	var_name_len = ft_strlen(var_name);
 	// if (*var_name == '?')
 	// {
-	//      return (ft_itoa(info->exit_status));
+	//     return (ft_itoa(g_status));
 	// }
 	while (env)
 	{

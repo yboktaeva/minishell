@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 20:06:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:44:37 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ void			print_parse_list(t_parse_list *parse_list);
 /*LEXER_TOKEN*/
 int				count_quotes(char *s);
 int				count_tokens(char *line);
+void			init_variables_tokens(char *line, int *count, char **start, \
+				char **quote_start);
+void			check_and_handle_redir(char **curr, char operator);
+int				check_and_handle_quotes(char **start, char **quote_start, int *count);
 void			token_quotes(char **start, char **quote_start, \
 				t_token *tokens, int *j);
 void			token_redirection(char **start, char **end, \

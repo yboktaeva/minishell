@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:15:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 19:00:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,19 @@ void	token_redirection(char **start, char **end, t_token *tokens, int *j)
 		(*end)++;
 		if (**end == **start)
 		{
-			tokens[*j].type = is_less_than ? HEREDOC : APPEND;
-				len += 1;
+			if (is_less_than)
+				tokens[*j].type = HEREDOC;
+			else
+				tokens[*j].type = APPEND;
+			len += 1;
 		}
 		else
 		{
-			tokens[*j].type = is_less_than ? REDIR_IN : REDIR_OUT;
-				(*end)--;
+			if (is_less_than)
+				tokens[*j].type = REDIR_IN;
+			else
+				tokens[*j].type = REDIR_OUT;
+			(*end)--;
 		}
 	}
 	tokens[*j].value = ft_calloc(len + 1, sizeof(char));
@@ -127,43 +133,3 @@ void	token_word(char **start, char **end, t_token *tokens, int *j)
 	(*j)++;
 	*start = *end - 1;
 }
-
-// void token_redirection(char **start, char **end, t_token *tokens, int *j)
-// {
-//     int len;
-
-//     len = 1;
-//     *end = *start;
-//     if (**end == '<')
-//     {
-//         (*end)++;
-//         if (**end == '<')
-//         {
-//             tokens[*j].type = HEREDOC;
-//             len += 1;
-//         }
-//         else
-//         {
-//             tokens[*j].type = REDIR_IN;
-//             (*end)--;
-//         }
-//     }
-//     else if (**end == '>')
-//     {
-//         (*end)++;
-//         if (**end == '>')
-//         {
-//             tokens[*j].type = APPEND;
-//             len += 1;
-//         }
-//         else
-//         {
-//             tokens[*j].type = REDIR_OUT;
-//             (*end)--;
-//         }
-//     }
-//     tokens[*j].value = ft_calloc(len, sizeof(char));
-//     my_strncpy(tokens[*j].value, *start, len);
-//     (*j)++;
-//     *start = *end;
-// }

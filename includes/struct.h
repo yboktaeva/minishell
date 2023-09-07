@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 17:38:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:24:06 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ typedef struct s_table
 	int				cmd_count;
 	int				exit_status;
 	pid_t			pid;
-	// int			*builtin_ptr[7];
-	// char			*reserved_names[7];
 }			t_table;
 
 

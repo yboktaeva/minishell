@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 17:40:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:17:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,22 @@ int is_builtin(t_one_cmd *one_cmd)
 void    execute_builtin(t_one_cmd *one_cmd, t_env *env)
 {
     int builtin_status;
-    (void)env;
+    
     builtin_status = 0;
     if (ft_strncmp(one_cmd->str, "echo", 5) == 0)
         builtin_status = cmd_echo(one_cmd);
     // else if (ft_strncmp(one_cmd->str, "cd", 3) == 0)
     //     builtin_status = cmd_cd(one_cmd, env);
-    // // else if (ft_strncmp(one_cmd->str, "pwd", 4) == 0)
-    // //     builtin_status = cmd_pwd(one_cmd);
+    // else if (ft_strncmp(one_cmd->str, "pwd", 4) == 0)
+    //     builtin_status = cmd_pwd(one_cmd);
     // else if (ft_strncmp(one_cmd->str, "export", 7) == 0)
     //     builtin_status = cmd_export(one_cmd, env);
     // else if (ft_strncmp(one_cmd->str, "unset", 6) == 0)
     //     builtin_status = cmd_unset(one_cmd, env);
-    // else if (ft_strncmp(one_cmd->str, "env", 4) == 0)
-    //     builtin_status = cmd_env(env);
+    else if (ft_strncmp(one_cmd->str, "env", 4) == 0)
+        builtin_status = cmd_env(env);
     // else if (ft_strncmp(one_cmd->str, "exit", 5) == 0)
     //     builtin_status = cmd_exit(one_cmd, env);
+    //g_status = builtin_status;
+    return ;
 }

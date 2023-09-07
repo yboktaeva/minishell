@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:35:34 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/06 18:23:30 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:29:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,18 @@ int	is_n_option(t_one_cmd *one_cmd);
 
 int     cmd_echo(t_one_cmd *one_cmd)
 {
-	int	echo_status;
 	int	n_flag;
 
-	echo_status = 0;
 	n_flag = 1;
 	if (one_cmd->next == NULL)
 	{
 		ft_putstr_fd("\n", 1);
-		return (echo_status);
+		return (0);
 	}
 	one_cmd = one_cmd->next;
 	if (is_n_option(one_cmd))
 	{
-		echo_status = 0;
+		n_flag = 0;
 		one_cmd = one_cmd->next;
 	}
 	while (one_cmd)
@@ -80,7 +78,7 @@ int     cmd_echo(t_one_cmd *one_cmd)
 	}
 	if (n_flag)
 		ft_putstr_fd("\n", 1);
-	return (echo_status = 0);
+	return (0);
 }
 
 int	is_n_option(t_one_cmd *one_cmd)

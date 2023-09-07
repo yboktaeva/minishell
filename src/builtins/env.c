@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:10:16 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/06 16:30:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/07 11:30:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@
 
 int cmd_env(t_env *env)
 {
-    int env_status;
-
-    env_status = 0;
     print_env_list(env);
-    return (env_status);
+    return (0);
 }
