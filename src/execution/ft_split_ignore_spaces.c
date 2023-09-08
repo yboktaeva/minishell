@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_ignore_spaces.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asekmani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:00:45 by asekmani          #+#    #+#             */
-/*   Updated: 2023/08/01 16:00:48 by asekmani         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:16:58 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "exec.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

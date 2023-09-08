@@ -6,13 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:10:16 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/07 11:30:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:57:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "builtin.h"
+#include "envp.h"
 
 // int cmd_env(t_table *info)
 // {

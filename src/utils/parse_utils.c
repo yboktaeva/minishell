@@ -6,11 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 11:16:59 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:50:20 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:41:44 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 int	is_redir(t_type type)
 {

@@ -6,13 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:39:54 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:58:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "../libft/libft.h"
 #include <stdio.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 void	*quote_error(void)
 {

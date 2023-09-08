@@ -6,11 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 16:18:03 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:02:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:02:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexer.h"
 
 int	count_quotes(char *s)
 {

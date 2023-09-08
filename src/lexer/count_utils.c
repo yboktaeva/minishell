@@ -6,15 +6,18 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:09:52 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/07 17:43:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:49:35 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
+#include "utils.h"
 #include "minishell.h"
+#include <stddef.h>
 
 static int	count_quotes_token(char **start, char **quote_start);
 
-void	init_variables_tokens(char *line, int *count, char **start, \
+void	init_var_count_tokens(char *line, int *count, char **start, \
 	char **quote_start)
 {
 	*count = 0;

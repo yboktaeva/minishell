@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:53:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:24:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:43:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexer.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 

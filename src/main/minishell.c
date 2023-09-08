@@ -6,11 +6,16 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/07 11:56:06 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:49:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer.h"
+#include "parser.h"
+#include "exec.h"
+#include "envp.h"
+#include "builtin.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdio.h>

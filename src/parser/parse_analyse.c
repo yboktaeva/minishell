@@ -6,14 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/07 17:39:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:47:12 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "minishell.h"
-#include <string.h>
+#include "utils.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 static void	*syntax_pipe(t_token *tokens, int *j, int end);
 static void	*syntax_redir(t_token *tokens, int *j, int end);

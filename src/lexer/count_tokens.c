@@ -6,12 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:32:08 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/07 17:45:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:49:11 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h>
+#include "lexer.h"
+#include "utils.h"
+#include <stddef.h>
 
 static int	count_redirection(char **start);
 static int	count_pipe(char **start);
@@ -24,7 +25,7 @@ int	count_tokens(char *line)
 	char	*start;
 	char	*quote_start;
 
-	init_variables_tokens(line, &count, &start, &quote_start);
+	init_var_count_tokens(line, &count, &start, &quote_start);
 	while (*start)
 	{
 		start = pass_white_space(start);

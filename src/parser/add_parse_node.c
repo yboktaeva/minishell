@@ -6,11 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 12:59:59 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:28:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:11:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 #include <stdlib.h>
 
 void	one_cmd_node(t_one_cmd **head, t_one_cmd *node)

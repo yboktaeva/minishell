@@ -6,11 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 11:18:25 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 12:58:31 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:42:40 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 char	*ft_strcat(char *dest, char *src)
 {

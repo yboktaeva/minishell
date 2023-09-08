@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/06 19:22:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:00:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "envp.h"
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 

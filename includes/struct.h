@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/07 12:24:06 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/08 18:13:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+
+# define TRUE 1
+# define FAULSE 0
+# define SUCCES ((void *)1)
 
 typedef enum s_type
 {
