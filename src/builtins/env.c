@@ -6,12 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:10:16 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/08 18:57:03 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:16:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "envp.h"
+#include "utils.h"
 
 // int cmd_env(t_table *info)
 // {

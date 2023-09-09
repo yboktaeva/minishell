@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:47:52 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 19:37:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:13:49 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "../libft/libft.h"
 #include <stdlib.h>
 
-char		*if_dollar(t_env *env, char *expand_str);
 static void	init_if_dollar(int *i, int *j, int *double_quote);
 
 void	*expand_word_token(t_env *env, t_token *tokens, t_table *info)

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:53:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:43:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/09 21:25:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ void	if_quotes_in_quotes(char *str, char quote_flag, int *i, int *j)
 		while (str[*i] != quote_flag)
 		{
 			str[*j] = str[*i];
-			(*j)++;
 			(*i)++;
+			if (str[*i] != '\0')
+				(*j)++;
 		}
 		(*i)++;
 	}

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:35:34 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/08 18:56:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/09 19:34:14 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	is_n_option(t_one_cmd *one_cmd);
+static int	check_n_option(char *str, char c);
+static int	if_n_option(t_one_cmd *one_cmd);
 
 // static void	print(int i, char **str, int out)
 // {
@@ -64,7 +65,7 @@ int     cmd_echo(t_one_cmd *one_cmd)
 		return (0);
 	}
 	one_cmd = one_cmd->next;
-	if (is_n_option(one_cmd))
+	if (if_n_option(one_cmd))
 	{
 		n_flag = 0;
 		one_cmd = one_cmd->next;
@@ -81,11 +82,27 @@ int     cmd_echo(t_one_cmd *one_cmd)
 	return (0);
 }
 
-int	is_n_option(t_one_cmd *one_cmd)
+static int	if_n_option(t_one_cmd *one_cmd)
 {
 	if (one_cmd->str[0] != '-')
 		return (0);
-	if (ft_strcmp(&one_cmd->str[1], "n") == 0)
+	if (check_n_option(&one_cmd->str[1], 'n'))
 		return (1);
 	return (0);
+}
+
+static int	check_n_option(char *str, char c)
+{
+	int	i;
+	
+	i = 0;
+	if (str[i] == '\0')
+		return (0);
+	while (str[i])
+	{
+		if (str[i] != c)
+			return (0);
+		i++;
+	}
+	return (1);
 }

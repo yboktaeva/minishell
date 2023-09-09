@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:49:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/09 19:48:41 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void shell_loop(t_env *env, char *line, t_table *info)
     parse_list = NULL;
     if (!line)
     {
-        ft_putendl_fd("exit", 1); //signal ctrl + D
+        ft_putendl_fd("exit", 1);
         free(line);
         return ;
     }

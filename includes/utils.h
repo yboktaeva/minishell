@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:24:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:25:40 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/09 18:15:36 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int				is_redir(t_type type);
 int				is_word(t_type type);
 int				is_pipe(t_type type);
 int				count_pipes_token(t_token *tokens, int n_tokens);
+void			print_env_list(t_env *env);
 //char	*ft_strcat(char *dest, char *src);
 #endif
