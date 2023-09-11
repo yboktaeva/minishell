@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:07:13 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/11 15:36:07 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 23:55:16 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <linux/limits.h>
+#include <limits.h>
 
 // static int specific_path(t_table *info, char *str);
 // static char	*find_path(char *str, t_table *info);

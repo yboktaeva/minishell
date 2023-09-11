@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 20:53:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 23:50:32 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,16 @@ int	cmd_size(t_parse_list *parse_list)
 	}
 	return (len);
 }
+
 int	env_size(t_env *env)
 {
-	t_env	*tmp;
 	int		len;
 
 	len = 0;
-	tmp = env;
-	while (tmp != NULL)
+	while (env)
 	{
 		len++;
-		tmp = tmp->next;
+		env = env->next;
 	}
 	return (len);
 }
@@ -48,7 +47,6 @@ int	env_size(t_env *env)
 char	**duplicate_envp(t_env *env)
 {
 	int		i;
-	char	*temp_str;
 	char	**cp_envp;
 	t_env	*tmp;
 
@@ -62,10 +60,8 @@ char	**duplicate_envp(t_env *env)
 	}
 	while (tmp != NULL)
 	{
-		temp_str = ft_strjoin(tmp->var_name, "=");
-		cp_envp[i] = ft_strjoin(temp_str, tmp->var_value);
+		cp_envp[i] = tmp->str;
 		//printf("%s\n", cp_envp[i]);
-		free(temp_str);
 		i++;
 		tmp = tmp->next;
 	}

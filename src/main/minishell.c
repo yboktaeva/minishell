@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 21:00:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 23:32:08 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,8 @@ void shell_loop(t_env *env, char *line, t_table *info)
     t_token         *tokens;
     t_parse_list    *parse_list;
     
-    //int i = 0;
     tokens = NULL;
     parse_list = NULL;
-    // while (arg.envp[i])
-    // {
-    //     printf("%s\n", arg.envp[i]);
-    //     i++;
-    // }
     if (!line)
     {
         ft_putendl_fd("exit", 1);
@@ -60,7 +54,7 @@ void shell_loop(t_env *env, char *line, t_table *info)
         {
             //print_tokens(tokens, info->n_tokens);
             parse_list = parsing_tokens(tokens, info->n_tokens);
-            print_parse_list(parse_list);
+            //print_parse_list(parse_list);
         }
         if (parse_list == NULL)
             is_null(line, tokens, parse_list, info);

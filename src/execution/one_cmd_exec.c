@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/11 21:13:20 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/12 00:11:48 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-static void handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out);
 static int one_cmd(const char *path, t_parse_list *s, t_arg *arg);
 static void exec_comd(const char *path, t_parse_list *s, t_arg *arg, int fd_in, int fd_out);
 int one_cmd_exec(t_parse_list *s, t_arg *arg);
@@ -123,7 +122,7 @@ static void exec_comd(const char *path, t_parse_list *s, t_arg *arg, int fd_in, 
         dup2(fd_out, STDOUT_FILENO);
         close(fd_out);
     }
-    execve(path, &s->one_cmd, arg->envp);
+    execve(path, &s->one_cmd->str, arg->envp);
     perror("Erreur lors de l'exécution de la commande");
     exit(1);
 }
