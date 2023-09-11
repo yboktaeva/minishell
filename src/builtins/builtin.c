@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:55:21 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:02:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void    execute_builtin(t_one_cmd *one_cmd, t_env *env)
         builtin_status = cmd_echo(one_cmd);
     // else if (ft_strncmp(one_cmd->str, "cd", 3) == 0)
     //     builtin_status = cmd_cd(one_cmd, env);
-    // else if (ft_strncmp(one_cmd->str, "pwd", 4) == 0)
-    //     builtin_status = cmd_pwd(one_cmd);
+    else if (ft_strncmp(one_cmd->str, "pwd", 4) == 0)
+        builtin_status = cmd_pwd(one_cmd);
     // else if (ft_strncmp(one_cmd->str, "export", 7) == 0)
     //     builtin_status = cmd_export(one_cmd, env);
     // else if (ft_strncmp(one_cmd->str, "unset", 6) == 0)

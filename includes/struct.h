@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:13:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:28:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_env /*dup ENVP in linked list*/
 	char			*var_name;
 	char			*var_value;
 	char			*str;
+	int				exported;
 	struct s_env	*next;
 }		t_env;
 
@@ -66,11 +67,18 @@ typedef struct s_parse_list/*parsing linked list*/
 	struct s_parse_list	*next;
 }		t_parse_list;
 
+typedef struct s_arg
+{
+	int		argc;
+	char	**argv;
+	char	**envp;
+}			t_arg;
+
 typedef struct s_table
 {
 	t_env			*env;
+	t_arg			*arg;
 	char			**cmds;
-	char			**envp;
 	char			*path;
 	char			*pwd;
 	char			*old_pwd;

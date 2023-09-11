@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:58:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:28:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "struct.h"
 
 /*READLINE_INIT*/
-void			*init_main_table(t_table *info, char *line, char **argv);
+void    init_execve_args(t_arg *arg, t_env *env);
+
+void			*init_main_table(t_table *info, char *line, char **envp);
 void			shell_loop(t_env *env, char *line, t_table *info);
 /*ERRORS*/
 void			*quote_error(void);

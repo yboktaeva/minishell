@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:08:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:54:51 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 17:11:46 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ int				cmd_echo(t_one_cmd *one_cmd);
 /*int			cmd_echo(t_table *info, char **argv);*/
 /*int			cmd_env(t_table *info);*/
 int				cmd_env(t_env *env);
-int				cmd_pwd(void);
+int				cmd_pwd(t_one_cmd *one_cmd);
 
 #endif

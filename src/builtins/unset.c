@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:58:28 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/09 18:14:16 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 18:28:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-// static int unset_variable(char *name, t_table *table);
+// static int unset_variable(char *name, t_env *env);
 // static void	error_message(char *name);
 // int str_check(char *str1, char *str2);
+
+// int cmd_unset(t_one_cmd *one_cmd, t_env *env)
+// {
+//     int i;
+
+//     i = 1;
+//     while (i < arg->argc)
+//     {
+//         unset_variable(arg->argv[i], env);
+//         i += 1;
+//     }
+//     return (EXIT_SUCCESS);
+// }
 
 // int cmd_unset(t_arg *arg, t_table *table)
 // {
@@ -32,19 +45,19 @@
 //     return (EXIT_SUCCESS);
 // }
 
-// static int unset_variable(char *name, t_table *table)
+// static int unset_variable(char *name, t_env *env)
 // {
 //     t_env *tmp;
 //     t_env *temp;
 //     t_env *prev_node = NULL;
 
-//     tmp = table->env;
+//     tmp = env;
 //     if (ft_strchr(name, '='))
 //     {
 //         error_message(name);
 //         return (EXIT_FAILURE);
 //     }
-//     temp = table->env->next;
+//     temp = env->next;
 //     while (temp != NULL)
 //     {
 //         printf("%s=%s\n", temp->var_name, temp->var_value);
@@ -59,7 +72,7 @@
 //             if (prev_node)
 //                 prev_node->next = tmp->next;
 //             else
-//                 table->env = tmp->next;
+//                 tmp = tmp->next;
 //             free(tmp->var_name);
 //             free(tmp->var_value);
 //             free(tmp);

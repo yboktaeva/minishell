@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/09 18:17:02 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:08:10 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,6 @@ char	*env_var_value(t_env *head, char *var_name)
 //     return (NULL);
 // }
 
-// int     env_size(t_env *env)
-// {
-//     t_env   *tmp;
-//     int     len;
-
-//     len = 0;
-//     tmp = env;
-//     while (tmp != NULL)
-//     {
-//         len++;
-//         tmp = tmp->next;
-//     }
-//     return (len);
-// }
 
 // t_env   *get_last(t_env *env)
 // {

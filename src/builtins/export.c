@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/09 20:42:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 15:36:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,4 +189,4 @@
 // 		//printf("var_name :%s\n tmp->var_name: %s\n", var_name, tmp->var_name);
 //         tmp = tmp->next;
 //     }
-// }
+// // }

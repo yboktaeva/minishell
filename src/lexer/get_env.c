@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 19:00:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:52:55 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_env	*init_env_list(char **envp)
 	new->var_value = NULL;
 	new->str = NULL;
 	new->next = NULL;
+	new->exported = -1;
 	set_env_list(&new, envp);
 	return (new);
 }

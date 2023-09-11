@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/09 19:48:41 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/11 21:00:43 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parser.h"
 #include "exec.h"
 #include "envp.h"
+#include "utils.h"
 #include "builtin.h"
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -36,8 +37,14 @@ void shell_loop(t_env *env, char *line, t_table *info)
     t_token         *tokens;
     t_parse_list    *parse_list;
     
+    //int i = 0;
     tokens = NULL;
     parse_list = NULL;
+    // while (arg.envp[i])
+    // {
+    //     printf("%s\n", arg.envp[i]);
+    //     i++;
+    // }
     if (!line)
     {
         ft_putendl_fd("exit", 1);
@@ -53,14 +60,14 @@ void shell_loop(t_env *env, char *line, t_table *info)
         {
             //print_tokens(tokens, info->n_tokens);
             parse_list = parsing_tokens(tokens, info->n_tokens);
-            //print_parse_list(parse_list);
+            print_parse_list(parse_list);
         }
         if (parse_list == NULL)
             is_null(line, tokens, parse_list, info);
         else
         {
             /*execution part*/
-            cmd_execution(parse_list, env);
+            cmd_execution(parse_list, env, info->arg);
             add_history(line);
             free_all(line, tokens, info->n_tokens, parse_list);
         }
@@ -72,6 +79,7 @@ int main(int ac, char **argv, char **envp)
     char *prompt;
     t_table info;
     t_env   *env;
+    t_arg arg;
 
     if (ac > 2 || argv[1] != NULL)
     {
@@ -82,9 +90,12 @@ int main(int ac, char **argv, char **envp)
     while (1)
     {
         prompt = readline("minishell$> ");
-        init_main_table(&info, prompt, argv);
+        init_execve_args(&arg, env);
+        info.arg = &arg;
+        init_main_table(&info, prompt, envp);
         shell_loop(env, prompt, &info);
     }
     free_env(&env);
+    free(info.arg->envp);
     return (EXIT_SUCCESS);
 }

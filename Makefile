@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/09 17:43:37 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/11 19:52:40 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC_FILES	=	main/minishell.c main/main.c init/init_all.c lexer/get_env.c\
 				builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
 				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c \
 				destructor/free_env.c utils/lex_utils.c utils/env_utils.c utils/parse_utils.c\
-				utils/print.c utils/parse_utils1.c
+				utils/print.c utils/exec_utils.c utils/parse_utils1.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
