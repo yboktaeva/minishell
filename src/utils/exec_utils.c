@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 23:50:32 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/12 20:16:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ int	cmd_size(t_parse_list *parse_list)
 	{
 		len++;
 		tmp = tmp->next;
+	}
+	return (len);
+}
+
+int	num_args(t_one_cmd *one_cmd)
+{
+	int	len;
+
+	len = 0;
+	while (one_cmd)
+	{
+		len++;
+		one_cmd = one_cmd->next;
 	}
 	return (len);
 }
@@ -52,16 +65,15 @@ char	**duplicate_envp(t_env *env)
 
 	i = 0;
 	tmp = env->next;
-	cp_envp = malloc((env_size(env) + 1) * sizeof(char *));
+	cp_envp = (char **)malloc((env_size(env) + 2) * sizeof(char *));
 	if (!cp_envp)
 	{
-		perror("Malloc failure");
+		perror("Malloc failure in duplicate envp");
 		return (NULL);
 	}
 	while (tmp != NULL)
 	{
 		cp_envp[i] = tmp->str;
-		//printf("%s\n", cp_envp[i]);
 		i++;
 		tmp = tmp->next;
 	}

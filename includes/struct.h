@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 15:28:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:54:55 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define FAULSE 0
 # define SUCCES ((void *)1)
 
+extern int	g_exit_status;
+
 typedef enum s_type
 {
 	WORD,
@@ -31,13 +33,13 @@ typedef enum s_type
 	PIPE
 }		t_type;
 
-typedef struct s_token /*lexer part*/
+typedef struct s_token
 {
 	t_type	type;
 	char	*value;
 }		t_token;
 
-typedef struct	s_env /*dup ENVP in linked list*/
+typedef struct	s_env
 {
 	char			*var_name;
 	char			*var_value;
@@ -46,20 +48,26 @@ typedef struct	s_env /*dup ENVP in linked list*/
 	struct s_env	*next;
 }		t_env;
 
-typedef struct s_redir /*struct for redirections IN, OUT, HEREDOC, APPEND*/
+typedef struct s_redir
 {
 	t_type			type;
 	char			*file_name;
 	struct s_redir	*next;
 }		t_redir;
 
-typedef struct s_one_cmd /*node of one cmd*/
+typedef struct s_here_doc
+{
+	int	read;
+	struct s_here_doc *next;
+}		t_here_doc;
+
+typedef struct s_one_cmd
 {
 	char				*str;
 	struct s_one_cmd	*next;
 }		t_one_cmd;
 
-typedef struct s_parse_list/*parsing linked list*/
+typedef struct s_parse_list
 {
 	t_one_cmd	*one_cmd;
 	t_redir		*input;
@@ -69,7 +77,7 @@ typedef struct s_parse_list/*parsing linked list*/
 
 typedef struct s_arg
 {
-	int		argc;
+	int		n_args;
 	char	**argv;
 	char	**envp;
 }			t_arg;
@@ -78,16 +86,16 @@ typedef struct s_table
 {
 	t_env			*env;
 	t_arg			*arg;
-	char			**cmds;
+	t_token			*tokens;
+	t_parse_list	*parse_list;
+	t_here_doc		*here_doc;
 	char			*path;
 	char			*pwd;
 	char			*old_pwd;
-	t_parse_list	*parse_list;
 	int				n_tokens;
 	int				cmd_count;
 	int				exit_status;
 	pid_t			pid;
 }			t_table;
-
 
 #endif

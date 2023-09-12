@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 23:32:08 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/12 18:51:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 
 static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *info)
 {
-    free_token(tokens, info->n_tokens);
-    free_parse_list(parse_list);
+    free_all(tokens, info->n_tokens, parse_list);
     add_history(line);
     return ;
 }
@@ -45,7 +44,7 @@ void shell_loop(t_env *env, char *line, t_table *info)
         free(line);
         return ;
     }
-    else
+    else if (line[0] != 0)
     {
         tokens = tokenize_input(env, line, info);
         if (tokens == NULL)
@@ -60,13 +59,14 @@ void shell_loop(t_env *env, char *line, t_table *info)
             is_null(line, tokens, parse_list, info);
         else
         {
-            /*execution part*/
             cmd_execution(parse_list, env, info->arg);
             add_history(line);
-            free_all(line, tokens, info->n_tokens, parse_list);
+            free_all(tokens, info->n_tokens, parse_list);
         }
     }
 }
+
+int g_exit_status;
 
 int main(int ac, char **argv, char **envp)
 {
@@ -81,15 +81,18 @@ int main(int ac, char **argv, char **envp)
         exit (EXIT_FAILURE);
     }
     env = init_env_list(envp);
+    prompt = NULL;
     while (1)
     {
+        free(prompt);
         prompt = readline("minishell$> ");
         init_execve_args(&arg, env);
         info.arg = &arg;
         init_main_table(&info, prompt, envp);
         shell_loop(env, prompt, &info);
     }
+    free(arg.envp);
+    free(arg.argv);
     free_env(&env);
-    free(info.arg->envp);
     return (EXIT_SUCCESS);
 }

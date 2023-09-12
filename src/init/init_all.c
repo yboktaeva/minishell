@@ -6,12 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/11 20:28:26 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:14:50 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "exec.h"
+#include "utils.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -51,7 +51,7 @@ t_one_cmd   *init_one_cmd(char *str)
 {
     t_one_cmd   *new;
 
-    new = (t_one_cmd *)malloc(sizeof(t_one_cmd));
+    new = malloc(sizeof(t_one_cmd));
     if (!new)
         return (NULL);
     new->str = str;
@@ -63,7 +63,7 @@ t_redir *init_redir_list(t_type type, char *name)
 {
     t_redir *new;
 
-    new = (t_redir *)malloc(sizeof(t_redir));
+    new = malloc(sizeof(t_redir));
     if (!new)
         return (new);
     new->type = type;

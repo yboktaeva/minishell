@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/06 19:43:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:44:37 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,9 @@ void	free_redirect_list(t_redir *head);
 void	free_token(t_token *tokens, int n_tokens);
 void	free_parse_list(t_parse_list *head);
 
-void	free_all(char *line, t_token *tokens, int n_tokens, \
+void	free_all(t_token *tokens, int n_tokens, \
 				t_parse_list *parse_list)
 {
-	if (line != NULL)
-	{
-		free(line);
-		line = NULL;
-	}
 	if (tokens != NULL)
 		free_token(tokens, n_tokens);
 	if (parse_list != NULL)
