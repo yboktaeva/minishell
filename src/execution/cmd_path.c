@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/12 16:58:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:49:43 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+static const char	*prepare_path(const char *path);
+static char	**get_table_of_paths(const char *path);
+static char	*create_executable_path(const char *path, const char *cmd);
+static char	*find_executable(char **dirs, const char *cmd);
+
+char	*get_executable_path(const char *cmd, const char *path)
+{
+	char **dirs;
+	char *executable_path;
+
+	path = prepare_path(path);
+	if (path == NULL)
+		return (NULL);
+	dirs = get_table_of_paths(path);
+	if (!dirs)
+		return (NULL);
+	executable_path = find_executable(dirs, cmd);
+	ft_free_str_array(dirs);
+	return (executable_path);
+}
 
 static const char	*prepare_path(const char *path)
 {
@@ -66,20 +87,4 @@ static char	*find_executable(char **dirs, const char *cmd)
 		i++;
 	}
 	return (NULL);
-}
-
-char	*get_executable_path(const char *cmd, const char *path)
-{
-	char **dirs;
-	char *executable_path;
-
-	path = prepare_path(path);
-	if (path == NULL)
-		return (NULL);
-	dirs = get_table_of_paths(path);
-	if (!dirs)
-		return (NULL);
-	executable_path = find_executable(dirs, cmd);
-	ft_free_str_array(dirs);
-	return (executable_path);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:08:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 17:11:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 00:09:40 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /*BUILTINS*/
 int				is_builtin(t_one_cmd *one_cmd);
-void			execute_builtin(t_one_cmd *one_cmd, t_env *env);
+void			builtin_exec(t_one_cmd *one_cmd, t_env *env, t_num_cmd num_of_cmd);
 char			*print_path(char *str, char **envp);
 int				pwd_oldpwd(t_table *info);
 int				cmd_cd(t_table *info, char *arg);

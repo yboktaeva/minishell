@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 19:54:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:38:49 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # define FAULSE 0
 # define SUCCES ((void *)1)
 
-extern int	g_exit_status;
+extern int	g_status;
 
-typedef enum s_type
+typedef enum e_type
 {
 	WORD,
 	REDIR_IN,
@@ -32,6 +32,12 @@ typedef enum s_type
 	APPEND,
 	PIPE
 }		t_type;
+
+typedef enum e_num_cmd
+{
+	ONE_CMD,
+	MULTI_CMD
+}			t_num_cmd;
 
 typedef struct s_token
 {
@@ -48,6 +54,12 @@ typedef struct	s_env
 	struct s_env	*next;
 }		t_env;
 
+typedef struct s_one_cmd
+{
+	char				*str;
+	struct s_one_cmd	*next;
+}		t_one_cmd;
+
 typedef struct s_redir
 {
 	t_type			type;
@@ -60,12 +72,6 @@ typedef struct s_here_doc
 	int	read;
 	struct s_here_doc *next;
 }		t_here_doc;
-
-typedef struct s_one_cmd
-{
-	char				*str;
-	struct s_one_cmd	*next;
-}		t_one_cmd;
 
 typedef struct s_parse_list
 {

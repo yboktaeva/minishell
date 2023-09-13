@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/13 19:49:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 23:05:36 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 # include "struct.h"
 # include "../libft/libft.h"
 
-/*EXEC*/
-void    init_args(t_parse_list *parse_list, t_arg *arg);
-void    create_args(t_one_cmd *one_cmd, t_arg *arg);
+void    create_args(t_parse_list *parse_list, t_arg *arg);
 int open_input(t_redir *input, int *fd_in);
 int open_output(t_redir *output, int *fd_out);
 void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out);

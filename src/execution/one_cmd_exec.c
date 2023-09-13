@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/13 19:49:33 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 00:08:09 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+char        *get_path_from_envp(t_arg *arg);
 static int  one_cmd(const char *path, t_parse_list *s, t_arg *arg);
 static void exec_comd(const char *path, t_arg *arg, int fd_in, int fd_out);
-int         one_cmd_exec(t_parse_list *s, t_arg *arg);
-char        *get_path_from_envp(t_arg *arg);
-
-
-void cmd_execution(t_parse_list *parse_list, t_env *env, t_arg *arg)
-{
-    int n_cmd;
-
-    n_cmd = cmd_size(parse_list);
-    if (n_cmd == 1 && is_builtin(parse_list->one_cmd))
-        execute_builtin(parse_list->one_cmd, env);
-    else if (n_cmd == 1)
-        one_cmd_exec(parse_list, arg);
-    else
-        two_cmds_exec(parse_list, arg);
-    return ;
-}
 
 int one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
 {
@@ -53,7 +37,7 @@ int one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
        // printf("Commande introuvable : %s\n", command);
         exit(EXIT_FAILURE);
     }
-    create_args(parse_list->one_cmd, arg);
+    create_args(parse_list, arg);
     one_cmd(executable_path, parse_list, arg);
     free(executable_path);
     return (0);
