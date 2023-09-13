@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 23:54:41 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/13 14:09:35 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../libft/libft.h"
-
-int g_status;
 
 int is_builtin(t_one_cmd *one_cmd)
 {
@@ -55,6 +53,6 @@ void    execute_builtin(t_one_cmd *one_cmd, t_env *env)
         builtin_status = cmd_env(env);
     // else if (ft_strncmp(one_cmd->str, "exit", 5) == 0)
     //     builtin_status = cmd_exit(one_cmd, env);
-    g_status = builtin_status;
+    g_exit_status = builtin_status;
     return ;
 }

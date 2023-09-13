@@ -6,26 +6,27 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 00:10:56 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/12 20:27:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 17:20:49 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-static void open_input(t_redir *input, int *fd_in, t_here_doc *here_doc);
-static void open_output(t_redir *output, int *fd_out);
+int open_input(t_redir *input, int *fd_in);
+int open_output(t_redir *output, int *fd_out);
 
-void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out, t_here_doc *here_doc)
+void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out)
 {
-    if (parse_list->input)
-        open_input(parse_list->input, fd_in, here_doc);
-    if (parse_list->output)
+    if (parse_list->input != NULL)
+        open_input(parse_list->input, fd_in);
+    if (parse_list->output != NULL)
         open_output(parse_list->output, fd_out);
 }
 
-static void open_input(t_redir *input, int *fd_in, t_here_doc *here_doc)
+int open_input(t_redir *input, int *fd_in)
 {
     while (input)
     {
@@ -38,16 +39,17 @@ static void open_input(t_redir *input, int *fd_in, t_here_doc *here_doc)
                 exit(1);
             }   
         }
-        else
-        {
-            *fd_in = here_doc->read;
-            here_doc = here_doc->next;
-        }
+        // else
+        // {
+        //     *fd_in = here_doc->read;
+        //     here_doc = here_doc->next;
+        // }
         input = input->next;
     }
+    return (0);
 }
 
-static void open_output(t_redir *output, int *fd_out)
+int open_output(t_redir *output, int *fd_out)
 {
     while (output)
     {
@@ -71,23 +73,5 @@ static void open_output(t_redir *output, int *fd_out)
         }
         output = output->next;
     }
-}
-
-t_here_doc    *open_heredoc(t_parse_list *parsing_list)
-{
-    t_here_doc *here_doc;
-
-    here_doc = malloc(sizeof(t_here_doc));
-    if (!here_doc)
-    {
-		perror("Malloc failure in duplicate envp");
-		return (NULL);
-	}
-    here_doc->read = 0;
-    here_doc->next = NULL;
-    while (parsing_list)
-    {
-        if (parsing_list->input->type == HEREDOC)
-    }
-    return (here_doc);
+    return (0);
 }

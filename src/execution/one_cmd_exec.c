@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/12 20:28:51 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:49:33 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void cmd_execution(t_parse_list *parse_list, t_env *env, t_arg *arg)
     else if (n_cmd == 1)
         one_cmd_exec(parse_list, arg);
     else
-    {
         two_cmds_exec(parse_list, arg);
-    }
     return ;
 }
 
@@ -55,6 +53,7 @@ int one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
        // printf("Commande introuvable : %s\n", command);
         exit(EXIT_FAILURE);
     }
+    create_args(parse_list->one_cmd, arg);
     one_cmd(executable_path, parse_list, arg);
     free(executable_path);
     return (0);
@@ -66,13 +65,12 @@ static int one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg)
     int status;
     int fd_in;
     int fd_out;
-    t_here_doc *here_doc;
+    //t_here_doc *here_doc;
     
     pid = fork();
     fd_in = STDIN_FILENO;
     fd_out = STDOUT_FILENO;
-    arg->argv = create_args(parse_list, arg->n_args);
-    here_doc = open_heredoc(parse_list);
+    //here_doc = open_heredoc(parse_list);
     if (pid == -1) 
     {
         perror("Erreur lors de la création du processus enfant");
@@ -80,7 +78,7 @@ static int one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg)
     } 
     else if (pid == 0)
     {
-        handle_redirections(parse_list, &fd_in, &fd_out, here_doc);
+        handle_redirections(parse_list, &fd_in, &fd_out);
         exec_comd(path, arg, fd_in, fd_out);
     }
     else

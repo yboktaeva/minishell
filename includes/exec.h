@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 20:27:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:49:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 # include "../libft/libft.h"
 
 /*EXEC*/
-char    **create_args(t_parse_list *parse_list, int n_args);
-void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out, t_here_doc *here_doc);
+void    init_args(t_parse_list *parse_list, t_arg *arg);
+void    create_args(t_one_cmd *one_cmd, t_arg *arg);
+int open_input(t_redir *input, int *fd_in);
+int open_output(t_redir *output, int *fd_out);
+void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out);
 void    cmd_execution(t_parse_list *parse_list, t_env *env, t_arg *arg);
 void    ft_free_str_array(char **str);
 char    **ft_split_ignore_spaces(const char *s, char c);

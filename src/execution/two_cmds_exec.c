@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:35:47 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/12 19:37:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:08:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -47,24 +48,6 @@ int two_cmds_exec(t_parse_list *parse_list, t_arg *arg)
     return (exit_status);
 }
 
-static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg) 
-{
-    const char *path;
-    const char *executable_path;
-
-    path = get_path_from_envp(arg);
-    executable_path = get_executable_path(parse_list->one_cmd->str, path);
-    if (!executable_path) 
-    {
-        //perror("Commande introuvable");
-        exit(1);
-    }
-    
-    execve(executable_path, arg->argv, arg->envp);
-    perror("Erreur lors de l'exécution de la commande");
-    exit(1);
-}
-
 static int wait_and_get_exit_status(pid_t pid)
 {
     int status;
@@ -75,9 +58,27 @@ static int wait_and_get_exit_status(pid_t pid)
     else
     {
         printf("La commande ne s'est pas terminée normalement.\n");
-        return -1;
+        return (-1);
     }
 }
+
+static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg) 
+{
+    const char *path;
+    const char *executable_path;
+    path = get_path_from_envp(arg);
+    executable_path = get_executable_path(parse_list->one_cmd->str, path);
+    if (!executable_path) 
+    {
+        //perror("Commande introuvable");
+        exit(1);
+    }
+    init_args(parse_list, arg);
+    execve(executable_path, arg->argv, arg->envp);
+    perror("Erreur lors de l'exécution de la commande");
+    exit(1);
+}
+
 
 static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int input_fd)
 {
@@ -94,14 +95,14 @@ static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2
         close(pipe_fd[0]);
         dup2(pipe_fd[1], STDOUT_FILENO);
         close(pipe_fd[1]);
-        input_fd = open(parse_list->input->file_name, O_RDONLY);
+        input_fd = open_input(parse_list->input, &input_fd);
         if (input_fd == -1)
         {
             perror("Erreur lors de l'ouverture du fichier d'entrée");
             exit(1);
         }
-        dup2(input_fd, STDIN_FILENO);
-        close(input_fd);
+        // dup2(input_fd, STDIN_FILENO);
+        // close(input_fd);
         exec_comd(parse_list, arg);
     }
     return (pid1);
@@ -119,17 +120,17 @@ static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[
     }
     else if (pid2 == 0)
     {
+        close(pipe_fd[1]);
         dup2(pipe_fd[0], STDIN_FILENO);
         close(pipe_fd[0]);
-
-        output_fd = open(parse_list->output->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        output_fd = open_output(parse_list->output, &output_fd);
         if (output_fd == -1)
         {
             perror("Erreur lors de l'ouverture du fichier de sortie");
             exit(1);
         }
-        dup2(output_fd, STDOUT_FILENO);
-        close(output_fd);
+        // dup2(output_fd, STDOUT_FILENO);
+        // close(output_fd);
         exec_comd(parse_list, arg);
     }
     return (pid2);

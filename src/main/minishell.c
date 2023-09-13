@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 18:51:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:55:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void shell_loop(t_env *env, char *line, t_table *info)
         {
             //print_tokens(tokens, info->n_tokens);
             parse_list = parsing_tokens(tokens, info->n_tokens);
-            //print_parse_list(parse_list);
+            print_parse_list(parse_list);
         }
         if (parse_list == NULL)
             is_null(line, tokens, parse_list, info);
