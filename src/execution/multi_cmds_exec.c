@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   two_cmds_exec.c                                    :+:      :+:    :+:   */
+/*   multi_cmds_exec.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/09 13:35:47 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/13 20:08:32 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/09/14 16:10:00 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "builtin.h"
 #include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,12 +21,12 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int input_fd);
-static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int output_fd);
-static int wait_and_get_exit_status(pid_t pid);
-static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg);
+static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int input_fd, t_env *env);
+static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int output_fd, t_env *env);
+static int  wait_and_get_exit_status(pid_t pid);
+static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg, t_env *env);
 
-int two_cmds_exec(t_parse_list *parse_list, t_arg *arg)
+int multi_cmds_exec(t_parse_list *parse_list, t_arg *arg, t_env *env)
 {
     int pipe_fd[2];
     int exit_status;
@@ -39,9 +40,9 @@ int two_cmds_exec(t_parse_list *parse_list, t_arg *arg)
         perror("Erreur lors de la création du tube");
         return (-1);
     }
-    pid_t pid1 = exec_first_comd(parse_list, arg, pipe_fd, fd_in);
+    pid_t pid1 = exec_first_comd(parse_list, arg, pipe_fd, fd_in, env);
     close(pipe_fd[1]);
-    pid_t pid2 = exec_second_comd(parse_list, arg, pipe_fd, fd_out);
+    pid_t pid2 = exec_second_comd(parse_list, arg, pipe_fd, fd_out, env);
     close(pipe_fd[0]);
     wait_and_get_exit_status(pid1);
     exit_status = wait_and_get_exit_status(pid2);
@@ -62,9 +63,10 @@ static int wait_and_get_exit_status(pid_t pid)
     }
 }
 
-static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg) 
+static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg, t_env *env) 
 {
-    const char *path;
+    int i = 0;
+    char *path;
     const char *executable_path;
     path = get_path_from_envp(arg);
     executable_path = get_executable_path(parse_list->one_cmd->str, path);
@@ -73,14 +75,25 @@ static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg)
         //perror("Commande introuvable");
         exit(1);
     }
-    init_args(parse_list, arg);
-    execve(executable_path, arg->argv, arg->envp);
+    if (parse_list->one_cmd)
+    {
+        if (is_builtin(parse_list->one_cmd))
+            builtin_exec(parse_list->one_cmd, env, MULTI_CMD);
+        else
+        {
+            create_args(parse_list, arg);
+            while (path[i])
+            {
+                execve(executable_path, arg->argv, arg->envp);
+                i++;
+            }
+        }
+    }
     perror("Erreur lors de l'exécution de la commande");
     exit(1);
 }
 
-
-static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int input_fd)
+static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int input_fd, t_env *env)
 {
     pid_t pid1;
     
@@ -101,14 +114,14 @@ static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2
             perror("Erreur lors de l'ouverture du fichier d'entrée");
             exit(1);
         }
-        // dup2(input_fd, STDIN_FILENO);
-        // close(input_fd);
-        exec_comd(parse_list, arg);
+        //dup2(input_fd, STDIN_FILENO);
+        //close(input_fd);
+        exec_comd(parse_list, arg, env);
     }
     return (pid1);
 }
 
-static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int output_fd)
+static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2], int output_fd, t_env *env)
 {
     pid_t pid2;
     
@@ -129,9 +142,9 @@ static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[
             perror("Erreur lors de l'ouverture du fichier de sortie");
             exit(1);
         }
-        // dup2(output_fd, STDOUT_FILENO);
-        // close(output_fd);
-        exec_comd(parse_list, arg);
+        //dup2(output_fd, STDOUT_FILENO);
+        //close(output_fd);
+        exec_comd(parse_list, arg, env);
     }
     return (pid2);
 }

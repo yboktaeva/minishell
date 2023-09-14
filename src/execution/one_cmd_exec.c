@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/14 00:08:09 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/14 14:26:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char    *get_path_from_envp(t_arg *arg)
     {
         if (ft_strncmp("PATH=", arg->envp[i], 5) == 0)
         {
-            path = ft_strdup(arg->envp[i] + 5);
+            path = (ft_strdup(arg->envp[i] + 5));
             if (path == NULL)
             {
                 perror("Erreur d'allocation de mémoire");

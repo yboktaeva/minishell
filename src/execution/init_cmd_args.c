@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/13 23:05:21 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/14 15:45:43 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,22 @@
 void create_args(t_parse_list *parse_list, t_arg *arg)
 {
     int i;
+    t_one_cmd *curr_cmd;
     
-    i = 0;
-    arg->n_args = num_args(parse_list->one_cmd);
+    curr_cmd = parse_list->one_cmd;
+    arg->n_args = num_args(curr_cmd);
     arg->argv = malloc(sizeof(char *) * (arg->n_args + 1));
     if (!arg->argv)
 	{
 		perror("Malloc failure in create_args");
 		return ;
 	}
-    while (parse_list->one_cmd)
+    i = 0;
+    while (curr_cmd)
     {
-        arg->argv[i] = parse_list->one_cmd->str;
+        arg->argv[i] = curr_cmd->str;
         i++;
-        parse_list->one_cmd = parse_list->one_cmd->next;
+        curr_cmd = curr_cmd->next;
     }
     arg->argv[i] = NULL;
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
+#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/14 00:07:20 by yuliaboktae      ###   ########.fr        #
+#    Updated: 2023/09/14 15:08:43 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_FILES	=	main/minishell.c main/main.c init/init_all.c lexer/get_env.c\
 				lexer/expand_token.c lexer/expand_utils.c lexer/lex_analyse.c \
 				parser/add_parse_node.c parser/build_parse.c parser/parse_analyse.c \
 				execution/cmd_path.c execution/path_utils.c execution/one_cmd_exec.c \
-				execution/two_cmds_exec.c execution/create_redir.c execution/create_heredoc.c\
+				execution/multi_cmds_exec.c execution/create_redir.c execution/create_heredoc.c\
 				execution/init_cmd_args.c execution/run_cmd.c\
 				execution/ft_split_ignore_spaces.c builtins/builtin.c builtins/echo.c \
 				builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
