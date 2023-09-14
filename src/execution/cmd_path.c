@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/14 12:47:02 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:57:49 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #include <unistd.h>
 
 static const char	*prepare_path(const char *path);
-static char	**get_table_of_paths(const char *path);
-static char	*create_executable_path(const char *path, const char *cmd);
-static char	*find_executable(char **dirs, const char *cmd);
+char			**get_table_of_paths(const char *path);
+static char			*create_executable_path(const char *path, const char *cmd);
+static char			*find_executable(char **dirs, const char *cmd);
 
 char	*get_executable_path(const char *cmd, const char *path)
 {
@@ -48,7 +48,7 @@ static const char	*prepare_path(const char *path)
 	return (path);
 }
 
-static char	**get_table_of_paths(const char *path)
+char	**get_table_of_paths(const char *path)
 {
 	char	**table;
 

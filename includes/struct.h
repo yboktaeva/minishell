@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/13 23:38:49 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/14 18:52:25 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 # define SUCCES ((void *)1)
 
 extern int	g_status;
+
+typedef enum e_sig_state
+{
+    SIG_DEFAULT = 1,
+    SIG_HEREDOC,
+    SIG_CHILD,
+    SIG_PARENT
+}    t_sig_state;
 
 typedef enum e_type
 {
@@ -84,6 +92,7 @@ typedef struct s_parse_list
 typedef struct s_arg
 {
 	int		n_args;
+	int		total_args;
 	char	**argv;
 	char	**envp;
 }			t_arg;

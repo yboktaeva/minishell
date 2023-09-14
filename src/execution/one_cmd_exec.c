@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/14 14:26:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:51:11 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
        // printf("Commande introuvable : %s\n", command);
         exit(EXIT_FAILURE);
     }
-    create_args(parse_list, arg);
     one_cmd(executable_path, parse_list, arg);
     free(executable_path);
     return (0);
@@ -62,8 +61,14 @@ static int one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg)
     } 
     else if (pid == 0)
     {
+        create_args(parse_list, arg);
         handle_redirections(parse_list, &fd_in, &fd_out);
-        exec_comd(path, arg, fd_in, fd_out);
+        int i = 0;
+        while (path[i])
+        {
+            exec_comd(path, arg, fd_in, fd_out);
+            i++;
+        }
     }
     else
     {

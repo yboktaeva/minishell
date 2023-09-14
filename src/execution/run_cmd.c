@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/14 16:03:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:45:35 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void cmd_execution(t_parse_list *parse_list, t_env *env, t_arg *arg)
             one_cmd_exec(parse_list, arg);
     }
     else
+    {
         multi_cmds_exec(parse_list, arg, env);
+    }
     return ;
 }
 

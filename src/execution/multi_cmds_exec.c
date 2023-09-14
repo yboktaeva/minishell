@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 16:10:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 20:12:59 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,25 @@ static int wait_and_get_exit_status(pid_t pid)
 
 static pid_t exec_comd(t_parse_list *parse_list, t_arg *arg, t_env *env) 
 {
-    int i = 0;
     char *path;
     const char *executable_path;
     path = get_path_from_envp(arg);
-    executable_path = get_executable_path(parse_list->one_cmd->str, path);
-    if (!executable_path) 
-    {
-        //perror("Commande introuvable");
-        exit(1);
-    }
-    if (parse_list->one_cmd)
+    if (arg->argv && parse_list->one_cmd)
     {
         if (is_builtin(parse_list->one_cmd))
             builtin_exec(parse_list->one_cmd, env, MULTI_CMD);
         else
         {
-            create_args(parse_list, arg);
-            while (path[i])
+            int i = 0;
+            while (i < arg->n_args)
             {
-                execve(executable_path, arg->argv, arg->envp);
+                executable_path = get_executable_path(arg->argv[i], path);
+                if (!executable_path) 
+                {
+                    //perror("Commande introuvable");
+                    exit(1);
+                }
+                execve(executable_path, &arg->argv[i], arg->envp);
                 i++;
             }
         }
@@ -114,8 +113,7 @@ static pid_t exec_first_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[2
             perror("Erreur lors de l'ouverture du fichier d'entrée");
             exit(1);
         }
-        //dup2(input_fd, STDIN_FILENO);
-        //close(input_fd);
+        create_args(parse_list, arg);
         exec_comd(parse_list, arg, env);
     }
     return (pid1);
@@ -142,8 +140,7 @@ static pid_t exec_second_comd(t_parse_list *parse_list, t_arg *arg, int pipe_fd[
             perror("Erreur lors de l'ouverture du fichier de sortie");
             exit(1);
         }
-        //dup2(output_fd, STDOUT_FILENO);
-        //close(output_fd);
+        create_args(parse_list, arg);
         exec_comd(parse_list, arg, env);
     }
     return (pid2);

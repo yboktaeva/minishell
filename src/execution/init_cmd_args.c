@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 15:45:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:44:46 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,37 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+static char    **convert_parse_list(t_one_cmd *head);
+
 void create_args(t_parse_list *parse_list, t_arg *arg)
 {
+    arg->argv = convert_parse_list(parse_list->one_cmd);
+    arg->n_args = num_args(parse_list->one_cmd);
+}
+
+static char    **convert_parse_list(t_one_cmd *head)
+{
     int i;
+    int size;
     t_one_cmd *curr_cmd;
+    char    **arr;
     
-    curr_cmd = parse_list->one_cmd;
-    arg->n_args = num_args(curr_cmd);
-    arg->argv = malloc(sizeof(char *) * (arg->n_args + 1));
-    if (!arg->argv)
+    size = num_args(head);
+    printf("%d\n", size);
+    curr_cmd = head;
+    arr = malloc(sizeof(char *) * (size + 1));
+    if (!arr)
 	{
 		perror("Malloc failure in create_args");
-		return ;
+		return (NULL);
 	}
     i = 0;
-    while (curr_cmd)
+    while (i < size)
     {
-        arg->argv[i] = curr_cmd->str;
+        arr[i] = curr_cmd->str;
         i++;
         curr_cmd = curr_cmd->next;
     }
-    arg->argv[i] = NULL;
+    arr[size] = NULL;
+    return (arr);
 }

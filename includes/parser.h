@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:05:25 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 18:14:33 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:03:02 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 
 # include "struct.h"
 
-/*PARSER*/
 t_parse_list	*init_parse_list(void);
+t_parse_list	*parsing_tokens(t_token *tokens, int n_tokens);
 t_one_cmd		*init_one_cmd(char *str);
 t_redir			*init_redir_list(t_type type, char *name);
-t_parse_list	*parsing_tokens(t_token *tokens, int n_tokens);
 void			if_word_token(t_token *tokens, \
 				t_parse_list *parse_list, int *j);
 void			*if_redir_token(t_token *tokens, \
