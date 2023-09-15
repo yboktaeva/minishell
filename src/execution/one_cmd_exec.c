@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/14 17:51:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:35:28 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 
 char        *get_path_from_envp(t_arg *arg);
 static int  one_cmd(const char *path, t_parse_list *s, t_arg *arg);
-static void exec_comd(const char *path, t_arg *arg, int fd_in, int fd_out);
+static void exec_comd(const char *path, t_parse_list *parse_list, t_arg *arg, int fd_in, int fd_out);
+static int  wait_and_get_exit_status(pid_t pid);
 
 int one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
 {
@@ -30,30 +31,43 @@ int one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
     char        *executable_path;
 
     path = get_path_from_envp(arg);
-    executable_path = get_executable_path(parse_list->one_cmd->str, path);
-    free((void*)path);
-    if (!executable_path)
+    int i = 0;
+    while (parse_list && path[i])
     {
-       // printf("Commande introuvable : %s\n", command);
-        exit(EXIT_FAILURE);
+        executable_path = get_executable_path(parse_list->one_cmd->str, path);
+        //free((void*)path);
+        if (!executable_path)
+        {
+        // printf("Commande introuvable : %s\n", command);
+            exit(EXIT_FAILURE);
+        }
+        one_cmd(executable_path, parse_list, arg);
+        i++;
+        parse_list = parse_list->next;
+        free(executable_path);
     }
-    one_cmd(executable_path, parse_list, arg);
-    free(executable_path);
     return (0);
 }
 
 static int one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg) 
 {
+    int pipe_fd[2];
     pid_t pid;
     int status;
     int fd_in;
     int fd_out;
     //t_here_doc *here_doc;
     
+    
     pid = fork();
     fd_in = STDIN_FILENO;
     fd_out = STDOUT_FILENO;
     //here_doc = open_heredoc(parse_list);
+    if (pipe(pipe_fd) == -1) 
+    {
+        perror("Erreur lors de la création du tube");
+        return (-1);
+    }
     if (pid == -1) 
     {
         perror("Erreur lors de la création du processus enfant");
@@ -62,40 +76,48 @@ static int one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg)
     else if (pid == 0)
     {
         create_args(parse_list, arg);
-        handle_redirections(parse_list, &fd_in, &fd_out);
-        int i = 0;
-        while (path[i])
-        {
-            exec_comd(path, arg, fd_in, fd_out);
-            i++;
-        }
+        exec_comd(path, parse_list, arg, fd_in, fd_out);
     }
-    else
-    {
-        wait(&status);
-        if (WIFEXITED(status))
-            return (WEXITSTATUS(status));
-        else 
-        {
-            printf("La commande ne s'est pas terminée normalement.\n");
-            return (-1);
-        }
-    }
-    return (0);
-}
-
-static void exec_comd(const char *path, t_arg *arg, int fd_in, int fd_out) 
-{
     if (fd_in != STDIN_FILENO)
     {
         dup2(fd_in, STDIN_FILENO);
         close(fd_in);
     }
+    close(pipe_fd[1]);
+    close(pipe_fd[0]);
+   // wait_and_get_exit_status(pid);
+    status = wait_and_get_exit_status(pid);
+    return (status);
+}
+
+static int wait_and_get_exit_status(pid_t pid)
+{
+    int status;
+
+    waitpid(pid, &status, 0);
+    if (WIFEXITED(status))
+        return WEXITSTATUS(status);
+    else
+    {
+        printf("La commande ne s'est pas terminée normalement.\n");
+        return (-1);
+    }
+}
+
+static void exec_comd(const char *path, t_parse_list *parse_list, t_arg *arg, int fd_in, int fd_out) 
+{
+    // if (fd_in != STDIN_FILENO)
+    // {
+    //     dup2(fd_in, STDIN_FILENO);
+    //     close(fd_in);
+    // }
     if (fd_out != STDOUT_FILENO)
     {
         dup2(fd_out, STDOUT_FILENO);
+        close(fd_in);
         close(fd_out);
     }
+    handle_redirections(parse_list, &fd_in, &fd_out);
     execve(path, arg->argv, arg->envp);
     perror("Erreur lors de l'exécution de la commande");
     exit(1);

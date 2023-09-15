@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 19:44:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:05:07 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,15 @@ static char    **convert_parse_list(t_one_cmd *head);
 
 void create_args(t_parse_list *parse_list, t_arg *arg)
 {
-    arg->argv = convert_parse_list(parse_list->one_cmd);
-    arg->n_args = num_args(parse_list->one_cmd);
+    t_parse_list *head;
+
+    head = parse_list;
+    while (head)
+    {
+        arg->argv = convert_parse_list(head->one_cmd);
+        arg->n_args = num_args(head->one_cmd);
+        head = head->next;
+    }
 }
 
 static char    **convert_parse_list(t_one_cmd *head)
@@ -43,6 +50,7 @@ static char    **convert_parse_list(t_one_cmd *head)
     while (i < size)
     {
         arr[i] = curr_cmd->str;
+        printf("%s\n", arr[i]);
         i++;
         curr_cmd = curr_cmd->next;
     }
