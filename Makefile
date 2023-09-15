@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/14 17:00:51 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/15 16:58:45 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRC_FILES	=	main/minishell.c main/main.c main/signals.c init/init_all.c lexer/ge
 				execution/multi_cmds_exec.c execution/create_redir.c execution/create_heredoc.c\
 				execution/init_cmd_args.c execution/run_cmd.c\
 				execution/ft_split_ignore_spaces.c builtins/builtin.c builtins/echo.c \
-				builtins/cd.c builtins/pwd.c builtins/export.c builtins/unset.c \
+				builtins/cd.c builtins/pwd.c builtins/export.c builtins/export_utils.c  builtins/unset.c \
 				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c \
 				destructor/free_env.c utils/lex_utils.c utils/env_utils.c utils/parse_utils.c\
 				utils/print.c utils/exec_utils.c

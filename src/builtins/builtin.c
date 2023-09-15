@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 12:29:34 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/15 18:52:50 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ int is_builtin(t_one_cmd *one_cmd)
     return (0);
 }
 
-void    builtin_exec(t_one_cmd *one_cmd, t_env *env, t_num_cmd num_of_cmd)
+void    builtin_exec(t_one_cmd *one_cmd, t_env *env, t_table *info, t_num_cmd num_of_cmd)
 {
     int b_status;
     
     b_status = 0;
     if (ft_strcmp(one_cmd->str, "echo") == 0)
         b_status = cmd_echo(one_cmd);
-    // else if (ft_strcmp(one_cmd->str, "cd") == 0)
-    //     b_status = cmd_cd(one_cmd, env);
+    else if (ft_strcmp(one_cmd->str, "cd") == 0)
+        b_status = cmd_cd(one_cmd, info);
     else if (ft_strcmp(one_cmd->str, "pwd") == 0)
         b_status = cmd_pwd(one_cmd);
-    // else if (ft_strcmp(one_cmd->str, "export") == 0)
-    //     b_status = cmd_export(one_cmd, env);
-    // else if (ft_strcmp(one_cmd->str, "unset") == 0)
-    //     b_status = cmd_unset(one_cmd, env);
+    else if (ft_strcmp(one_cmd->str, "export") == 0)
+        b_status = cmd_export(one_cmd, env);
+    else if (ft_strcmp(one_cmd->str, "unset") == 0)
+        b_status = cmd_unset(one_cmd, env);
     else if (ft_strcmp(one_cmd->str, "env") == 0)
         b_status = cmd_env(env);
     // else if (ft_strcmp(one_cmd->str, "exit") == 0)

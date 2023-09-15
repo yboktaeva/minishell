@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 18:52:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/15 18:25:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ typedef struct s_token
 
 typedef struct	s_env
 {
+	int				exported;
 	char			*var_name;
 	char			*var_value;
 	char			*str;
-	int				exported;
 	struct s_env	*next;
 }		t_env;
 
@@ -92,7 +92,6 @@ typedef struct s_parse_list
 typedef struct s_arg
 {
 	int		n_args;
-	int		total_args;
 	char	**argv;
 	char	**envp;
 }			t_arg;

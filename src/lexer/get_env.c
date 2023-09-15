@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 20:52:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:35:55 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_env	*add_env_node(char *str)
 	if (!index)
 		new->var_value = NULL;
 	else
-		new->var_value = ft_substr(str, index + 1, ft_strlen(str));
+		new->var_value = ft_substr(str, index, ft_strlen(str));
 	new->next = NULL;
 	return (new);
 }
