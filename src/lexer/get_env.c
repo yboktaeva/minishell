@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/15 19:35:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:32:39 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	get_env(t_env *head, char *str)
 		if (copy->var_value != NULL)
 			free(copy->var_value);
 		copy->str = ft_strdup(str);
-		copy->var_value = ft_substr(str, index, ft_strlen(str));
+		copy->var_value = ft_substr(str, index + 1, ft_strlen(str));
 		return ;
 	}
 	start = head;
@@ -87,7 +87,7 @@ t_env	*add_env_node(char *str)
 	if (!index)
 		new->var_value = NULL;
 	else
-		new->var_value = ft_substr(str, index, ft_strlen(str));
+		new->var_value = ft_substr(str, index + 1, ft_strlen(str));
 	new->next = NULL;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 20:12:59 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:22:00 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,133 +27,133 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-static int wait_and_get_exit_status(pid_t pid);
+// static int wait_and_get_exit_status(pid_t pid);
 
-static int execute_command(t_parse_list *parse_list, const char *path, t_arg *arg, int fd_in, int fd_out)
-{
-    pid_t pid;
-    int status;
+// static int execute_command(t_parse_list *parse_list, const char *path, t_arg *arg, int fd_in, int fd_out)
+// {
+//     pid_t pid;
+//     int status;
 
-    pid = fork();
+//     pid = fork();
     
-    if (pid == -1)
-    {
-        perror("Erreur lors de la création du processus enfant");
-        return -1;
-    }
-    else if (pid == 0)
-    {
-        // Processus fils
-        // Redirection d'entrée/sortie pour le fils
-        if (fd_in != STDIN_FILENO)
-        {
-            dup2(fd_in, STDIN_FILENO);
-            close(fd_in);
-        }
-        if (fd_out != STDOUT_FILENO)
-        {
-            dup2(fd_out, STDOUT_FILENO);
-            close(fd_out);
-        }
-        create_args(parse_list, arg);
-        exec_comds(path, arg);
-        exit(EXIT_FAILURE); // En cas d'échec de l'exécution
-    }
-    else
-    {
-        // Processus parent
-        status = wait_and_get_exit_status(pid);
-        return status;
-    }
-}
+//     if (pid == -1)
+//     {
+//         perror("Erreur lors de la création du processus enfant");
+//         return -1;
+//     }
+//     else if (pid == 0)
+//     {
+//         // Processus fils
+//         // Redirection d'entrée/sortie pour le fils
+//         if (fd_in != STDIN_FILENO)
+//         {
+//             dup2(fd_in, STDIN_FILENO);
+//             close(fd_in);
+//         }
+//         if (fd_out != STDOUT_FILENO)
+//         {
+//             dup2(fd_out, STDOUT_FILENO);
+//             close(fd_out);
+//         }
+//         create_args(parse_list, arg);
+//         exec_comds(path, arg);
+//         exit(EXIT_FAILURE); // En cas d'échec de l'exécution
+//     }
+//     else
+//     {
+//         // Processus parent
+//         status = wait_and_get_exit_status(pid);
+//         return status;
+//     }
+// }
 
-static int wait_and_get_exit_status(pid_t pid)
-{
-    int status;
+// static int wait_and_get_exit_status(pid_t pid)
+// {
+//     int status;
 
-    waitpid(pid, &status, 0);
+//     waitpid(pid, &status, 0);
 
-    if (WIFEXITED(status))
-    {
-        return WEXITSTATUS(status);
-    }
-    else
-    {
-        printf("La commande ne s'est pas terminée normalement.\n");
-        return -1;
-    }
-}
+//     if (WIFEXITED(status))
+//     {
+//         return WEXITSTATUS(status);
+//     }
+//     else
+//     {
+//         printf("La commande ne s'est pas terminée normalement.\n");
+//         return -1;
+//     }
+// }
 
-void exec_comds(const char *path, t_arg *arg)
-{
-    execve(path, arg->argv, arg->envp);
-    perror("Erreur lors de l'exécution de la commande");
-    exit(EXIT_FAILURE);
-}
+// void exec_comds(const char *path, t_arg *arg)
+// {
+//     execve(path, arg->argv, arg->envp);
+//     perror("Erreur lors de l'exécution de la commande");
+//     exit(EXIT_FAILURE);
+// }
 
-char *get_path_from_envp(t_arg *arg)
-{
-    int i = 0;
+// char *get_path_from_envp(t_arg *arg)
+// {
+//     int i = 0;
 
-    while (arg->envp[i])
-    {
-        if (strncmp("PATH=", arg->envp[i], 5) == 0)
-        {
-            char *path = strdup(arg->envp[i] + 5);
-            if (path == NULL)
-            {
-                perror("Erreur d'allocation de mémoire");
-                exit(EXIT_FAILURE);
-            }
-            return path;
-        }
-        i++;
-    }
+//     while (arg->envp[i])
+//     {
+//         if (strncmp("PATH=", arg->envp[i], 5) == 0)
+//         {
+//             char *path = strdup(arg->envp[i] + 5);
+//             if (path == NULL)
+//             {
+//                 perror("Erreur d'allocation de mémoire");
+//                 exit(EXIT_FAILURE);
+//             }
+//             return path;
+//         }
+//         i++;
+//     }
 
-    return NULL; // Si la variable PATH n'est pas trouvée
-}
+//     return NULL; // Si la variable PATH n'est pas trouvée
+// }
 
-int multi_cmds_exec(t_parse_list *parse_list, t_arg *arg)
-{
-    const char *path;
-    char *executable_path;
+// int multi_cmds_exec(t_parse_list *parse_list, t_arg *arg)
+// {
+//     const char *path;
+//     char *executable_path;
 
-    path = get_path_from_envp(arg);
-    int status = 0;
-    int fd_in = STDIN_FILENO;
-    int fd_out = STDOUT_FILENO;
+//     path = get_path_from_envp(arg);
+//     int status = 0;
+//     int fd_in = STDIN_FILENO;
+//     int fd_out = STDOUT_FILENO;
 
-    while (parse_list && path)
-    {
-        executable_path = get_executable_path(parse_list->one_cmd->str, path);
-        printf("executable_path = %s\n", executable_path);
+//     while (parse_list && path)
+//     {
+//         executable_path = get_executable_path(parse_list->one_cmd->str, path);
+//         printf("executable_path = %s\n", executable_path);
 
-        if (!executable_path)
-        {
-            fprintf(stderr, "Commande introuvable : %s\n", parse_list->one_cmd->str);
-            exit(EXIT_FAILURE);
-        }
+//         if (!executable_path)
+//         {
+//             fprintf(stderr, "Commande introuvable : %s\n", parse_list->one_cmd->str);
+//             exit(EXIT_FAILURE);
+//         }
 
-        handle_redirections(parse_list, &fd_in, &fd_out);
-        // int i = 0;
-        // while (arg->argv[i] != NULL)
-        // {
-        //     printf("arg->argv: %s\n", arg->argv[i]);
-        //     i++;
-        // }
-        int cmd_status = execute_command(parse_list, executable_path, arg, fd_in, fd_out);
-        if (cmd_status != 0)
-        {
-            fprintf(stderr, "La commande a échoué : %s\n", parse_list->one_cmd->str);
-            status = -1; // Indique une erreur globale
-        }
+//         handle_redirections(parse_list, &fd_in, &fd_out);
+//         // int i = 0;
+//         // while (arg->argv[i] != NULL)
+//         // {
+//         //     printf("arg->argv: %s\n", arg->argv[i]);
+//         //     i++;
+//         // }
+//         int cmd_status = execute_command(parse_list, executable_path, arg, fd_in, fd_out);
+//         if (cmd_status != 0)
+//         {
+//             fprintf(stderr, "La commande a échoué : %s\n", parse_list->one_cmd->str);
+//             status = -1; // Indique une erreur globale
+//         }
 
-        free(executable_path);
-        parse_list = parse_list->next;
-    }
+//         free(executable_path);
+//         parse_list = parse_list->next;
+//     }
 
-    return status;
-}
+//     return status;
+// }
 
 
 

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:07:13 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/15 20:19:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/16 13:57:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int cmd_cd(t_one_cmd *one_cmd, t_table *info)
     pwd_oldpwd(info);
     cwd = getcwd(NULL, 0);
     path = NULL;
-    t_one_cmd *head = one_cmd;
+    t_one_cmd *head = one_cmd->next;
     while (head)
     {
-        if (!head->str || ft_strcmp(head->next->str, "~") == 0)
+        if (ft_strcmp(head->str, "~") == 0)
             ret = specific_path(info, "HOME");
         else if (ft_strcmp(head->str, "-") == 0)
             ret = specific_path(info, "OLDPWD");
@@ -72,7 +72,7 @@ int cmd_cd(t_one_cmd *one_cmd, t_table *info)
             update_path_variables(info);
             printf("apres update_path_variables\n");
         }
-        //free(path);
+        free(path);
     }
     else
     {
@@ -92,7 +92,7 @@ static int specific_path(t_table *info, char *str)
     int ret;
 
     tmp = find_path(str, info);
-    //printf("tmp = %s\n", tmp);
+    printf("tmp = %s\n", tmp);
     if (tmp == NULL)
     {
         printf("%s not set\n", str);
@@ -121,7 +121,7 @@ static char	*find_path(char *str, t_table *info)
 	while (head)
 	{
 		if (ft_strncmp(head->var_name, str, ft_strlen(str)) == 0)
-			return (ft_strdup(head->str) - ft_strlen(head->var_name));
+			return (ft_strdup(head->var_value));
         head = head->next;
 	}
 	return (NULL);
@@ -145,15 +145,15 @@ static void update_path_variables(t_table *info)
 	char	*tmp;
     t_env   *head;
 
-    head = info->env;
+    head = info->env->next;
 	while (head)
 	{
-		if (!ft_strncmp(head->var_name, "PWD=", 4))
+		if (!ft_strncmp(head->var_name, "PWD", 3))
 		{
 			tmp = ft_strjoin("PWD=", info->pwd);
 			head->str = tmp;
 		}
-		else if (!ft_strncmp(head->var_name, "OLDPWD=", 7) && info->old_pwd)
+		else if (!ft_strncmp(head->var_name, "OLDPWD", 6) && info->old_pwd)
 		{
 			tmp = ft_strjoin("OLDPWD=", info->old_pwd);
 			head->str = tmp;
