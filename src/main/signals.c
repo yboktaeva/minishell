@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:07:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/14 17:10:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 12:18:11 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	default_sigint(int sig)
 	g_status = 130;
 	ft_putstr_fd("\n", STDERR_FILENO);
 	rl_on_new_line();
-	rl_replace_line("", 1);
+	//rl_replace_line("", 1);
 	rl_redisplay();
 }
 

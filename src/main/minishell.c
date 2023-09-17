@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/16 14:01:54 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 20:18:36 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include <signal.h>
 #include <unistd.h>
 
+int g_status;
+
 static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *info)
 {
     free_all(tokens, info->n_tokens, parse_list);
@@ -40,9 +42,8 @@ void shell_loop(t_env *env, char *line, t_table *info)
     parse_list = NULL;
     if (!line)
     {
-        ft_putendl_fd("exit", 1);
-        free(line);
-        return ;
+        ft_putendl_fd("exit", 2);
+        exit (g_status);
     }
     else if (line[0] != 0)
     {
@@ -66,7 +67,6 @@ void shell_loop(t_env *env, char *line, t_table *info)
     }
 }
 
-int g_status;
 
 int main(int ac, char **argv, char **envp)
 {
@@ -80,12 +80,15 @@ int main(int ac, char **argv, char **envp)
         ft_putendl_fd("Program does not accept any arguments", 1);
         exit (EXIT_FAILURE);
     }
+    g_status = 0;
+    //handle_sig();
     env = init_env_list(envp);
     prompt = NULL;
     while (1)
     {
         free(prompt);
         prompt = readline("minishell$> ");
+        // handle_sig();
         init_execve_args(&arg, env);
         init_main_table(&info, prompt, envp);
         info.env = env;
@@ -95,5 +98,5 @@ int main(int ac, char **argv, char **envp)
     free(arg.envp);
     free(arg.argv);
     free_env(&env);
-    return (EXIT_SUCCESS);
+    exit(g_status);
 }

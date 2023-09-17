@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 00:10:56 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/13 17:20:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:46:00 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "minishell.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,14 +36,19 @@ int open_input(t_redir *input, int *fd_in)
             *fd_in = open(input->file_name, O_RDONLY);
             if (*fd_in == -1) 
             {
-                perror("Erreur lors de l'ouverture du fichier d'entrée");
-                exit(1);
+                open_error(input->file_name, REDIR_IN);
+                return (-1);
             }   
         }
-        // else
+        // else if (input->type == HEREDOC)
         // {
         //     *fd_in = here_doc->read;
         //     here_doc = here_doc->next;
+        //     if (*fd_in == -1) 
+        //     {
+        //         open_error(input->file_name);
+        //         return (-1);
+        //     }   
         // }
         input = input->next;
     }
@@ -58,17 +64,17 @@ int open_output(t_redir *output, int *fd_out)
             *fd_out = open(output->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
             if (*fd_out == -1) 
             {
-                perror("Erreur lors de l'ouverture du fichier de sortie");
-                exit(1);
+                open_error(output->file_name, REDIR_OUT);
+                return (-1);
             }
         }
-        else
+        else if (output->type == APPEND)
         {
             *fd_out = open(output->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (*fd_out == -1) 
             {
-                perror("Erreur lors de l'ouverture du fichier de sortie");
-                exit(1);
+                open_error(output->file_name, APPEND);
+                return (-1);
             }
         }
         output = output->next;

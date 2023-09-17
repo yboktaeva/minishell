@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/15 18:03:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 12:18:52 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ static void find_exported(t_env *env, char *var_name);
 
 int cmd_export(t_one_cmd *one_cmd, t_env *env)
 {
-    int i;
     int exit_status;
     char *name;
     char *value;
     
-	i = 0;
 	exit_status = 0;
     if (one_cmd->next == NULL)
 		return (print_export(env));

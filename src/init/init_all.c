@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/13 19:31:57 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 18:25:52 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void *init_main_table(t_table *info, char *line, char **envp)
     return (SUCCES);
 }
 
-void    init_execve_args(t_arg *arg, t_env *env)
+void    *init_execve_args(t_arg *arg, t_env *env)
 {
     arg->envp = duplicate_envp(env);
-    //return (SUCCES);
+    return (SUCCES);
 }
 
 t_parse_list *init_parse_list(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/15 18:25:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:12:53 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,8 @@ typedef struct s_table
 	t_token			*tokens;
 	t_parse_list	*parse_list;
 	t_here_doc		*here_doc;
-	char			*path;
-	char			*pwd;
-	char			*old_pwd;
 	int				n_tokens;
 	int				cmd_count;
-	int				exit_status;
 	pid_t			pid;
 }			t_table;
 

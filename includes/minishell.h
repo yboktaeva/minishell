@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/14 16:56:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:42:52 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "struct.h"
 
 /*READLINE_INIT*/
-void	init_execve_args(t_arg *arg, t_env *env);
+void	*init_execve_args(t_arg *arg, t_env *env);
 void	*init_main_table(t_table *info, char *line, char **envp);
 void	shell_loop(t_env *env, char *line, t_table *info);
 /*SIGNAL*/
@@ -27,6 +27,7 @@ void    handle_sig(int state);
 /*ERRORS*/
 void	*quote_error(void);
 void	*syntax_error(char *str);
+void	*open_error(char *str, t_type type);
 /*DESTRUCTOR*/
 void	free_all(t_token *tokens, int n_tokens, \
 		t_parse_list *parse_list);

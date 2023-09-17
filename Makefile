@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
+#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/15 16:58:45 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/17 22:59:19 by yuliaboktae      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

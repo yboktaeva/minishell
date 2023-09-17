@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:58:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:45:51 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,15 @@ void	*quote_error(void)
 void	*syntax_error(char *str)
 {
 	printf("minishell: syntax error near unexpected token `%s'\n", str);
+	return (NULL);
+}
+
+void	*open_error(char *str, t_type type)
+{
+	printf("%s:", str);
+	if (type == REDIR_IN)
+    	perror("No such file or directory");
+	else if (type == REDIR_OUT || type == APPEND)
+    	perror("cannot open output file");
 	return (NULL);
 }

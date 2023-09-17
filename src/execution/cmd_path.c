@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/14 17:57:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 18:30:29 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <unistd.h>
 
 static const char	*prepare_path(const char *path);
-char			**get_table_of_paths(const char *path);
+static char			**get_table_of_paths(const char *path);
 static char			*create_executable_path(const char *path, const char *cmd);
 static char			*find_executable(char **dirs, const char *cmd);
 
@@ -48,7 +48,7 @@ static const char	*prepare_path(const char *path)
 	return (path);
 }
 
-char	**get_table_of_paths(const char *path)
+static char	**get_table_of_paths(const char *path)
 {
 	char	**table;
 

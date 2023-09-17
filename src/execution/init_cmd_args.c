@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/15 13:05:07 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 18:21:54 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ static char    **convert_parse_list(t_one_cmd *head)
 {
     int i;
     int size;
-    t_one_cmd *curr_cmd;
     char    **arr;
+    t_one_cmd *curr_cmd;
     
     size = num_args(head);
-    printf("%d\n", size);
     curr_cmd = head;
     arr = malloc(sizeof(char *) * (size + 1));
     if (!arr)
@@ -50,7 +49,6 @@ static char    **convert_parse_list(t_one_cmd *head)
     while (i < size)
     {
         arr[i] = curr_cmd->str;
-        printf("%s\n", arr[i]);
         i++;
         curr_cmd = curr_cmd->next;
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 20:16:18 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 18:28:42 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,22 @@ int	env_size(t_env *env)
 char	**duplicate_envp(t_env *env)
 {
 	int		i;
+	t_env	*head;
 	char	**cp_envp;
-	t_env	*tmp;
 
 	i = 0;
-	tmp = env->next;
+	head = env->next;
 	cp_envp = (char **)malloc((env_size(env) + 2) * sizeof(char *));
 	if (!cp_envp)
 	{
 		perror("Malloc failure in duplicate envp");
 		return (NULL);
 	}
-	while (tmp != NULL)
+	while (head)
 	{
-		cp_envp[i] = tmp->str;
+		cp_envp[i] = head->str;
 		i++;
-		tmp = tmp->next;
+		head = head->next;
 	}
 	cp_envp[i] = NULL;
 	return (cp_envp);

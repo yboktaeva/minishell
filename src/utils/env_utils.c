@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 20:08:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/17 21:46:37 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,40 +45,19 @@ char	*env_var_value(t_env *head, char *var_name)
 
 	env = head->next;
 	var_name_len = ft_strlen(var_name);
-	// if (*var_name == '?')
-	// {
-	//     return (ft_itoa(g_status));
-	// }
+	if (var_name_len == 1 && *var_name == '?')
+	{
+	    return (ft_itoa(g_status));
+	}
 	while (env)
 	{
 		if (ft_strncmp(var_name, env->var_name, var_name_len + 1) == 0)
 		{
 			if (env->var_value == NULL)
-				return (ft_strdup(""));
+				return (ft_strdup("\0"));
 			return (ft_strdup(env->var_value));
 		}
 		env = env->next;
 	}
-	return (ft_strdup(""));
+	return (ft_strdup("\0"));
 }
-
-// char    *find_env_value(t_env* env, char *var_name)
-// {
-//     while (env != NULL)
-//     {
-//         if (strcmp(env->var_name, var_name) == 0)
-//             return env->var_value;
-//         env = env->next;
-//     }
-//     return (NULL);
-// }
-
-
-// t_env   *get_last(t_env *env)
-// {
-//     if (!env)
-//         return (NULL);
-//     while (env->next != NULL)
-//         env = env->next;
-//     return (env);
-// }
