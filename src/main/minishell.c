@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 20:18:36 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 20:30:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void shell_loop(t_env *env, char *line, t_table *info)
             cmd_execution(parse_list, info, env, info->arg);
             add_history(line);
             free_all(tokens, info->n_tokens, parse_list);
+            free(info->arg->envp);
         }
     }
 }
-
 
 int main(int ac, char **argv, char **envp)
 {
@@ -81,22 +81,20 @@ int main(int ac, char **argv, char **envp)
         exit (EXIT_FAILURE);
     }
     g_status = 0;
-    //handle_sig();
     env = init_env_list(envp);
     prompt = NULL;
+    handle_sig(SIG_DEFAULT);
     while (1)
     {
         free(prompt);
         prompt = readline("minishell$> ");
-        // handle_sig();
         init_execve_args(&arg, env);
         init_main_table(&info, prompt, envp);
         info.env = env;
         info.arg = &arg;
         shell_loop(env, prompt, &info);
     }
-    free(arg.envp);
-    free(arg.argv);
     free_env(&env);
+    free(arg.argv);
     exit(g_status);
 }

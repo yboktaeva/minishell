@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 22:42:52 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 17:28:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void    handle_sig(int state);
 void	*quote_error(void);
 void	*syntax_error(char *str);
 void	*open_error(char *str, t_type type);
+void	*chdir_error(char *str);
 /*DESTRUCTOR*/
 void	free_all(t_token *tokens, int n_tokens, \
 		t_parse_list *parse_list);

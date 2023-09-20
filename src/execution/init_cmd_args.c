@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 18:21:54 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 19:31:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

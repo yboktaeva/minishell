@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 22:45:51 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 17:26:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,15 @@ void	*syntax_error(char *str)
 
 void	*open_error(char *str, t_type type)
 {
-	printf("%s:", str);
 	if (type == REDIR_IN)
-    	perror("No such file or directory");
+		printf("%s: No such file or directory", str);
 	else if (type == REDIR_OUT || type == APPEND)
-    	perror("cannot open output file");
+		printf("%s:cannot open output file", str);
+	return (NULL);
+}
+
+void	*chdir_error(char *str)
+{
+	printf ("%s: No such file or directory\n", str);
 	return (NULL);
 }

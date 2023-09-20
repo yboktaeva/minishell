@@ -3,171 +3,104 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:07:13 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/17 18:18:36 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 18:27:10 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "minishell.h"
 #include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <limits.h>
 
-static int specific_path(t_env *env, char *str);
-static char	*find_path(char *str, t_env *env);
-static void	change_path(t_env *env);
-static void update_path_variables(t_env *env);
-//char	*print_path(char *str, char **envp);
+static void init_cmd_cd(char **path, int *ret);
+static int  handle_tilde_and_dash(t_one_cmd *head, t_env *curr);
+static char *create_path(t_one_cmd *head, t_env *curr);
+static int  change_directory(char *path, t_env *env, t_one_cmd *one_cmd);
 
 int cmd_cd(t_one_cmd *one_cmd, t_env *env)
 {
-    int ret;
-    char *path;
-    char *cwd;
+	int			ret;
+	char		*path;
+	t_one_cmd	*head;
+	t_env		*curr;
 
-    cwd = getcwd(NULL, 0);
+	head = one_cmd->next;
+	curr = env->next;
+	init_cmd_cd(&path, &ret);
+	while (head)
+	{
+		ret = handle_tilde_and_dash(head, curr);
+		if (ret == -1)
+		{
+			path = create_path(head, curr);
+			if (path)
+				ret = change_directory(path, curr, head);
+		}
+		head = head->next;
+	}
+	free(path);
+	return (ret);
+}
+
+static void  init_cmd_cd(char **path, int *ret)
+{
+	*path = NULL;
+	*ret = -1;
+}
+
+static int handle_tilde_and_dash(t_one_cmd *head, t_env *curr)
+{
+	int ret;
+
+	ret = -1;
+	if (!ft_strcmp(head->str, "~"))
+		ret = specific_path(curr, "HOME");
+	else if (!ft_strcmp(head->str, "-"))
+	{
+		ret = specific_path(curr, "OLDPWD");
+		print_pwd(curr, "PWD");
+	}
+	return (ret);
+}
+
+static char* create_path(t_one_cmd *head, t_env *curr)
+{
+	char    *path;
+    char    *tmp;
+    
     path = NULL;
-    t_one_cmd *head = one_cmd->next;
-    t_env   *curr = env->next;
-    while (head)
-    {
-        if (ft_strcmp(head->str, "~") == 0)
-            ret = specific_path(env, "HOME");
-        else if (ft_strcmp(head->str, "-") == 0)
-            ret = specific_path(env, "OLDPWD");
-        else
-        {
-            if (head->str[0] == '/')
-            {
-                // Absolute path
-                path = ft_strdup(head->str);
-            }
-            else
-            {
-                while (curr)
-                {
-                    if (!ft_strcmp(curr->var_name, "PWD"))
-                    {
-                        path = ft_strjoin(curr->var_value, "/");
-                        path = ft_strjoin(path, head->str);
-                    }
-                    curr = curr->next;
-                }
-                if (path)
-                {
-                    ret = chdir(path);
-                    if (ret != 0)
-                        perror("chdir");
-                    else
-                    {
-                        change_path(env);
-                        update_path_variables(env);
-                    }
-                    free(path);
-                }
-                else
-                    ret = -1;
-            }
-        }
-        head = head->next;
-    }
-    free(cwd);
-    return (ret);
+    tmp = NULL;
+	if (head->str[0] == '/')
+		path = ft_strdup(head->str);
+	else
+	{
+		while (curr)
+		{
+			if (!ft_strcmp(curr->var_name, "PWD"))
+			{
+				tmp = ft_strjoin(curr->var_value, "/");
+				path = ft_strjoin(tmp, head->str);
+			}
+			curr = curr->next;
+		}
+        free(tmp);
+	}
+	return (path);
 }
 
-static int specific_path(t_env *env, char *str)
+static int change_directory(char *path, t_env *env, t_one_cmd *one_cmd)
 {
-    char *tmp;
     int ret;
-
-    tmp = find_path(str, env);
-    if (tmp == NULL)
-        return (-1);
-    ret = chdir(tmp);
+    
+    ret = chdir(path);
     if (ret != 0)
-    {
-        perror("chdir");
-        return (ret);
-    }
-    change_path(env);
-    update_path_variables(env);
+        chdir_error(one_cmd->str);
+    else
+        change_path(env);
     return (ret);
 }
-
-static char	*find_path(char *str, t_env *env)
-{
-    t_env *head;
-
-    head = env->next;
-	while (head)
-	{
-		if (ft_strcmp(head->var_name, str) == 0)
-			return (head->var_value);
-        head = head->next;
-	}
-	return (NULL);
-}
-
-static void	change_path(t_env *env)
-{
-	char	*tmp = NULL;
-    t_env   *head;
-
-    head = env->next;
-    while (head)
-    {
-        if (!ft_strcmp(head->var_name, "PWD"))
-        {
-            tmp = ft_strdup(head->var_value);
-            free(head->var_value);
-            head->var_value = getcwd(NULL, 0);
-        }
-        if (!ft_strcmp(head->var_name, "OLDPWD"))
-        {
-            free(head->var_value);
-            head->var_value = tmp;
-        }
-        head = head->next;
-    }
-}
-
-static void update_path_variables(t_env *env)
-{
-	char	*tmp;
-    t_env   *head;
-
-    head = env->next;
-	while (head)
-	{
-		if (!ft_strncmp(head->var_name, "PWD", 3))
-		{
-			tmp = ft_strjoin("PWD=", env->var_value);
-			head->str = tmp;
-		}
-		else if (!ft_strncmp(head->var_name, "OLDPWD", 6) && env->var_value)
-		{
-			tmp = ft_strjoin("OLDPWD=", env->var_value);
-			head->str = tmp;
-		}
-        head = head->next;
-	}
-	free(tmp);
-}
-
-// char	*print_path(char *str, char **envp)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (envp[i])
-// 	{
-// 		if (!ft_strncmp(envp[i], str, ft_strlen(str)))
-// 			return (ft_substr(envp[i], ft_strlen(str) + 1, ft_strlen(envp[i]) - ft_strlen(str)));
-// 		i++;
-// 	}
-// 	return (ft_strdup("\0"));
-// }

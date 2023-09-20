@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 21:46:37 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 20:27:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*env_var_value(t_env *head, char *var_name)
 	var_name_len = ft_strlen(var_name);
 	if (var_name_len == 1 && *var_name == '?')
 	{
-	    return (ft_itoa(g_status));
+	    ft_itoa(g_status);
 	}
 	while (env)
 	{

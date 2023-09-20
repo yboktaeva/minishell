@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:00:22 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/11 17:11:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:26:33 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	cmd_pwd(t_one_cmd *one_cmd)
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
 	if (one_cmd->str == NULL)
-		return (0);
+		return (1);
 	if (cwd == NULL)
 	{
 		perror("minishell:");
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	ft_putendl_fd(cwd, STDOUT_FILENO);
 	free(cwd);
-	return (EXIT_SUCCESS);
+	return (0);
 }

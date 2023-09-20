@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 00:10:56 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/17 22:46:00 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 17:15:55 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int open_output(t_redir *output, int *fd_out)
             if (*fd_out == -1) 
             {
                 open_error(output->file_name, REDIR_OUT);
-                return (-1);
+                break ;
             }
         }
         else if (output->type == APPEND)
@@ -74,7 +74,7 @@ int open_output(t_redir *output, int *fd_out)
             if (*fd_out == -1) 
             {
                 open_error(output->file_name, APPEND);
-                return (-1);
+                break ;
             }
         }
         output = output->next;

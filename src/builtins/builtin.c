@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 21:51:15 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/20 12:07:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int is_builtin(t_one_cmd *one_cmd)
         return (1);
     else if (ft_strcmp(one_cmd->str, "cd") == 0)
         return (1);
-    else if (ft_strcmp(one_cmd->str, "pwd") == 0)
+    else if (ft_strncmp(one_cmd->str, "pwd", 4) == 0)
         return (1);
     else if (ft_strcmp(one_cmd->str, "export") == 0)
         return (1);
@@ -44,7 +44,7 @@ void    builtin_exec(t_one_cmd *one_cmd, t_env *env, t_table *info, t_num_cmd nu
         b_status = cmd_echo(one_cmd);
     else if (ft_strcmp(one_cmd->str, "cd") == 0)
         b_status = cmd_cd(one_cmd, env);
-    else if (ft_strcmp(one_cmd->str, "pwd") == 0)
+    else if (ft_strncmp(one_cmd->str, "pwd", 4) == 0)
         b_status = cmd_pwd(one_cmd);
     else if (ft_strcmp(one_cmd->str, "export") == 0)
         b_status = cmd_export(one_cmd, env);
