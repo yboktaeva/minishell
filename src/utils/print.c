@@ -6,19 +6,22 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 17:41:43 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/13 19:59:24 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:23:21 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void	print_env_list(t_env *env)
 {
 	t_env	*head;
-
-	head = env;
-	while (head->next != NULL)
+	
+	if (!env)
+		exit (1);
+	head = env->next;
+	while (head != NULL)
 	{
 		if (head->var_value != NULL)
 			printf("%s=%s\n", head->var_name, head->var_value);

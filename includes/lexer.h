@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:34 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 19:00:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:26:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 # define LEXER_H
 
 # include "struct.h"
-
+/*ENV*/
+t_env   *init_env_list(char **envp);
+/*LEXER*/
 int		count_quotes(char *s);
 int		count_tokens(char *line);
 void	init_var_count_tokens(char *line, int *count, char **start, \

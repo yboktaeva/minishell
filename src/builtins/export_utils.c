@@ -6,33 +6,28 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 16:46:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/15 17:05:27 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:26:06 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "utils.h"
 #include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int export_bad_id(char *id)
+int	print_export(t_env *env)
 {
-    printf("minishell: export: `%s': not a valid identifier\n", id);
-    return (EXIT_FAILURE);
-}
+	t_env	*tmp;
 
-int str_check(char *str1, char *str2)
-{
-    if (!str1 || !str2)
-        return (0);
-    while (*str1 && *str2)
-    {
-        if (*str1 != *str2)
-            return (0);
-        str1++;
-        str2++;
-    }
-    return (*str1 == '\0' && *str2 == '\0');
+	tmp = env->next;
+	while (tmp)
+	{
+		if (!tmp->exported)
+			printf("declare -x %s=\"%s\"\n", tmp->var_name, tmp->var_value);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 int	valid_id(char *str)
@@ -52,16 +47,24 @@ int	valid_id(char *str)
 	return (1);
 }
 
-int	char_check(char *str, char c)
+int	export_bad_id(char *id)
 {
-	size_t	i;
+	printf("minishell: export: `%s': not a valid identifier\n", id);
+	return (EXIT_FAILURE);
+}
 
-	i = 0;
-	while (str[i])
+void	find_exported(t_env *env, char *var_name)
+{
+	t_env	*tmp;
+
+	tmp = env->next;
+	while (tmp)
 	{
-		if (str[i] == c)
-			return (1);
-		i += 1;
+		if (ft_strcmp(var_name, tmp->var_name) == 0)
+		{
+			tmp->exported = 1;
+			break ;
+		}
+		tmp = tmp->next;
 	}
-	return (0);
 }

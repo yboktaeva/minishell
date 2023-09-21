@@ -6,13 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 19:26:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 19:29:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:30:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
-#include "envp.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
 

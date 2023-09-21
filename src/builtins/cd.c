@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:07:13 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/20 18:27:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:16:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void init_cmd_cd(char **path, int *ret);
-static int  handle_tilde_and_dash(t_one_cmd *head, t_env *curr);
-static char *create_path(t_one_cmd *head, t_env *curr);
-static int  change_directory(char *path, t_env *env, t_one_cmd *one_cmd);
+static void	init_cmd_cd(char **path, int *ret);
+static int	handle_tilde_and_dash(t_one_cmd *head, t_env *curr);
+static char	*create_path(t_one_cmd *head, t_env *curr);
+static int	change_directory(char *path, t_env *env, t_one_cmd *one_cmd);
 
-int cmd_cd(t_one_cmd *one_cmd, t_env *env)
+int	cmd_cd(t_one_cmd *one_cmd, t_env *env)
 {
 	int			ret;
 	char		*path;
@@ -47,15 +47,15 @@ int cmd_cd(t_one_cmd *one_cmd, t_env *env)
 	return (ret);
 }
 
-static void  init_cmd_cd(char **path, int *ret)
+static void	init_cmd_cd(char **path, int *ret)
 {
 	*path = NULL;
 	*ret = -1;
 }
 
-static int handle_tilde_and_dash(t_one_cmd *head, t_env *curr)
+static int	handle_tilde_and_dash(t_one_cmd *head, t_env *curr)
 {
-	int ret;
+	int	ret;
 
 	ret = -1;
 	if (!ft_strcmp(head->str, "~"))
@@ -68,13 +68,13 @@ static int handle_tilde_and_dash(t_one_cmd *head, t_env *curr)
 	return (ret);
 }
 
-static char* create_path(t_one_cmd *head, t_env *curr)
+static char	*create_path(t_one_cmd *head, t_env *curr)
 {
-	char    *path;
-    char    *tmp;
-    
-    path = NULL;
-    tmp = NULL;
+	char	*path;
+	char	*tmp;
+
+	path = NULL;
+	tmp = NULL;
 	if (head->str[0] == '/')
 		path = ft_strdup(head->str);
 	else
@@ -88,19 +88,19 @@ static char* create_path(t_one_cmd *head, t_env *curr)
 			}
 			curr = curr->next;
 		}
-        free(tmp);
+		free(tmp);
 	}
 	return (path);
 }
 
-static int change_directory(char *path, t_env *env, t_one_cmd *one_cmd)
+static int	change_directory(char *path, t_env *env, t_one_cmd *one_cmd)
 {
-    int ret;
-    
-    ret = chdir(path);
-    if (ret != 0)
-        chdir_error(one_cmd->str);
-    else
-        change_path(env);
-    return (ret);
+	int	ret;
+
+	ret = chdir(path);
+	if (ret != 0)
+		chdir_error(one_cmd->str);
+	else
+		change_path(env);
+	return (ret);
 }

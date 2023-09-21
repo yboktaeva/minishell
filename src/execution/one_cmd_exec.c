@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/20 20:30:59 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:40:28 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,21 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-char		*get_path_from_envp(t_arg *arg);
 static int	one_cmd(const char *path, t_parse_list *s, t_arg *arg);
-static void	exec_comd(const char *path, t_parse_list *parse_list, t_arg *arg,
+static void	exec_comd(const char *path, t_arg *arg,
 				int fd_in, int fd_out);
 static int	wait_and_get_exit_status(pid_t pid);
 
-int	one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
+int	one_cmd_exec(t_parse_list *parse_list, t_arg *arg, t_env *env)
 {
 	const char	*path;
 	char		*executable_path;
 
-	path = get_path_from_envp(arg);
+	path = get_path_from_envp(env);
 	executable_path = get_executable_path(parse_list->one_cmd->str, path);
 	if (!executable_path)
 	{
 		printf("%s : command not found\n", parse_list->one_cmd->str);
-		free((void *)path);
 		free(executable_path);
 		g_status = 127;
 		return (g_status);
@@ -45,7 +43,6 @@ int	one_cmd_exec(t_parse_list *parse_list, t_arg *arg)
 	else
 		one_cmd(executable_path, parse_list, arg);
 	free(executable_path);
-	free((void *)path);
 	return (0);
 }
 
@@ -71,7 +68,8 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg)
 	{
 		handle_sig(SIG_CHILD);
 		create_args(parse_list, arg);
-		exec_comd(path, parse_list, arg, fd_in, fd_out);
+		handle_redirections(parse_list, &fd_in, &fd_out);
+		exec_comd(path, arg, fd_in, fd_out);
 	}
 	status = wait_and_get_exit_status(pid);
 	return (status);
@@ -91,10 +89,9 @@ static int	wait_and_get_exit_status(pid_t pid)
 	}
 }
 
-static void	exec_comd(const char *path, t_parse_list *parse_list, t_arg *arg,
+static void	exec_comd(const char *path, t_arg *arg,
 		int fd_in, int fd_out)
 {
-	handle_redirections(parse_list, &fd_in, &fd_out);
 	if (fd_in != STDIN_FILENO)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -106,29 +103,28 @@ static void	exec_comd(const char *path, t_parse_list *parse_list, t_arg *arg,
 		close(fd_out);
 	}
 	if (execve(path, arg->argv, arg->envp) == -1)
-		perror("Erreur lors de l'exécution de la commande");
+		perror("Execve error");
 }
 
-char	*get_path_from_envp(t_arg *arg)
+char	*get_path_from_envp(t_env *env)
 {
 	char *path;
-	int i;
-
+	t_env *head;
+	
 	path = NULL;
-	i = 0;
-	while (arg->envp[i])
+	if (!env)
+		return (NULL);
+	head = env->next;
+	while (head)
 	{
-		if (ft_strncmp("PATH=", arg->envp[i], 5) == 0)
+		if (ft_strcmp(head->var_name, "PATH") == 0)
 		{
-			path = (ft_strdup(arg->envp[i] + 5));
-			if (path == NULL)
-			{
-				perror("Erreur d'allocation de mémoire");
-				exit(EXIT_FAILURE);
-			}
-			break ;
+			if (head->var_value)
+				path = ft_strdup(head->var_value);
+			else
+				path = ft_strdup("\0");	
 		}
-		i++;
+		head = head->next;
 	}
 	return (path);
 }

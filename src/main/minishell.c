@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/20 20:30:34 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:06:39 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "lexer.h"
 #include "parser.h"
 #include "exec.h"
-#include "envp.h"
 #include "utils.h"
 #include "builtin.h"
 #include <readline/readline.h>
@@ -63,7 +62,6 @@ void shell_loop(t_env *env, char *line, t_table *info)
             cmd_execution(parse_list, info, env, info->arg);
             add_history(line);
             free_all(tokens, info->n_tokens, parse_list);
-            free(info->arg->envp);
         }
     }
 }
@@ -88,13 +86,13 @@ int main(int ac, char **argv, char **envp)
     {
         free(prompt);
         prompt = readline("minishell$> ");
-        init_execve_args(&arg, env);
+        //init_execve_args(&arg, env);
         init_main_table(&info, prompt, envp);
         info.env = env;
         info.arg = &arg;
         shell_loop(env, prompt, &info);
     }
     free_env(&env);
-    free(arg.argv);
+    //free(arg.argv);
     exit(g_status);
 }

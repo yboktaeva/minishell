@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 19:00:22 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/20 18:26:33 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/09/21 15:33:26 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/09/21 15:36:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "utils.h"
+#include <stddef.h>
 
-int	cmd_pwd(t_one_cmd *one_cmd)
+int str_check(char *str1, char *str2)
 {
-	char	*cwd;
+    if (!str1 || !str2)
+        return (0);
+    while (*str1 && *str2)
+    {
+        if (*str1 != *str2)
+            return (0);
+        str1++;
+        str2++;
+    }
+    return (*str1 == '\0' && *str2 == '\0');
+}
 
-	cwd = NULL;
-	cwd = getcwd(cwd, 0);
-	if (one_cmd->str == NULL)
-		return (1);
-	if (cwd == NULL)
+int	char_check(char *str, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
 	{
-		perror("minishell:");
-		return (1);
+		if (str[i] == c)
+			return (1);
+		i += 1;
 	}
-	ft_putendl_fd(cwd, STDOUT_FILENO);
-	free(cwd);
 	return (0);
 }

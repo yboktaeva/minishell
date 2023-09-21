@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 00:10:56 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/20 17:15:55 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 10:44:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int open_input(t_redir *input, int *fd_in)
             if (*fd_in == -1) 
             {
                 open_error(input->file_name, REDIR_IN);
-                return (-1);
+                exit (1);
             }   
         }
         // else if (input->type == HEREDOC)
@@ -47,7 +47,7 @@ int open_input(t_redir *input, int *fd_in)
         //     if (*fd_in == -1) 
         //     {
         //         open_error(input->file_name);
-        //         return (-1);
+        //         exit (1);
         //     }   
         // }
         input = input->next;
@@ -65,7 +65,7 @@ int open_output(t_redir *output, int *fd_out)
             if (*fd_out == -1) 
             {
                 open_error(output->file_name, REDIR_OUT);
-                break ;
+                exit (1);
             }
         }
         else if (output->type == APPEND)
@@ -74,7 +74,7 @@ int open_output(t_redir *output, int *fd_out)
             if (*fd_out == -1) 
             {
                 open_error(output->file_name, APPEND);
-                break ;
+                exit (1);
             }
         }
         output = output->next;

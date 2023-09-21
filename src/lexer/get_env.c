@@ -6,19 +6,20 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/16 13:32:39 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 15:23:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "envp.h"
+#include "lexer.h"
+#include "utils.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-void	set_env_list(t_env **head, char **envp);
-void	get_env(t_env *head, char *str);
-t_env	*add_env_node(char *str);
-t_env	*copy_env(t_env *env, char *str);
+static void	set_env_list(t_env **head, char **envp);
+static void	get_env(t_env *head, char *str);
+static t_env	*add_env_node(char *str);
+static t_env	*copy_env(t_env *env, char *str);
 
 t_env	*init_env_list(char **envp)
 {
@@ -36,7 +37,7 @@ t_env	*init_env_list(char **envp)
 	return (new);
 }
 
-void	set_env_list(t_env **head, char **envp)
+static void	set_env_list(t_env **head, char **envp)
 {
 	int	i;
 
@@ -48,7 +49,7 @@ void	set_env_list(t_env **head, char **envp)
 	}
 }
 
-void	get_env(t_env *head, char *str)
+static void	get_env(t_env *head, char *str)
 {
 	t_env	*start;
 	t_env	*copy;
@@ -65,6 +66,7 @@ void	get_env(t_env *head, char *str)
 			free(copy->var_value);
 		copy->str = ft_strdup(str);
 		copy->var_value = ft_substr(str, index + 1, ft_strlen(str));
+		copy->exported = -1;
 		return ;
 	}
 	start = head;
@@ -73,7 +75,7 @@ void	get_env(t_env *head, char *str)
 	start->next = add_env_node(str);
 }
 
-t_env	*add_env_node(char *str)
+static t_env	*add_env_node(char *str)
 {
 	t_env	*new;
 	int		index;
@@ -82,6 +84,7 @@ t_env	*add_env_node(char *str)
 	new = malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
+	new->exported = -1;
 	new->str = ft_strdup(str);
 	new->var_name = ft_substr(str, 0, env_var_name_len(str));
 	if (!index)
@@ -92,7 +95,7 @@ t_env	*add_env_node(char *str)
 	return (new);
 }
 
-t_env	*copy_env(t_env *env, char *str)
+static t_env	*copy_env(t_env *env, char *str)
 {
 	t_env	*start;
 	char	*var_name;

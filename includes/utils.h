@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:24:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/12 19:01:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:06:57 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ int		is_pipe(t_type type);
 int		count_pipes_token(t_token *tokens, int n_tokens);
 void	print_env_list(t_env *env);
 int     cmd_size(t_parse_list *parse_list);
-int     env_size(t_env *env);
 int     num_args(t_one_cmd *one_cmd);
-char    **duplicate_envp(t_env *env);
-
+int     env_size(t_env *env);
+char    *env_var_name(char *str);
+int     env_var_name_len(char *var_name);
+char    *env_var_value(t_env *head, char *key);
+t_env   *get_last(t_env *env);
+int     str_check(char *str1, char *str2);
+int     char_check(char *str, char c);
 #endif

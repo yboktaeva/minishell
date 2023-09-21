@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/20 16:16:50 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/21 15:34:11 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_FILES	=	main/minishell.c main/main.c main/signals.c init/init_all.c lexer/ge
 				builtins/export.c builtins/export_utils.c  builtins/unset.c \
 				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c \
 				destructor/free_env.c utils/lex_utils.c utils/env_utils.c utils/parse_utils.c\
-				utils/print.c utils/exec_utils.c
+				utils/print.c utils/exec_utils.c utils/builtin_utils.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
@@ -45,10 +45,10 @@ LIBFT		=	$(LIBFT_PATH)/libft.a
 all:	 $(NAME) $(LIBFT)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH) all
+	@$(MAKE) -C $(LIBFT_PATH) all
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(READLINE_LIB) -o $@ $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) $(CPPFLAGS) $(READLINE_LIB) -o $@ $(OBJ) $(LIBFT)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
@@ -57,12 +57,12 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 -include $(DEP)
 
 clean:
-	$(MAKE) clean -C $(LIBFT_PATH)
-	$(RM) -r $(OBJ_DIR)
+	@$(MAKE) clean -C $(LIBFT_PATH)
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) fclean -C $(LIBFT_PATH)
-	$(RM) $(NAME) $(LIBFT)
+	@$(MAKE) fclean -C $(LIBFT_PATH)
+	@$(RM) $(NAME) $(LIBFT)
 
 re: fclean all 
 

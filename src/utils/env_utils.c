@@ -6,14 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/20 20:27:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:22:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "envp.h"
+#include "utils.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 char	*env_var_name(char *str)
 {
@@ -43,6 +42,8 @@ char	*env_var_value(t_env *head, char *var_name)
 	t_env	*env;
 	int		var_name_len;
 
+	if (!head)
+		return (NULL);
 	env = head->next;
 	var_name_len = ft_strlen(var_name);
 	if (var_name_len == 1 && *var_name == '?')
@@ -60,4 +61,16 @@ char	*env_var_value(t_env *head, char *var_name)
 		env = env->next;
 	}
 	return (ft_strdup("\0"));
+}
+
+t_env   *get_last(t_env *env)
+{
+	t_env	*head;
+	
+  	if (!env)
+        return (NULL);
+	head = env;
+	while (head->next != NULL)
+		head = head->next;
+	return (head);
 }
