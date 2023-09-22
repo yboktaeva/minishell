@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 17:47:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 11:48:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 void    create_args(t_parse_list *parse_list, t_arg *arg);
 int     open_input(t_redir *input, int *fd_in);
 int     open_output(t_redir *output, int *fd_out);
-void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out);
+int     handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out);
 void    cmd_execution(t_parse_list *parse_list, t_table *info, t_env *env, t_arg *arg);
-void    one_builtin(t_parse_list *parse_list, t_env *env);
+void    one_builtin(t_parse_list *parse_list, t_env *env, int fd_in, int fd_out);
 void    ft_free_str_array(char **str);
 char    **ft_split_ignore_spaces(const char *s, char c);
 char    *get_executable_path(const char *cmd, const char *path);

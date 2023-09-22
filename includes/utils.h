@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:24:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 18:06:57 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:03:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "struct.h"
 
+char	**duplicate_envp(t_env *env);
 int     ft_isspace(char c);
 void	skip_single_quote(char *str, int *i);
 char	*pass_white_space(char *s);

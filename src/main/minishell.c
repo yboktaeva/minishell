@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 19:06:39 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:09:27 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,14 @@ int main(int ac, char **argv, char **envp)
     {
         free(prompt);
         prompt = readline("minishell$> ");
-        //init_execve_args(&arg, env);
+        init_execve_args(&arg, env);
         init_main_table(&info, prompt, envp);
         info.env = env;
         info.arg = &arg;
         shell_loop(env, prompt, &info);
     }
+    free(arg.envp);
     free_env(&env);
-    //free(arg.argv);
+    free(arg.argv);
     exit(g_status);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_redir.c                                     :+:      :+:    :+:   */
+/*   create_fd_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 00:10:56 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/21 10:44:18 by yuboktae         ###   ########.fr       */
+/*   Created: 2023/09/22 10:34:17 by yuboktae          #+#    #+#             */
+/*   Updated: 2023/09/22 11:31:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,22 @@
 int open_input(t_redir *input, int *fd_in);
 int open_output(t_redir *output, int *fd_out);
 
-void    handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out)
+int   handle_redirections(t_parse_list *parse_list, int *fd_in, int *fd_out)
 {
+    
     if (parse_list->input != NULL)
         open_input(parse_list->input, fd_in);
     if (parse_list->output != NULL)
         open_output(parse_list->output, fd_out);
+    return (1);
 }
 
 int open_input(t_redir *input, int *fd_in)
 {
+    if (!input || !fd_in)
+        return (0);
+    if (*fd_in != 0)
+        close(*fd_in);
     while (input)
     {
         if (input->type == REDIR_IN)
@@ -50,13 +56,19 @@ int open_input(t_redir *input, int *fd_in)
         //         exit (1);
         //     }   
         // }
+        if (input->next)
+            close(*fd_in);
         input = input->next;
     }
-    return (0);
+    return (1);
 }
 
 int open_output(t_redir *output, int *fd_out)
 {
+    if (!output || !fd_out)
+        return (0);
+    if (*fd_out != 1)
+        close(*fd_out);
     while (output)
     {
         if (output->type == REDIR_OUT)
@@ -77,7 +89,9 @@ int open_output(t_redir *output, int *fd_out)
                 exit (1);
             }
         }
+        if (output->next)
+            close(*fd_out);
         output = output->next;
     }
-    return (0);
+    return (1);
 }

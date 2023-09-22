@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 10:51:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 11:25:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 
 void	*quote_error(void)
 {
+	g_status = 1;
 	ft_putendl_fd("minishell: missing closing quote", 2);
 	return (NULL);
 }
 
 void	*syntax_error(char *str)
 {
+	g_status = 2;
 	printf("minishell: syntax error near unexpected token `%s'\n", str);
 	return (NULL);
 }

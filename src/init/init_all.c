@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/21 18:08:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 12:01:20 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void *init_main_table(t_table *info, char *line, char **envp)
     return (SUCCES);
 }
 
-// void    *init_execve_args(t_arg *arg, t_env *env)
-// {
-//     arg->envp = duplicate_envp(env);
-//     return (SUCCES);
-// }
+void    *init_execve_args(t_arg *arg, t_env *env)
+{
+    arg->envp = duplicate_envp(env);
+    return (SUCCES);
+}
 
 t_parse_list *init_parse_list(void)
 {
