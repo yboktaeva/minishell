@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/22 12:12:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 18:46:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ void    one_builtin(t_parse_list *parse_list, t_env *env, int fd_in, int fd_out)
         }
     }
     builtin_exec(parse_list->one_cmd, env, ONE_CMD);
-    dup2(tmp_fd[0], STDIN_FILENO);
+    //dup2(tmp_fd[0], STDIN_FILENO);
     close(tmp_fd[0]);
-	dup2(tmp_fd[1], STDOUT_FILENO);
+	//dup2(tmp_fd[1], STDOUT_FILENO);
     close(tmp_fd[1]);
-    //close(fd_in);
-    //close(fd_out);
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 15:25:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:49:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,20 @@ void	free_env_node(t_env *head)
 	if (head->exported == -1)
 		free(head->str);
 	free(head);
+}
+
+void	free_fake_envp(t_arg *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg->envp != NULL)
+	{
+		while (arg->envp[i] != NULL)
+		{
+			free(arg->envp[i]);
+			i++;
+		}
+		free(arg->envp);
+	}
 }

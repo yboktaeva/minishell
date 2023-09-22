@@ -6,17 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/12 18:44:37 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 16:16:44 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
-
-void	free_one_cmd_list(t_one_cmd *head);
-void	free_redirect_list(t_redir *head);
-void	free_token(t_token *tokens, int n_tokens);
-void	free_parse_list(t_parse_list *head);
 
 void	free_all(t_token *tokens, int n_tokens, \
 				t_parse_list *parse_list)

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/22 11:32:39 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:52:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	*get_path_from_envp(t_env *env)
 		if (ft_strcmp(head->var_name, "PATH") == 0)
 		{
 			if (head->var_value)
-				path = ft_strdup(head->var_value);
+				path = head->var_value;
 			else
 				path = ft_strdup("\0");	
 		}

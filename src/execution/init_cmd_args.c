@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/20 19:31:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/22 19:40:35 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,8 @@ void create_args(t_parse_list *parse_list, t_arg *arg)
     t_parse_list *head;
 
     head = parse_list;
-    while (head)
-    {
-        arg->argv = convert_parse_list(head->one_cmd);
-        arg->n_args = num_args(head->one_cmd);
-        head = head->next;
-    }
+    arg->argv = convert_parse_list(head->one_cmd);
+    arg->n_args = num_args(head->one_cmd);
 }
 
 static char    **convert_parse_list(t_one_cmd *head)
