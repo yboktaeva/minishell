@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/22 18:46:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 01:34:12 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void cmd_execution(t_parse_list *parse_list, t_table *info, t_env *env, t_arg *a
     int n_cmd;
     int fd_in;
     int fd_out;
+    t_here_doc *here_doc;
     
     fd_in = 0;
     fd_out = 1;
-    (void)info;
+    here_doc = open_heredoc(parse_list);
+    info->here_doc = here_doc;
     n_cmd = cmd_size(parse_list);
     if (n_cmd == 1)
     {
@@ -31,10 +33,11 @@ void cmd_execution(t_parse_list *parse_list, t_table *info, t_env *env, t_arg *a
         else
             one_cmd_exec(parse_list, arg, env);
     }
-    // else
-    // {
-    //     multi_cmds_exec(parse_list, arg, env);
-    // }
+    else
+    {
+        multi_cmds_exec(parse_list, arg, env, info->cmd_info);
+    }
+    free_n_close_heredoc(here_doc, 0);
     return ;
 }
 

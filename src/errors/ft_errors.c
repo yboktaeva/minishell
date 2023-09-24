@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/22 11:25:01 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/23 17:57:44 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,55 @@
 #include <stdio.h>
 #include <stddef.h>
 
-void	*quote_error(void)
+void	quote_error(void)
 {
-	g_status = 1;
 	ft_putendl_fd("minishell: missing closing quote", 2);
-	return (NULL);
+	g_status = 1;
+	exit(1);
 }
 
-void	*syntax_error(char *str)
+void	syntax_error(char *str)
 {
-	g_status = 2;
 	printf("minishell: syntax error near unexpected token `%s'\n", str);
-	return (NULL);
+	g_status = 2;
+	exit(2);
 }
 
-void	*open_error(char *str, t_type type)
+void	open_error(char *str, t_type type)
 {
 	if (type == REDIR_IN)
-		printf("%s: No such file or directory\n", str);
+	{
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+	}
 	else if (type == REDIR_OUT || type == APPEND)
-		printf("%s:cannot open output file\n", str);
-	return (NULL);
+	{
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": cannot open output file", 2);
+	}
+	g_status = 2;
+	exit(2);
 }
 
-void	*chdir_error(char *str)
+void	chdir_error(char *str)
 {
-	printf ("%s: No such file or directory\n", str);
-	return (NULL);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": No such file or directory", 2);
+	g_status = 2;
+	exit(2);
+}
+
+void	command_not_found(char *str)
+{
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": command not found", 2);
+	g_status = 127;
+	exit(127);
+}
+
+void	exec_fail(void)
+{
+	perror("execve");
+	g_status = 2;
+	exit(2);
 }

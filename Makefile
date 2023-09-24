@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
+#    By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/22 17:44:44 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/23 16:37:00 by yuliaboktae      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC_FILES	=	main/minishell.c main/main.c main/signals.c init/init_all.c lexer/ge
 				execution/cmd_path.c execution/path_utils.c execution/one_cmd_exec.c \
 				execution/multi_cmds_exec.c execution/create_fd_redir.c execution/create_heredoc.c\
 				execution/init_cmd_args.c execution/run_cmd.c execution/ft_split_ignore_spaces.c \
-				builtins/builtin.c builtins/echo.c builtins/cd.c builtins/cd_utils.c builtins/pwd.c \
+				execution/heredoc_utils.c builtins/builtin.c builtins/echo.c builtins/cd.c \
+				builtins/cd_utils.c builtins/pwd.c \
 				builtins/export.c builtins/export_utils.c  builtins/unset.c \
 				builtins/env.c builtins/exit.c errors/ft_errors.c destructor/free_parsing.c \
 				destructor/free_env.c destructor/ft_exit.c utils/lex_utils.c utils/env_utils.c \

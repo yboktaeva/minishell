@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 10:59:35 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/08 18:17:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 02:03:39 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include <stdbool.h>
+#include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

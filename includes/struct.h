@@ -6,7 +6,7 @@
 /*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/17 22:12:53 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 01:32:04 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_redir
 
 typedef struct s_here_doc
 {
-	int	read;
+	int	read_fd;
 	struct s_here_doc *next;
 }		t_here_doc;
 
@@ -96,6 +96,17 @@ typedef struct s_arg
 	char	**envp;
 }			t_arg;
 
+typedef struct s_cmd_info
+{
+	char *path;
+	char *executable_path;
+	int in;
+	int out;
+	int *fd;
+	int index_cmd;
+	int nb_cmds;
+} t_cmd_info;
+
 typedef struct s_table
 {
 	t_env			*env;
@@ -103,6 +114,7 @@ typedef struct s_table
 	t_token			*tokens;
 	t_parse_list	*parse_list;
 	t_here_doc		*here_doc;
+	t_cmd_info		*cmd_info;
 	int				n_tokens;
 	int				cmd_count;
 	pid_t			pid;

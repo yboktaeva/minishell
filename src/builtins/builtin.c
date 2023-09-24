@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 17:46:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 01:43:26 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	builtin_exec(t_one_cmd *one_cmd, t_env *env, t_num_cmd num_of_cmd)
 		b_status = cmd_unset(one_cmd, env);
 	else if (ft_strcmp(one_cmd->str, "env") == 0)
 		b_status = cmd_env(env);
-	// else if (ft_strcmp(one_cmd->str, "exit") == 0)
-	//     b_status = cmd_exit(one_cmd, env);
+	else if (ft_strcmp(one_cmd->str, "exit") == 0)
+	    b_status = cmd_exit(one_cmd);
 	if (num_of_cmd == ONE_CMD)
 		g_status = b_status;
 	else

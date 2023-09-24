@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:08:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 17:47:36 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 01:57:50 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int     cmd_env(t_env *env);
 int     cmd_pwd(t_one_cmd *one_cmd);
 int     cmd_unset(t_one_cmd *one_cmd, t_env *env);
 int     cmd_export(t_one_cmd *one_cmd, t_env *env);
+void	cmd_exit(t_one_cmd *one_cmd);
 int     export_bad_id(char *id);
 int     print_export(t_env *env);
 int     valid_id(char *str);

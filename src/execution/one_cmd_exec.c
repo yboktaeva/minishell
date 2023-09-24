@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/22 15:52:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 02:03:03 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "exec.h"
 #include "minishell.h"
 #include "utils.h"
+#include "../libft/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,12 +34,10 @@ int	one_cmd_exec(t_parse_list *parse_list, t_arg *arg, t_env *env)
 
 	path = get_path_from_envp(env);
 	executable_path = get_executable_path(parse_list->one_cmd->str, path);
-	if (!executable_path)
+	if (executable_path == NULL)
 	{
-		printf("%s : command not found\n", parse_list->one_cmd->str);
+		command_not_found(parse_list->one_cmd->str);
 		free(executable_path);
-		g_status = 127;
-		return (g_status);
 	}
 	else
 		one_cmd(executable_path, parse_list, arg);
@@ -103,7 +102,7 @@ static void	exec_comd(const char *path, t_arg *arg,
 		close(fd_out);
 	}
 	if (execve(path, arg->argv, arg->envp) == -1)
-		perror("Execve error");
+		exec_fail();
 }
 
 char	*get_path_from_envp(t_env *env)

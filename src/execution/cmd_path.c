@@ -6,11 +6,12 @@
 /*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/17 18:30:29 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 01:59:49 by yuliaboktae      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "../libft/libft.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
