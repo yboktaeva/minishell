@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 01:32:04 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 13:15:51 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define FAULSE 0
 # define SUCCES ((void *)1)
 
-extern int	g_status;
+extern long long	g_status;
 
 typedef enum e_sig_state
 {
@@ -105,7 +105,7 @@ typedef struct s_cmd_info
 	int *fd;
 	int index_cmd;
 	int nb_cmds;
-} t_cmd_info;
+}		t_cmd_info;
 
 typedef struct s_table
 {

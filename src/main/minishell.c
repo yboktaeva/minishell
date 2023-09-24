@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 01:19:49 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 17:04:06 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "exec.h"
 #include "utils.h"
 #include "builtin.h"
+#include "../libft/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdio.h>
@@ -23,16 +24,16 @@
 #include <signal.h>
 #include <unistd.h>
 
-int g_status;
+long long  g_status;
 
-static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *info)
+static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *main)
 {
-    free_all(tokens, info->n_tokens, parse_list);
+    free_all(tokens, main->n_tokens, parse_list);
     add_history(line);
     return ;
 }
 
-void shell_loop(t_env *env, char *line, t_table *info)
+void shell_loop(t_env *env, char *line, t_table *main)
 {
     t_token         *tokens;
     t_parse_list    *parse_list;
@@ -41,29 +42,30 @@ void shell_loop(t_env *env, char *line, t_table *info)
     parse_list = NULL;
     if (!line)
     {
-        ft_putendl_fd("exit", 1);
-        free_all(tokens, info->n_tokens, parse_list);
-        free_fake_envp(info->arg);
+        ft_putendl_fd("exit", STDOUT_FILENO);
+        free(line);
+        free_all(tokens, main->n_tokens, parse_list);
         exit (g_status);
     }
     else if (line[0] != 0)
     {
-        tokens = tokenize_input(env, line, info);
+        tokens = tokenize_input(env, line, main);
         if (tokens == NULL)
-            is_null(line, tokens, parse_list, info);
+            is_null(line, tokens, parse_list, main);
         else
         {
-            //print_tokens(tokens, info->n_tokens);
-            parse_list = parsing_tokens(tokens, info->n_tokens);
+            //print_tokens(tokens, main->n_tokens);
+            parse_list = parsing_tokens(tokens, main->n_tokens);
             //print_parse_list(parse_list);
         }
         if (parse_list == NULL)
-            is_null(line, tokens, parse_list, info);
+            is_null(line, tokens, parse_list, main);
         else
         {
-            cmd_execution(parse_list, info, env, info->arg);
+            cmd_execution(parse_list, main);
             add_history(line);
-            free_all(tokens, info->n_tokens, parse_list);
+            free_all(tokens, main->n_tokens, parse_list);
+            //free_fake_envp(main->arg);
         }
     }
 }
@@ -71,7 +73,7 @@ void shell_loop(t_env *env, char *line, t_table *info)
 int main(int ac, char **argv, char **envp)
 {
     char *prompt;
-    t_table info;
+    t_table main;
     t_env   *env;
     t_arg arg;
 
@@ -90,12 +92,12 @@ int main(int ac, char **argv, char **envp)
         prompt = readline("minishell$> ");
         
         init_execve_args(&arg, env);
-        init_main_table(&info, prompt, envp);
-        info.env = env;
-        info.arg = &arg;
-        shell_loop(env, prompt, &info);
+        init_main_table(&main, prompt, envp);
+        main.env = env;
+        main.arg = &arg;
+        shell_loop(env, prompt, &main);
     }
-    safe_exit(&info);
+    safe_exit(&main);
     free_env(&env);
     free_cmd_args(&arg);
     exit(g_status);

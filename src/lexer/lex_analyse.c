@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:53:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/11 15:08:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:27:07 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ void	get_rid_quotes(char *value);
 void	if_quotes_in_quotes(char *str, char quote_flag, int *i, int *j);
 int		if_quotes_closed(char *str);
 
-t_token	*tokenize_input(t_env *env, char *line, t_table *info)
+t_token	*tokenize_input(t_env *env, char *line, t_table *main)
 {
 	t_token	*tokens;
 
-	info->n_tokens = count_tokens(line);
-	if (info->n_tokens < 0)
+	main->n_tokens = count_tokens(line);
+	if (main->n_tokens < 0)
 		return (NULL);
-	tokens = malloc(sizeof(struct s_token) * info->n_tokens);
+	tokens = malloc(sizeof(struct s_token) * main->n_tokens);
 	if (!tokens)
 		return (NULL);
 	tokens = split_tokens(line, tokens);
-	expand_word_token(env, tokens, info);
-	delete_quotes(tokens, info->n_tokens);
+	expand_word_token(env, tokens, main);
+	delete_quotes(tokens, main->n_tokens);
 	return (tokens);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 12:30:10 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 02:00:31 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 17:40:40 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 #include "minishell.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
+#include <sys/types.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
 static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc);
-static int write_heredoc(int tmp_fd, char *sep);
+static int write_heredoc(int *tmp_fd, char *sep);
 
 t_here_doc    *open_heredoc(t_parse_list *parse_list)
 {
@@ -52,18 +53,20 @@ static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc)
     int status;
     int fd[2];
     
-    while (input)
+    fd[0] = 0;
+    fd[1] = 1;
+    while (input != NULL)
     {
         if (input->type == HEREDOC)
         {
-            pid = fork;
+            pid = fork();
             if (pid == 0)
                 write_heredoc(fd, input->file_name);
             else
             {
-                close(fd[1]);
+                //close(fd[1]);
                 wait(&status);
-                add_back_heredoc(here_doc, fd);
+                add_back_heredoc(here_doc, fd[0]);
             }
         }
         input = input->next;
@@ -71,7 +74,7 @@ static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc)
     return (here_doc);
 }
 
-static int write_heredoc(int tmp_fd, char *sep)
+static int write_heredoc(int *tmp_fd, char *sep)
 {
     char    *input;
     
@@ -80,20 +83,20 @@ static int write_heredoc(int tmp_fd, char *sep)
     {
         input = readline(">");
         if (!input)
-        {
-            close(tmp_fd);
-            exit(0);
-        }
-        if (ft_strncmp(sep, input, ft_strlen(sep + 1)))
-            ft_putendl_fd(input, tmp_fd);
+            break ;
         else
         {
-            close(tmp_fd);
-            free(input);
-            break ;
+            if (ft_strncmp(sep, input, ft_strlen(sep)))
+            {
+                ft_putendl_fd(input, tmp_fd[1]);
+                free(input);
+            }
+            else
+                break ;
         }
     }
     free(input);
-    close(tmp_fd);
+    close(tmp_fd[0]);
+    close(tmp_fd[1]);
     exit(0);
 }

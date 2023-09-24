@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:47:52 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/09 18:13:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:27:42 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 static void	init_if_dollar(int *i, int *j, int *double_quote);
 
-void	*expand_word_token(t_env *env, t_token *tokens, t_table *info)
+void	*expand_word_token(t_env *env, t_token *tokens, t_table *main)
 {
 	int		i;
 	char	*expand_value;
 
 	i = 0;
-	while (i < info->n_tokens)
+	while (i < main->n_tokens)
 	{
 		if (tokens[i].type == WORD && dollar_sign(tokens[i].value) == 1)
 		{

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 18:47:12 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 16:58:16 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,11 @@ static void	*syntax_pipe(t_token *tokens, int *j, int end)
 		else
 			return (syntax_error(tokens[*j].value));
 	}
-	else if (count_pipes_token(tokens, end) == 3)
-	{
-		if (tokens[*j].type == PIPE && tokens[*j + 1].type == PIPE)
+	else if (count_pipes_token(tokens, end) == 3 && tokens[*j].type == PIPE 
+		&& tokens[*j + 1].type == PIPE)
 			return (syntax_error(tokens[*j].value));
-	}
-	return (SUCCES);
+	else
+		return (SUCCES);
 }
 
 static void	*syntax_redir(t_token *tokens, int *j, int end)
@@ -82,5 +81,6 @@ static void	*syntax_redir(t_token *tokens, int *j, int end)
 		return (syntax_error(tokens[*j + 1].value));
 	else if (is_redir(tokens[*j].type && !is_word(tokens[*j + 1].type)))
 		return (syntax_error(tokens[*j + 1].value));
-	return (SUCCES);
+	else
+		return (SUCCES);
 }

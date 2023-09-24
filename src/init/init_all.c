@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/22 17:38:21 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:28:55 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void *init_main_table(t_table *info, char *line, char **envp)
+void *init_main_table(t_table *main, char *line, char **envp)
 {
     (void)line;
     (void)envp;
     //init_execve_args(&arg, envp);
     // t_token tokens;
     // info->cmds =;
-    // info->path = get_executable_path(info->env);
-    info->cmd_count = 0;
+    main->cmd_count = 0;
     return (SUCCES);
 }
 

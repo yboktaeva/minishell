@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_fd_redir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 10:34:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 01:14:16 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 17:00:27 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

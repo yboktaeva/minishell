@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/24 02:03:03 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/24 18:17:16 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,53 +22,48 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static int	one_cmd(const char *path, t_parse_list *s, t_arg *arg);
-static void	exec_comd(const char *path, t_arg *arg,
-				int fd_in, int fd_out);
+static int	one_cmd(const char *path, t_parse_list *s, t_table *main, t_cmd_info *cmd_info);
+static void	exec_comd(const char *path, t_arg *arg, t_cmd_info *cmd_info);
 static int	wait_and_get_exit_status(pid_t pid);
 
-int	one_cmd_exec(t_parse_list *parse_list, t_arg *arg, t_env *env)
+int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 {
-	const char	*path;
-	char		*executable_path;
+	int		status;
 
-	path = get_path_from_envp(env);
-	executable_path = get_executable_path(parse_list->one_cmd->str, path);
-	if (executable_path == NULL)
+	status = 0;
+	if (parse_list->one_cmd == NULL)
+		return (0);
+	cmd_info->executable_path = get_executable_path(parse_list->one_cmd->str, cmd_info->path);
+	if (cmd_info->executable_path == NULL)
 	{
 		command_not_found(parse_list->one_cmd->str);
-		free(executable_path);
+		free(cmd_info->executable_path);
+		status = g_status;
 	}
 	else
-		one_cmd(executable_path, parse_list, arg);
-	free(executable_path);
-	return (0);
+		status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
+	free(cmd_info->executable_path);
+	return (status);
 }
 
-static int	one_cmd(const char *path, t_parse_list *parse_list, t_arg *arg)
+static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 {
 	pid_t	pid;
 	int		status;
-	int		fd_in;
-	int		fd_out;
 
-	// t_here_doc *here_doc;
 	handle_sig(SIG_PARENT);
 	pid = fork();
-	fd_in = STDIN_FILENO;
-	fd_out = STDOUT_FILENO;
-	// here_doc = open_heredoc(parse_list);
 	if (pid == -1)
 	{
-		perror("Erreur lors de la création du processus enfant");
-		return (-1);
+		perror("Fork failed");
+		return (EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
 		handle_sig(SIG_CHILD);
-		create_args(parse_list, arg);
-		handle_redirections(parse_list, &fd_in, &fd_out);
-		exec_comd(path, arg, fd_in, fd_out);
+		create_args(parse_list, main->arg);
+    	handle_redirections(parse_list, main->here_doc, &cmd_info->in, &cmd_info->out);
+		exec_comd(path, main->arg, cmd_info);
 	}
 	status = wait_and_get_exit_status(pid);
 	return (status);
@@ -88,42 +83,18 @@ static int	wait_and_get_exit_status(pid_t pid)
 	}
 }
 
-static void	exec_comd(const char *path, t_arg *arg,
-		int fd_in, int fd_out)
+static void	exec_comd(const char *path, t_arg *arg, t_cmd_info *cmd_info)
 {
-	if (fd_in != STDIN_FILENO)
+	if (cmd_info->in != STDIN_FILENO)
 	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
+		dup2(cmd_info->in, STDIN_FILENO);
+		close(cmd_info->in);
 	}
-	if (fd_out != STDOUT_FILENO)
+	if (cmd_info->out != STDOUT_FILENO)
 	{
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
+		dup2(cmd_info->out, STDOUT_FILENO);
+		close(cmd_info->out);
 	}
 	if (execve(path, arg->argv, arg->envp) == -1)
 		exec_fail();
-}
-
-char	*get_path_from_envp(t_env *env)
-{
-	char *path;
-	t_env *head;
-	
-	path = NULL;
-	if (!env)
-		return (NULL);
-	head = env->next;
-	while (head)
-	{
-		if (ft_strcmp(head->var_name, "PATH") == 0)
-		{
-			if (head->var_value)
-				path = head->var_value;
-			else
-				path = ft_strdup("\0");	
-		}
-		head = head->next;
-	}
-	return (path);
 }

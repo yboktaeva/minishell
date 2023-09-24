@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/09 18:12:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/24 11:42:25 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ static void	*invalid_operator(t_token *tokens, int *j)
 	if (ft_strcmp(tokens[*j].value, "&") == 0
 		|| ft_strcmp(tokens[*j].value, "&&") == 0
 		|| ft_strcmp(tokens[*j].value, ";") == 0)
-		return (syntax_error(tokens[*j].value));
+		syntax_error(tokens[*j].value);
 	return (SUCCES);
 }
