@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 14:44:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:24:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char    *get_executable_path(const char *cmd, const char *path);
 char    *ft_strjoin_free(char *s1, char const *s2, int free_s1);
 int     one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info);
 char    *get_path_from_envp(t_env *env);
-t_here_doc    *open_heredoc(t_parse_list *parse_list);
+t_here_doc    *open_heredoc(t_parse_list *parse_list, t_cmd_info *cmd_info);
 void    add_back_heredoc(t_here_doc *here_doc, int fd);
 void    free_n_close_heredoc(t_here_doc *head, int fd);
 int     multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info);

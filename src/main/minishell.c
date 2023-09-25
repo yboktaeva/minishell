@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 14:52:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:16:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void shell_loop(t_env *env, char *line, t_table *main)
         free(line);
         free_fake_envp(main->arg);
         free_all(tokens, main->n_tokens, parse_list);
-        free(main->cmd_info->fd);
-        free(main->cmd_info);
+        //free(main->cmd_info->fd);
         exit (g_status);
     }
     else if (line[0] != 0)

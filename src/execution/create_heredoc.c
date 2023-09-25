@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 12:30:10 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 17:40:40 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:33:58 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 #include "minishell.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc);
+static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc, t_cmd_info *cmd_info);
 static int write_heredoc(int *tmp_fd, char *sep);
 
-t_here_doc    *open_heredoc(t_parse_list *parse_list)
+t_here_doc    *open_heredoc(t_parse_list *parse_list, t_cmd_info *cmd_info)
 {
     t_here_doc *here_doc;
     t_redir *curr;
@@ -39,7 +40,7 @@ t_here_doc    *open_heredoc(t_parse_list *parse_list)
         curr = parse_list->input;
         if (curr != NULL)
         {
-            if (!run_heredoc(curr, here_doc))
+            if (!run_heredoc(curr, here_doc, cmd_info))
                 return (NULL);
         }
         parse_list = parse_list->next;
@@ -47,26 +48,29 @@ t_here_doc    *open_heredoc(t_parse_list *parse_list)
     return (here_doc);
 }
 
-static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc)
+static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc, t_cmd_info *cmd_info)
 {
 	pid_t	pid;
     int status;
-    int fd[2];
+    // int fd[2];
     
-    fd[0] = 0;
-    fd[1] = 1;
+    // fd[0] = 0;
+    // fd[1] = 1;
     while (input != NULL)
     {
         if (input->type == HEREDOC)
         {
             pid = fork();
             if (pid == 0)
-                write_heredoc(fd, input->file_name);
+            {   cmd_info->fd[0] = 0;
+                cmd_info->fd[1] = 1;
+                write_heredoc(cmd_info->fd, input->file_name);
+            }
             else
             {
                 //close(fd[1]);
                 wait(&status);
-                add_back_heredoc(here_doc, fd[0]);
+                add_back_heredoc(here_doc, cmd_info->in);
             }
         }
         input = input->next;
@@ -78,6 +82,7 @@ static int write_heredoc(int *tmp_fd, char *sep)
 {
     char    *input;
     
+    *tmp_fd = open(sep, O_WRONLY | O_CREAT | O_APPEND, 0600);
     handle_sig(SIG_HEREDOC);
     while (1)
     {
@@ -88,7 +93,9 @@ static int write_heredoc(int *tmp_fd, char *sep)
         {
             if (ft_strncmp(sep, input, ft_strlen(sep)))
             {
-                ft_putendl_fd(input, tmp_fd[1]);
+                //ft_putendl_fd(input, tmp_fd[1]);
+                write(tmp_fd[0], input, ft_strlen(input));
+                write(tmp_fd[0], "\n", 1);
                 free(input);
             }
             else
