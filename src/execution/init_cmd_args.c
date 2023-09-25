@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/22 19:40:35 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 10:27:54 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char    **convert_parse_list(t_one_cmd *head)
     
     size = num_args(head);
     curr_cmd = head;
-    arr = malloc(sizeof(char *) * (size + 1));
+    arr = (char **)malloc(sizeof(char *) * (size + 2));
     if (!arr)
 	{
 		perror("Malloc failure in create_args");

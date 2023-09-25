@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 10:34:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 17:00:27 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 13:47:02 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int open_output(t_redir *output, int *fd_out);
 
 int   handle_redirections(t_parse_list *parse_list, t_here_doc *here_doc, int *fd_in, int *fd_out)
 {
-    
     if (parse_list->input != NULL)
         open_input(parse_list->input, here_doc, fd_in);
     if (parse_list->output != NULL)

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/24 18:17:16 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:11:48 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,14 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_
 {
 	pid_t	pid;
 	int		status;
+	// int		fd_in;
+	// int		fd_out;
+	
 
 	handle_sig(SIG_PARENT);
 	pid = fork();
+	// fd_in = STDIN_FILENO;
+	// fd_out = STDOUT_FILENO;
 	if (pid == -1)
 	{
 		perror("Fork failed");
@@ -66,7 +71,7 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_
 		exec_comd(path, main->arg, cmd_info);
 	}
 	status = wait_and_get_exit_status(pid);
-	return (status);
+		return (status);
 }
 
 static int	wait_and_get_exit_status(pid_t pid)

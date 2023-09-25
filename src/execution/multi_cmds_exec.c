@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 18:16:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:21:06 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 #include <fcntl.h>
 
 static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc);
-static void *execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_arg *arg);
-static int execute_command(t_parse_list *parse_list, const char *path, t_arg *arg, pid_t *pids, t_cmd_info *cmd_info);
+static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_arg *arg);
+static int execute_command(t_parse_list *parse_list, const char *path, t_table *main, pid_t *pids);
 static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main, pid_t *pids);
 
 int multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
@@ -52,8 +52,8 @@ static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *mai
     int status;
 
     status = 0;
-    if (parse_list->one_cmd == NULL)
-		return (0);
+    // if (parse_list->one_cmd == NULL)
+	// 	return (0);
     reset_cmd_info(cmd_info);
     cmd_info->executable_path = get_executable_path(parse_list->one_cmd->str, cmd_info->path);
     if (cmd_info->executable_path == NULL)
@@ -62,13 +62,13 @@ static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *mai
         free(cmd_info->executable_path);
     }
     handle_redirections(parse_list, main->here_doc, &cmd_info->in, &cmd_info->out);
-    status = execute_command(parse_list, cmd_info->executable_path, main->arg, pids, cmd_info);
+    status = execute_command(parse_list, cmd_info->executable_path, main, pids);
     reset_cmd_info(cmd_info);
     free(cmd_info->executable_path);
     return (status);
 }
 
-static int execute_command(t_parse_list *parse_list, const char *path, t_arg *arg, pid_t *pids, t_cmd_info *cmd_info)
+static int execute_command(t_parse_list *parse_list, const char *path, t_table *main, pid_t *pids)
 {
     pid_t pid;
     int res;
@@ -78,7 +78,7 @@ static int execute_command(t_parse_list *parse_list, const char *path, t_arg *ar
     res = -1;
     fdc = malloc(sizeof(int) * 2);
     res = pipe(fdc);
-    create_args(parse_list, arg);
+    create_args(parse_list, main->arg);
     if (res == -1)
         exit(1);
     pid = fork();
@@ -89,11 +89,11 @@ static int execute_command(t_parse_list *parse_list, const char *path, t_arg *ar
     }
     else if (pid == 0)
     {
-        execute_child(cmd_info, fdc, path, arg);
+        execute_child(main->cmd_info, fdc, path, main->arg);
         return (EXIT_SUCCESS);
     }
     else
-        status = execute_parent(cmd_info, pid, pids, fdc);
+        status = execute_parent(main->cmd_info, pid, pids, fdc);
     return (status);
 }
 
@@ -115,7 +115,7 @@ static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc
     return (status);
 }
 
-static void *execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_arg *arg)
+static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_arg *arg)
 {
     if (cmd_info->in != STDIN_FILENO)
     {
@@ -137,5 +137,4 @@ static void *execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_a
     }
     if (execve(path, arg->argv, arg->envp) == -1)
         exec_fail();
-    return (SUCCES);
 }

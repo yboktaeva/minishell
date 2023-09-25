@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:07:41 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 18:30:12 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 10:24:59 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "exec.h"
 #include "utils.h"
 #include "../libft/libft.h"
 #include <stdio.h>

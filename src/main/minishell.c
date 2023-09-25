@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 17:04:06 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:52:28 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ void shell_loop(t_env *env, char *line, t_table *main)
     {
         ft_putendl_fd("exit", STDOUT_FILENO);
         free(line);
+        free_fake_envp(main->arg);
         free_all(tokens, main->n_tokens, parse_list);
+        free(main->cmd_info->fd);
+        free(main->cmd_info);
         exit (g_status);
     }
     else if (line[0] != 0)
@@ -65,7 +68,7 @@ void shell_loop(t_env *env, char *line, t_table *main)
             cmd_execution(parse_list, main);
             add_history(line);
             free_all(tokens, main->n_tokens, parse_list);
-            //free_fake_envp(main->arg);
+            //free_cmd_args(main->arg);
         }
     }
 }
@@ -99,6 +102,8 @@ int main(int ac, char **argv, char **envp)
     }
     safe_exit(&main);
     free_env(&env);
+    free(main.cmd_info);
     free_cmd_args(&arg);
+    free_fake_envp(&arg);
     exit(g_status);
 }
