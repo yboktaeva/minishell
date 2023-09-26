@@ -6,12 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 10:09:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:34:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include "../libft/libft.h"
+#include "utils.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 char	*env_var_name(char *str)
@@ -37,38 +38,41 @@ int	env_var_name_len(char *var_name)
 	return (i);
 }
 
-char	*env_var_value(t_env *head, char *var_name)
+char	*env_var_value(t_env *env, char *var_name)
 {
-	t_env	*env;
+	t_env	*head;
 	int		var_name_len;
 
-	if (!head)
+	if (!env)
 		return (NULL);
-	env = head->next;
 	var_name_len = ft_strlen(var_name);
-	if (var_name_len == 1 && *var_name == '?')
+	head = env->next;
+//printf("a %s \n", var_name);
+	while (head)
 	{
-	    ft_itoa(g_status);
-	}
-	while (env)
-	{
-		if (ft_strncmp(var_name, env->var_name, var_name_len + 1) == 0)
+		//printf("%s \n", var_name);
+		if (var_name[0] == '?')
 		{
-			if (env->var_value == NULL)
-				return (ft_strdup("\0"));
-			return (ft_strdup(env->var_value));
+//printf("test\n");
+			return (ft_itoa(g_status));
 		}
-		env = env->next;
+		else if (ft_strncmp(var_name, head->var_name, var_name_len + 1) == 0)
+		{
+			if (head->var_value == NULL)
+				return (ft_strdup("\0"));
+			return (ft_strdup(head->var_value));
+		}
+		head = head->next;
 	}
 	return (ft_strdup("\0"));
 }
 
-t_env   *get_last(t_env *env)
+t_env	*get_last(t_env *env)
 {
-	t_env	*head;
-	
-  	if (!env)
-        return (NULL);
+	t_env *head;
+
+	if (!env)
+		return (NULL);
 	head = env;
 	while (head->next != NULL)
 		head = head->next;

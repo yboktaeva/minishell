@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:24:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/22 17:38:48 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 09:52:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int     num_args(t_one_cmd *one_cmd);
 int     env_size(t_env *env);
 char    *env_var_name(char *str);
 int     env_var_name_len(char *var_name);
-char    *env_var_value(t_env *head, char *key);
+char    *env_var_value(t_env *env, char *key);
 t_env   *get_last(t_env *env);
 int     str_check(char *str1, char *str2);
 int     char_check(char *str, char c);

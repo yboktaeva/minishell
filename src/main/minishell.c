@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 17:16:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:35:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@
 #include <signal.h>
 #include <unistd.h>
 
-long long  g_status;
+int  g_status;
 
 static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *main)
 {
-    free_all(tokens, main->n_tokens, parse_list);
     add_history(line);
+    free_all(tokens, main->n_tokens, parse_list);
     return ;
 }
 
@@ -43,10 +43,8 @@ void shell_loop(t_env *env, char *line, t_table *main)
     if (!line)
     {
         ft_putendl_fd("exit", STDOUT_FILENO);
-        free(line);
-        free_fake_envp(main->arg);
-        free_all(tokens, main->n_tokens, parse_list);
-        //free(main->cmd_info->fd);
+        //safe_exit(main);
+        //free_all(tokens, main->n_tokens, parse_list);
         exit (g_status);
     }
     else if (line[0] != 0)
@@ -67,9 +65,9 @@ void shell_loop(t_env *env, char *line, t_table *main)
             cmd_execution(parse_list, main);
             add_history(line);
             free_all(tokens, main->n_tokens, parse_list);
-            //free_cmd_args(main->arg);
         }
     }
+    //free_fake_envp(main->arg);
 }
 
 int main(int ac, char **argv, char **envp)
@@ -100,6 +98,7 @@ int main(int ac, char **argv, char **envp)
         shell_loop(env, prompt, &main);
     }
     safe_exit(&main);
+    free(main.cmd_info->fd);
     free_env(&env);
     free(main.cmd_info);
     free_cmd_args(&arg);

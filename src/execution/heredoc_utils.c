@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:35:48 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/24 12:50:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 09:16:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@
 #include <unistd.h>
 
 static t_here_doc  *new_node(int fd);
-
-// int create_tmp_file(t_redir *input)
-// {
-//     int fd;
-    
-//     fd = (input->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-//     if (fd == -1)
-//         open_error(input->file_name, HEREDOC);
-//     return (fd);
-// }
 
 void    add_back_heredoc(t_here_doc *here_doc, int fd)
 {

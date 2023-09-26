@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/25 18:27:19 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:56:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "utils.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static void	init_cmd_info(t_cmd_info *cmd_info, t_env *env,
 				t_parse_list *parse_list);
@@ -38,6 +39,7 @@ void	cmd_execution(t_parse_list *parse_list, t_table *main)
 	else
 		multi_cmds_exec(parse_list, main, &cmd_info);
 	free_n_close_heredoc(here_doc, 0);
+	free(main->arg->envp);
 	return ;
 }
 
@@ -79,19 +81,12 @@ static void	init_cmd_info(t_cmd_info *cmd_info, t_env *env,
 		t_parse_list *parse_list)
 {
     cmd_info->fd = malloc(sizeof(int) * 2);
+	if (!cmd_info->fd)
+		perror("fd: malloc failed");
+    cmd_info->fd[0] = -1;
+    cmd_info->fd[1] = -1;
 	cmd_info->path = get_path_from_envp(env);
 	cmd_info->nb_cmds = cmd_size(parse_list);
 	cmd_info->in = 0;
 	cmd_info->out = 1;
-    cmd_info->fd[0] = -1;
-    cmd_info->fd[1] = -1;
 }
-
-// static t_cmd_info *init_cmd_info()
-// {
-//     t_cmd_info *cmd_info;
-    
-//     cmd_info = NULL;
-//     cmd_info = malloc(sizeof(t_cmd_info));
-//     return (cmd_info);
-// }

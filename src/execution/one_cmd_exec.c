@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/25 15:11:48 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:46:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include <unistd.h>
 
 static int	one_cmd(const char *path, t_parse_list *s, t_table *main, t_cmd_info *cmd_info);
@@ -28,9 +29,9 @@ static int	wait_and_get_exit_status(pid_t pid);
 
 int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 {
-	int		status;
+	//int		status;
 
-	status = 0;
+	//status = 0;
 	if (parse_list->one_cmd == NULL)
 		return (0);
 	cmd_info->executable_path = get_executable_path(parse_list->one_cmd->str, cmd_info->path);
@@ -38,12 +39,12 @@ int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 	{
 		command_not_found(parse_list->one_cmd->str);
 		free(cmd_info->executable_path);
-		status = g_status;
+		return (g_status);
 	}
 	else
-		status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
+		g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
 	free(cmd_info->executable_path);
-	return (status);
+	return (g_status);
 }
 
 static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
@@ -71,7 +72,7 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_
 		exec_comd(path, main->arg, cmd_info);
 	}
 	status = wait_and_get_exit_status(pid);
-		return (status);
+	return (status);
 }
 
 static int	wait_and_get_exit_status(pid_t pid)

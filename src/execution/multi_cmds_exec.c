@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 15:21:06 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:49:41 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
+#include <signal.h>
 
 static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc);
 static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_arg *arg);
@@ -30,21 +31,21 @@ static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *mai
 
 int multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 {
-    int status;
+    //int status;
     pid_t *pids;
 
     pids = NULL;
-    status = 0;
+    //status = 0;
     pids = malloc(sizeof(int) * cmd_info->nb_cmds);
     cmd_info->index_cmd = 1;
     while (parse_list && cmd_info->path)
     {
-        status = exec_cmd(parse_list, cmd_info, main, pids);
+        g_status = exec_cmd(parse_list, cmd_info, main, pids);
         parse_list = parse_list->next;
         cmd_info->index_cmd++;
     }
     free(pids);
-    return (status);
+    return (g_status);
 }
 
 static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main, pid_t *pids)
@@ -89,11 +90,10 @@ static int execute_command(t_parse_list *parse_list, const char *path, t_table *
     }
     else if (pid == 0)
     {
+        handle_sig(SIG_CHILD);
         execute_child(main->cmd_info, fdc, path, main->arg);
-        return (EXIT_SUCCESS);
     }
-    else
-        status = execute_parent(main->cmd_info, pid, pids, fdc);
+    status = execute_parent(main->cmd_info, pid, pids, fdc);
     return (status);
 }
 
@@ -102,6 +102,7 @@ static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc
     int status;
 
     status = 1;
+    handle_sig(SIG_PARENT);
     close_fd_cmd(cmd_info);
     pids[cmd_info->index_cmd - 1] = pid;
     if (cmd_info->index_cmd == cmd_info->nb_cmds)

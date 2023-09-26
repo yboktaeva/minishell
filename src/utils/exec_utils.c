@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 10:01:42 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:26:43 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**duplicate_envp(t_env *env)
 	fake_envp = (char **)malloc((env_size(env) + 2) * sizeof(char *));
 	if (!fake_envp)
 	{
-		perror("Malloc failure in duplicate envp");
+		perror("duplicate envp: malloc failed");
 		return (NULL);
 	}
 	while (head)

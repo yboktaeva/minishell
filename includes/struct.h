@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 18:13:45 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/26 10:15:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define FAULSE 0
 # define SUCCES ((void *)1)
 
-extern long long	g_status;
+extern int	g_status;
 
 typedef enum e_sig_state
 {
