@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/21 17:24:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 12:07:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	cmd_export(t_one_cmd *one_cmd, t_env *env)
 
 	exit_status = 0;
 	if (one_cmd->next == NULL)
+	{
 		return (print_export(env));
+	}
 	while (one_cmd)
 	{
 		exit_status = procces_cmd(one_cmd, env);
@@ -94,7 +96,7 @@ static t_env	*create_env_var(const char *name, const char *value)
 	new_var = malloc(sizeof(t_env));
 	if (new_var == NULL)
 	{
-		perror("Memory alloc error");
+		perror("Malloc failed in export");
 		exit(1);
 	}
 	new_var->var_name = ft_strdup(name);

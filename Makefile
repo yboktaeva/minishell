@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/24 13:07:54 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/27 19:01:26 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,9 @@ SRC_FILES	=	main/minishell.c main/main.c main/signals.c init/init_all.c \
 				execution/heredoc_utils.c builtins/builtin.c builtins/echo.c builtins/cd.c \
 				builtins/cd_utils.c builtins/pwd.c builtins/export.c builtins/export_utils.c  \
 				builtins/unset.c builtins/env.c builtins/exit.c errors/ft_errors.c \
-				destructor/free_parsing.c destructor/free_env.c destructor/ft_exit.c \
-				utils/lex_utils.c utils/env_utils.c utils/parse_utils.c utils/print.c \
-				utils/exec_utils.c utils/builtin_utils.c
+				errors/exec_error.c destructor/free_parsing.c destructor/free_env.c \
+				destructor/ft_exit.c utils/lex_utils.c utils/env_utils.c utils/parse_utils.c \
+				utils/print.c utils/exec_utils.c utils/builtin_utils.c
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ			=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))

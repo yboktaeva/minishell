@@ -6,12 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:53:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 13:27:07 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:57:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,8 +32,13 @@ t_token	*tokenize_input(t_env *env, char *line, t_table *main)
 	if (!tokens)
 		return (NULL);
 	tokens = split_tokens(line, tokens);
-	expand_word_token(env, tokens, main);
-	delete_quotes(tokens, main->n_tokens);
+	if (!tokens)
+		free_token(tokens, main->n_tokens);
+	else
+	{
+		expand_word_token(env, tokens, main);
+		delete_quotes(tokens, main->n_tokens);
+	}
 	return (tokens);
 }
 

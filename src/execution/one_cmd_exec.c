@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/26 10:46:19 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:06:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 	cmd_info->executable_path = get_executable_path(parse_list->one_cmd->str, cmd_info->path);
 	if (cmd_info->executable_path == NULL)
 	{
-		command_not_found(parse_list->one_cmd->str);
-		free(cmd_info->executable_path);
-		return (g_status);
+		cmd_info->executable_path = parse_list->one_cmd->str;
+		// if (cmd_info->executable_path == NULL)
+		// 	free(cmd_info->executable_path);
+		// return (g_status);
 	}
-	else
-		g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
+	g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
 	free(cmd_info->executable_path);
 	return (g_status);
 }
@@ -84,8 +84,8 @@ static int	wait_and_get_exit_status(pid_t pid)
 		return (WEXITSTATUS(status));
 	else
 	{
-		printf("La commande ne s'est pas terminée normalement.\n");
-		return (-1);
+		g_status = 127;
+		return (g_status);
 	}
 }
 
@@ -102,5 +102,5 @@ static void	exec_comd(const char *path, t_arg *arg, t_cmd_info *cmd_info)
 		close(cmd_info->out);
 	}
 	if (execve(path, arg->argv, arg->envp) == -1)
-		exec_fail();
+		exec_fail(*arg->argv);
 }

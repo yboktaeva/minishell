@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 10:49:41 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:06:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_inf
         cmd_info->index_cmd++;
     }
     free(pids);
+    //free(cmd_info->fd);
     return (g_status);
 }
 
@@ -111,7 +112,6 @@ static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc
         ft_close(fdc[0]);
         ft_close(fdc[1]);
     }
-    //free(cmd_info->fd);
     cmd_info->fd = fdc;
     return (status);
 }
@@ -137,5 +137,5 @@ static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_ar
         ft_close(fdc[1]);
     }
     if (execve(path, arg->argv, arg->envp) == -1)
-        exec_fail();
+        exec_fail(*arg->argv);
 }

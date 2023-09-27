@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 10:26:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:20:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ char	**duplicate_envp(t_env *env)
 	char	**fake_envp;
 
 	i = 0;
+	if (env == NULL)
+		return (NULL);
 	head = env->next;
 	fake_envp = (char **)malloc((env_size(env) + 2) * sizeof(char *));
 	if (!fake_envp)
@@ -94,8 +96,8 @@ char	*get_path_from_envp(t_env *env)
 	{
 		if (ft_strcmp(head->var_name, "PATH") == 0)
 		{
-			if (head->var_value)
-				path = head->var_value;
+			if (head->str)
+				path = head->str;
 			else
 				path = ft_strdup("\0");	
 		}

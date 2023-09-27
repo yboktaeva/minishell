@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:29 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 11:42:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:18:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_parse_list	*parsing_tokens(t_token *tokens, int n_tokens)
 	int				is_correct;
 	t_parse_list	*parse_list;
 
+	is_correct = 0;
 	parse_list = NULL;
 	if (!tokens)
 		return (NULL);

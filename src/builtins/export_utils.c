@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 16:46:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 17:26:06 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:45:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	print_export(t_env *env)
 	tmp = env->next;
 	while (tmp)
 	{
-		if (!tmp->exported)
+		if (tmp->exported)
 			printf("declare -x %s=\"%s\"\n", tmp->var_name, tmp->var_value);
 		tmp = tmp->next;
 	}

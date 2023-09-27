@@ -6,20 +6,19 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/27 09:52:27 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:31:26 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
 
-void	free_all(t_token *tokens, int n_tokens, \
-				t_parse_list *parse_list)
+void	free_all(t_table *main, int n_tokens)
 {
-	if (tokens != NULL)
-		free_token(tokens, n_tokens);
-	if (parse_list != NULL)
-		free_parse_list(parse_list);
+	if (main->tokens != NULL)
+		free_token(main->tokens, n_tokens);
+	if (main->parse_list != NULL)
+		free_parse_list(main->parse_list);
 }
 
 void	free_token(t_token *tokens, int n_tokens)
@@ -27,13 +26,12 @@ void	free_token(t_token *tokens, int n_tokens)
 	int	i;
 
 	i = 0;
-	while (tokens && i < n_tokens)
+	while (i < n_tokens)
 	{
 		free(tokens[i].value);
 		i++;
 	}
 	free(tokens);
-	tokens = NULL;
 	return ;
 }
 
@@ -56,6 +54,7 @@ void	free_parse_list(t_parse_list *head)
 		free(head);
 		head = tmp;
 	}
+	head = NULL;
 }
 
 void	free_one_cmd_list(t_one_cmd *head)
@@ -67,10 +66,11 @@ void	free_one_cmd_list(t_one_cmd *head)
 	while (head)
 	{
 		tmp = head->next;
+		free(head->str);
 		free(head);
 		head = tmp;
-		tmp = NULL;
 	}
+	head = NULL;
 }
 
 void	free_redirect_list(t_redir *head)
@@ -86,4 +86,5 @@ void	free_redirect_list(t_redir *head)
 		head = tmp;
 		tmp = NULL;
 	}
+	head = NULL;
 }

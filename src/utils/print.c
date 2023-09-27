@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 17:41:43 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/21 18:23:21 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:49:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	print_parse_list(t_parse_list *parse_list)
 
 	while (parse_list != NULL)
 	{
-		printf("CMD\n");
 		cur_cmd = parse_list->one_cmd;
 		while (cur_cmd != NULL)
 		{

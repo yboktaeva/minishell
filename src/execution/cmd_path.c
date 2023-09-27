@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/24 01:59:49 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/27 17:20:12 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,6 @@ static char	**get_table_of_paths(const char *path)
 	return (table);
 }
 
-static char	*create_executable_path(const char *path, const char *cmd)
-{
-	char	*executable_path;
-	char	*cmd_path;
-
-	executable_path = ft_strjoin(path, "/");
-	if (!executable_path)
-		return (NULL);
-	cmd_path = ft_strjoin_free(executable_path, cmd, 1);
-	if (!cmd_path)
-		return (NULL);
-	return (cmd_path);
-}
-
 static char	*find_executable(char **dirs, const char *cmd)
 {
 	char	*cmd_path;
@@ -88,4 +74,18 @@ static char	*find_executable(char **dirs, const char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+static char	*create_executable_path(const char *path, const char *cmd)
+{
+	char	*executable_path;
+	char	*cmd_path;
+
+	executable_path = ft_strjoin(path, "/");
+	if (!executable_path)
+		return (NULL);
+	cmd_path = ft_strjoin_free(executable_path, cmd, 1);
+	if (!cmd_path)
+		return (NULL);
+	return (cmd_path);
 }

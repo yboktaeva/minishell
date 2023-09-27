@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 10:27:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:05:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	free_env(t_env **head)
 	while (tmp)
 	{
 		stock = tmp->next;
-		free(tmp->str);
 		free(tmp->var_name);
 		free(tmp->var_value);
+		if (tmp->str)
+			free(tmp->str);
 		free(tmp);
 		tmp = stock;
 	}
@@ -46,21 +47,24 @@ void	free_env_node(t_env *head)
 	if (head->exported == -1)
 		free(head->str);
 	free(head);
+	head = NULL;
 }
 
-void	free_fake_envp(t_arg *arg)
+void	free_fake_envp(t_table *main)
 {
 	int	i;
 
 	i = 0;
-	if (arg->envp != NULL && *(arg->envp) != NULL)
+	if (main->arg->envp != NULL && *(main->arg->envp) != NULL)
 	{
-		while (arg->envp[i] != NULL)
+		while (main->arg->envp[i] != NULL)
 		{
-			free(arg->envp[i]);
+			free(main->arg->envp[i]);
 			i++;
 		}
-		free(arg->envp);
+		free(main->arg->envp);
+		main->arg->envp = NULL;
 	}
-	arg->envp = NULL;
+	else
+		return ;
 }

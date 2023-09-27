@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 11:22:03 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:37:16 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 
 int  g_status;
 
-static void is_null(char *line, t_token *tokens, t_parse_list *parse_list, t_table *main)
+static void is_null(char *line, t_table *main)
 {
     add_history(line);
-    free_all(tokens, main->n_tokens, parse_list);
+    free_all(main, main->n_tokens);
     return ;
 }
 
@@ -49,7 +49,7 @@ void shell_loop(t_env *env, char *line, t_table *main)
     {
         tokens = tokenize_input(env, line, main);
         if (tokens == NULL)
-            is_null(line, tokens, parse_list, main);
+            is_null(line, main);
         else
         {
             //print_tokens(tokens, main->n_tokens);
@@ -57,13 +57,12 @@ void shell_loop(t_env *env, char *line, t_table *main)
             //print_parse_list(parse_list);
         }
         if (parse_list == NULL)
-            is_null(line, tokens, parse_list, main);
+            is_null(line, main);
         else
         {
             cmd_execution(parse_list, main);
             add_history(line);
-            free_all(tokens, main->n_tokens, parse_list);
-            //safe_exit(main);
+            free_loop(main);
         }
     }
 }
@@ -73,7 +72,7 @@ int main(int ac, char **argv, char **envp)
     char *prompt;
     t_table main;
     t_env   *env;
-    t_arg arg;
+    t_arg   arg;
 
     if (ac > 2 || argv[1] != NULL)
     {
@@ -88,17 +87,12 @@ int main(int ac, char **argv, char **envp)
     {
         free(prompt);
         prompt = readline("minishell$> ");
-        init_execve_args(&arg, env);
-        init_main_table(&main, prompt, envp);
+        init_main_table(&main);
         main.env = env;
+        init_execve_args(&arg, env);
         main.arg = &arg;
         shell_loop(env, prompt, &main);
     }
-    //safe_exit(&main);
-    free(main.cmd_info->fd);
-    free_env(&env);
-    free(main.cmd_info);
-    free_cmd_args(&arg);
-    free_fake_envp(&arg);
+    safe_exit(&main);
     exit(g_status);
 }

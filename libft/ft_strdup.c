@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:36:33 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/30 19:03:51 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:52:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_strdup(const char *s)
 	char	*ret;
 
 	len = 0;
+	if (!s)
+		return (NULL);
 	while (((char *)s)[len] != '\0')
 		len++;
 	ret = (char *)malloc(sizeof(char) * (len + 1));

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 10:15:34 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:55:14 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ typedef struct s_table
 	t_here_doc		*here_doc;
 	t_cmd_info		*cmd_info;
 	int				n_tokens;
-	int				cmd_count;
-	pid_t			pid;
 }			t_table;
 
 #endif
