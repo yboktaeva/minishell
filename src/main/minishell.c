@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 20:04:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:21:37 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ int main(int ac, char **argv, char **envp)
     env = init_env_list(envp);
     prompt = NULL;
     handle_sig(SIG_DEFAULT);
+    init_main_table(&main);
+    main.env = env;
+    init_execve_args(&arg, env);
+    main.arg = &arg;
     while (1)
     {
         free(prompt);
         prompt = readline("minishell$> ");
-        init_main_table(&main);
-        main.env = env;
-        init_execve_args(&arg, env);
-        main.arg = &arg;
         shell_loop(env, prompt, &main);
     }
     safe_exit(&main);
