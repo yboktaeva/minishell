@@ -6,13 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:07:41 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 11:26:00 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 09:58:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "exec.h"
 #include "utils.h"
+#include "minishell.h"
 #include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,11 +41,12 @@ static int	is_all_digit(char *str)
 	return (1);
 }
 
-int	cmd_exit(t_one_cmd *one_cmd)
+int	cmd_exit(t_one_cmd *one_cmd, t_table *main)
 {
 	if (one_cmd->next == NULL)
 	{
 		ft_putendl_fd("exit", 1);
+		safe_exit(main);
 		exit(g_status);
 	}
 	else if (one_cmd->next->next != NULL)

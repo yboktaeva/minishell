@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 01:43:26 by yuliaboktae      ###   ########.fr       */
+/*   Updated: 2023/09/27 09:57:33 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_builtin(t_one_cmd *one_cmd)
 	return (0);
 }
 
-void	builtin_exec(t_one_cmd *one_cmd, t_env *env, t_num_cmd num_of_cmd)
+void	builtin_exec(t_one_cmd *one_cmd, t_env *env, t_num_cmd num_of_cmd, t_table *main)
 {
 	int	b_status;
 
@@ -53,7 +53,7 @@ void	builtin_exec(t_one_cmd *one_cmd, t_env *env, t_num_cmd num_of_cmd)
 	else if (ft_strcmp(one_cmd->str, "env") == 0)
 		b_status = cmd_env(env);
 	else if (ft_strcmp(one_cmd->str, "exit") == 0)
-	    b_status = cmd_exit(one_cmd);
+	    b_status = cmd_exit(one_cmd, main);
 	if (num_of_cmd == ONE_CMD)
 		g_status = b_status;
 	else

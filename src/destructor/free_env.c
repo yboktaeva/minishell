@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/22 16:49:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:27:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	free_env(t_env **head)
 	t_env	*tmp;
 	t_env	*stock;
 
-	if (!(*head))
+	if (head == NULL && *head == NULL)
 		return ;
 	tmp = *head;
 	stock = NULL;
-	while (tmp != NULL)
+	while (tmp)
 	{
 		stock = tmp->next;
 		free(tmp->str);
@@ -36,7 +36,7 @@ void	free_env(t_env **head)
 
 void	free_env_node(t_env *head)
 {
-	if (!head)
+	if (head == NULL)
 		return ;
 	if (head->exported != 0)
 	{
@@ -53,7 +53,7 @@ void	free_fake_envp(t_arg *arg)
 	int	i;
 
 	i = 0;
-	if (arg->envp != NULL)
+	if (arg->envp != NULL && *(arg->envp) != NULL)
 	{
 		while (arg->envp[i] != NULL)
 		{
@@ -62,4 +62,5 @@ void	free_fake_envp(t_arg *arg)
 		}
 		free(arg->envp);
 	}
+	arg->envp = NULL;
 }

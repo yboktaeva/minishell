@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 14:34:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:09:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,10 @@ char	*env_var_value(t_env *env, char *var_name)
 		return (NULL);
 	var_name_len = ft_strlen(var_name);
 	head = env->next;
-//printf("a %s \n", var_name);
 	while (head)
 	{
-		//printf("%s \n", var_name);
 		if (var_name[0] == '?')
-		{
-//printf("test\n");
 			return (ft_itoa(g_status));
-		}
 		else if (ft_strncmp(var_name, head->var_name, var_name_len + 1) == 0)
 		{
 			if (head->var_value == NULL)

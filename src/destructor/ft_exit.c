@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:07:49 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 11:56:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:05:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 void    safe_exit(t_table *main)
 {
     rl_clear_history();
-    //free_all(main->tokens, main->n_tokens, main->parse_list);
-    //free_fake_envp(main->arg);
-    main->arg->envp = NULL;
-    //free_cmd_args(main->arg);
-    main->arg->argv = NULL;
-    //free_env(&main->env);
-    //free(main->cmd_info->fd);
+    free_env(&main->env);
+    free_fake_envp(main->arg);
+    free_all(main->tokens, main->n_tokens, main->parse_list);
+    free_cmd_args(main->arg);
+    if (main->cmd_info->fd != NULL)
+        free(main->cmd_info->fd);
 }
 
 void    free_cmd_args(t_arg *arg)
@@ -32,7 +31,7 @@ void    free_cmd_args(t_arg *arg)
     int	i;
 
 	i = 0;
-	if (arg->argv != NULL)
+	if (arg->argv != NULL && *(arg->argv) != NULL)
     {
         while (arg->argv[i] != NULL)
         {
@@ -41,4 +40,5 @@ void    free_cmd_args(t_arg *arg)
         }
         free(arg->argv);
     }
+    arg->argv = NULL;
 }

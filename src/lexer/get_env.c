@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/22 19:14:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 10:58:28 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void		set_env_list(t_env **head, char **envp);
+static void		set_env_list(t_env *head, char **envp);
 static void		get_env(t_env *head, char *str);
 static t_env	*add_env_node(char *str);
 static t_env	*copy_env(t_env *env, char *str);
@@ -27,7 +27,7 @@ t_env	*init_env_list(char **envp)
 	char	**default_env;
 	
 	default_env = (char *[]){"PATH=/bin:/usr/bin", NULL};
-	new = (t_env *)malloc(sizeof(t_env));
+	new = malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	new->var_name = NULL;
@@ -36,19 +36,19 @@ t_env	*init_env_list(char **envp)
 	new->next = NULL;
 	new->exported = -1;
  	if (!envp || !*envp)
-		set_env_list(&new, default_env);
+		set_env_list(new, default_env);
 	else
-		set_env_list(&new, envp);
+		set_env_list(new, envp);
 	return (new);
 }
 
-static void	set_env_list(t_env **head, char **envp)
+static void	set_env_list(t_env *head, char **envp)
 {
 	int	i;
 	i = 0;
 	while (envp[i])
 	{
-		get_env(*head, envp[i]);
+		get_env(head, envp[i]);
 		i++;
 	}
 }
@@ -79,26 +79,6 @@ static void	get_env(t_env *head, char *str)
 	start->next = add_env_node(str);
 }
 
-static t_env	*add_env_node(char *str)
-{
-	t_env	*new;
-	int		index;
-
-	index = ft_strchr(str, '=') - str;
-	new = malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->exported = -1;
-	new->str = ft_strdup(str);
-	new->var_name = ft_substr(str, 0, env_var_name_len(str));
-	if (!index)
-		new->var_value = NULL;
-	else
-		new->var_value = ft_substr(str, index + 1, ft_strlen(str));
-	new->next = NULL;
-	return (new);
-}
-
 static t_env	*copy_env(t_env *env, char *str)
 {
 	t_env	*start;
@@ -120,3 +100,27 @@ static t_env	*copy_env(t_env *env, char *str)
 	free(var_name);
 	return (NULL);
 }
+
+static t_env	*add_env_node(char *str)
+{
+	t_env	*new;
+	int		index;
+
+	index = ft_strchr(str, '=') - str;
+	new = malloc(sizeof(t_env));
+	if (!new)
+	{
+		free(new);
+		return (NULL);
+	}
+	new->exported = -1;
+	new->str = ft_strdup(str);
+	new->var_name = ft_substr(str, 0, env_var_name_len(str));
+	if (!index)
+		new->var_value = NULL;
+	else
+		new->var_value = ft_substr(str, index + 1, ft_strlen(str));
+	new->next = NULL;
+	return (new);
+}
+

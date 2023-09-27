@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/26 14:35:01 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 11:22:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void shell_loop(t_env *env, char *line, t_table *main)
     if (!line)
     {
         ft_putendl_fd("exit", STDOUT_FILENO);
-        //safe_exit(main);
-        //free_all(tokens, main->n_tokens, parse_list);
         exit (g_status);
     }
     else if (line[0] != 0)
@@ -65,9 +63,9 @@ void shell_loop(t_env *env, char *line, t_table *main)
             cmd_execution(parse_list, main);
             add_history(line);
             free_all(tokens, main->n_tokens, parse_list);
+            //safe_exit(main);
         }
     }
-    //free_fake_envp(main->arg);
 }
 
 int main(int ac, char **argv, char **envp)
@@ -90,14 +88,13 @@ int main(int ac, char **argv, char **envp)
     {
         free(prompt);
         prompt = readline("minishell$> ");
-        
         init_execve_args(&arg, env);
         init_main_table(&main, prompt, envp);
         main.env = env;
         main.arg = &arg;
         shell_loop(env, prompt, &main);
     }
-    safe_exit(&main);
+    //safe_exit(&main);
     free(main.cmd_info->fd);
     free_env(&env);
     free(main.cmd_info);
