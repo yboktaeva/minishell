@@ -6,13 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 15:47:52 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 13:27:42 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:55:50 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
 #include "lexer.h"
 #include "utils.h"
-#include "../libft/libft.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 static void	init_if_dollar(int *i, int *j, int *double_quote);
