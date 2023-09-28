@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 20:04:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:29:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,6 @@ static void is_null(char *line, t_table *main)
 
 void shell_loop(t_env *env, char *line, t_table *main)
 {
-    t_token         *tokens;
-    t_parse_list    *parse_list;
-    
-    tokens = NULL;
-    parse_list = NULL;
     if (!line)
     {
         ft_putendl_fd("exit", STDOUT_FILENO);
@@ -47,20 +42,20 @@ void shell_loop(t_env *env, char *line, t_table *main)
     }
     else if (line[0] != 0)
     {
-        tokens = tokenize_input(env, line, main);
-        if (tokens == NULL)
+        main->tokens = tokenize_input(env, line, main);
+        if (main->tokens == NULL)
             is_null(line, main);
         else
         {
             //print_tokens(tokens, main->n_tokens);
-            parse_list = parsing_tokens(tokens, main->n_tokens);
+            main->parse_list = parsing_tokens(main->tokens, main->n_tokens);
             //print_parse_list(parse_list);
         }
-        if (parse_list == NULL)
+        if (main->parse_list == NULL)
             is_null(line, main);
         else
         {
-            cmd_execution(parse_list, main);
+            cmd_execution(main->parse_list, main);
             add_history(line);
             free_loop(main);
         }
