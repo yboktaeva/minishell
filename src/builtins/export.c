@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/27 12:07:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:42:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 static int		procces_cmd(t_one_cmd *one_cmd, t_env *env);
 static void		add_env_var_if_find(t_env *env, char *name, char *value);
 static t_env	*create_env_var(const char *name, const char *value);
-static void		add_env_var(t_env *env, const char *name, const char *value);
+static void		add_env_var(t_env **env, const char *name, const char *value);
 
 int	cmd_export(t_one_cmd *one_cmd, t_env *env)
 {
@@ -69,23 +69,33 @@ static int	procces_cmd(t_one_cmd *one_cmd, t_env *env)
 
 static void	add_env_var_if_find(t_env *env, char *name, char *value)
 {
-	add_env_var(env, name, value);
+	add_env_var(&env, name, value);
 	find_exported(env, name);
 }
 
-static void	add_env_var(t_env *env, const char *name, const char *value)
+static void	add_env_var(t_env **env, const char *name, const char *value)
 {
+	t_env	*var;
 	t_env	*new_var;
 	t_env	*last;
 
-	new_var = create_env_var(name, value);
-	if (env == NULL)
-		env = new_var;
-	else
-	{
-		last = get_last(env);
-		last->next = new_var;
-		new_var->next = NULL;
+	var = find_env_var(*env, name);
+    if (var)
+    {
+        free(var->var_value);
+        var->var_value = ft_strdup(value);
+    }
+    else
+    {
+		new_var = create_env_var(name, value);
+		if (*env == NULL)
+			*env = new_var;
+		else
+		{
+			last = get_last(*env);
+			last->next = new_var;
+			new_var->next = NULL;
+		}
 	}
 }
 
@@ -96,7 +106,7 @@ static t_env	*create_env_var(const char *name, const char *value)
 	new_var = malloc(sizeof(t_env));
 	if (new_var == NULL)
 	{
-		perror("Malloc failed in export");
+		perror("export: malloc failed");
 		exit(1);
 	}
 	new_var->var_name = ft_strdup(name);

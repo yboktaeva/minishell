@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/27 19:19:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:54:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,26 @@ int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 		cmd_info->executable_path = parse_list->one_cmd->str;
 	if (cmd_info->executable_path == NULL)
 	{
-		free(cmd_info->executable_path);
+		//g_status = exec_fail(cmd_info->executable_path);
+		//command_not_found(cmd_info->executable_path);
+		//free(cmd_info->executable_path);
+		if(cmd_info->fd != NULL)
+		{
+			free(cmd_info->fd);
+			cmd_info->fd = NULL;
+		}
 		return (g_status);
 	}
 	g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
-	free(cmd_info->executable_path);
+	if (g_status == 0)
+		free(cmd_info->executable_path);
+	else
+		free_cmd_args(main->arg->argv);
+	if(cmd_info->fd != NULL)
+	{
+		free(cmd_info->fd);
+		cmd_info->fd = NULL;
+	}
 	return (g_status);
 }
 
@@ -48,14 +63,9 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_
 {
 	pid_t	pid;
 	int		status;
-	// int		fd_in;
-	// int		fd_out;
 	
-
 	handle_sig(SIG_PARENT);
 	pid = fork();
-	// fd_in = STDIN_FILENO;
-	// fd_out = STDOUT_FILENO;
 	if (pid == -1)
 	{
 		perror("Fork failed");
@@ -76,6 +86,7 @@ static int	wait_and_get_exit_status(pid_t pid)
 {
 	int	status;
 
+	status = -1;
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));

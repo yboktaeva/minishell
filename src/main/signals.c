@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:07:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/20 18:30:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:33:30 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sig_parent(int sig)
 	if (sig == SIGINT)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	else if (sig == SIGQUIT)
-		ft_putstr_fd("Quit: ", STDERR_FILENO);
+		ft_putstr_fd("Quit: Core dumped\n", STDERR_FILENO);
 }
 
 void	handle_sig(int state)

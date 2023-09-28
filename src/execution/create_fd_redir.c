@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 10:34:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 15:09:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:49:11 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ static int	open_output(t_redir *output, int *fd_out);
 
 int	handle_redirections(t_parse_list *parse_list, t_here_doc *here_doc, int *fd_in, int *fd_out)
 {
+	int	status;
+
+	status = 1;
 	if (parse_list->input != NULL)
-		open_input(parse_list->input, here_doc, fd_in);
+		status = open_input(parse_list->input, here_doc, fd_in);
 	if (parse_list->output != NULL)
-		open_output(parse_list->output, fd_out);
-	return (1);
+		status = open_output(parse_list->output, fd_out);
+	return (status);
 }
 
 static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in)
@@ -42,8 +45,8 @@ static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in)
 			if (*fd_in == -1) 
 			{
 				open_error(input->file_name, REDIR_IN);
-				exit (1);
-			}   
+				return (0);
+			}
 		}
 		else if (input->type == HEREDOC)
 		{
@@ -52,7 +55,7 @@ static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in)
 			if (*fd_in == -1) 
 			{
 				open_error(input->file_name, HEREDOC);
-				exit (1);
+				return (0);
 			}   
 		}
 		if (input->next)
@@ -76,7 +79,7 @@ static int	open_output(t_redir *output, int *fd_out)
 			if (*fd_out == -1) 
 			{
 				open_error(output->file_name, REDIR_OUT);
-				exit (1);
+				return (0);
 			}
 		}
 		else if (output->type == APPEND)
@@ -85,7 +88,7 @@ static int	open_output(t_redir *output, int *fd_out)
 			if (*fd_out == -1) 
 			{
 				open_error(output->file_name, APPEND);
-				exit (1);
+				return (0);
 			}
 		}
 		if (output->next)

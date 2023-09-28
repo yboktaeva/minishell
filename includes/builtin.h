@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:08:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:36:14 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:40:48 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		export_bad_id(char *id);
 int		print_export(t_env *env);
 int		valid_id(char *str);
 void	find_exported(t_env *env, char *var_name);
+t_env	*find_env_var(t_env *env, const char *name);
 
 #endif

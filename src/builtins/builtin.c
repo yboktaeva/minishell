@@ -6,13 +6,15 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:30:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:28:30 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
+
+static void	check_fd_free(t_table *main);
 
 int	is_builtin(t_one_cmd *one_cmd)
 {
@@ -59,5 +61,15 @@ void	builtin_exec(t_one_cmd *one_cmd, t_env *env,
 		g_status = b_status;
 	else
 		exit (b_status);
+	check_fd_free(main);
 	return ;
+}
+
+static void	check_fd_free(t_table *main)
+{
+	if(main->cmd_info->fd != NULL)
+	{
+		free(main->cmd_info->fd);
+		main->cmd_info->fd = NULL;
+	}
 }

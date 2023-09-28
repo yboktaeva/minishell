@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:20:24 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:52:42 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int			multi_cmds_exec(t_parse_list *parse_list, t_table *main,
 				t_cmd_info *cmd_info);
 void		exec_comds(const char *path, t_arg *arg);
 void		ft_close(int fd);
+void		check_free(int *fd);
 void		close_fd_cmd(t_cmd_info *cmd_info);
 int			wait_all_pid(t_cmd_info *cmd_info, pid_t pid, pid_t *pids);
 void		reset_cmd_info(t_cmd_info *cmd_info);

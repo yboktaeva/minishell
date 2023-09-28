@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 14:20:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:59:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,13 @@ static char    **convert_parse_list(t_one_cmd *head)
     }
     arr[size] = NULL;
     return (arr);
+}
+
+void check_free(int *fd)
+{
+    if(fd != NULL)
+    { 
+        free(fd);
+        fd = NULL;
+    }
 }

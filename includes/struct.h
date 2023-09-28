@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:09:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 13:22:33 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:29:51 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_cmd_info
 	char				*executable_path;
 	int					in;
 	int					out;
-	int					fd[2];
+	int					*fd;
 	int					index_cmd;
 	int					nb_cmds;
 }						t_cmd_info;

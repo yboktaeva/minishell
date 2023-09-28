@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:35:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:43:57 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	no_home_set(t_one_cmd *one_cmd, t_env *env, int ret)
 	{
 		ret = specific_path(env, "HOME");
 		if (ret == 0)
-			perror("cd: HOME not set");
+		{
+			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
+			g_status = 1;
+		}
 	}
 }
 

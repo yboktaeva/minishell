@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:53:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:30:43 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static t_env	*copy_env(t_env *env, char *str);
 t_env	*init_env_list(char **envp)
 {
 	t_env	*new;
-	char	**default_env;
 
-	default_env = (char *[]){"PATH=/bin:/usr/bin", NULL};
 	new = malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
@@ -35,10 +33,7 @@ t_env	*init_env_list(char **envp)
 	new->str = NULL;
 	new->next = NULL;
 	new->exported = -1;
-	if (!envp || !*envp)
-		set_env_list(new, default_env);
-	else
-		set_env_list(new, envp);
+	set_env_list(new, envp);
 	return (new);
 }
 

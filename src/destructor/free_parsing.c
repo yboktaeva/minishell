@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/28 14:41:40 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 22:38:45 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,9 @@
 void	free_all(t_table *main, int n_tokens)
 {
 	if (main->tokens != NULL)
-	{
 		free_token(main->tokens, n_tokens);
-		main->tokens = NULL;
-	}
 	if (main->parse_list != NULL)
-	{
 		free_parse_list(main->parse_list);
-		main->parse_list = NULL;
-	}
 }
 
 void	free_token(t_token *tokens, int n_tokens)
