@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:59:20 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 19:50:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:27:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ t_token	*split_tokens(char *line, t_token *tokens)
 	char	*quote_start;
 
 	init_var_split_tokens(line, &j, &start, &quote_start);
-	end = start;
-	while (*end != '\0')
-		end++;
 	while (*start)
 	{
 		start = pass_white_space(start);
