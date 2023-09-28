@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 18:05:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:50:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 void	free_env(t_env **head)
@@ -27,8 +28,8 @@ void	free_env(t_env **head)
 		stock = tmp->next;
 		free(tmp->var_name);
 		free(tmp->var_value);
-		if (tmp->str)
-			free(tmp->str);
+		// if (tmp->str)
+		// 	free(tmp->str);
 		free(tmp);
 		tmp = stock;
 	}
@@ -52,7 +53,7 @@ void	free_env_node(t_env *head)
 
 void	free_fake_envp(t_table *main)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (main->arg->envp != NULL && *(main->arg->envp) != NULL)
