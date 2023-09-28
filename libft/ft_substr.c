@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:02:36 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/14 17:59:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:09:32 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	new[i] = '\0';
 	return (new);
 }
-
-/*#include <stdio.h>
-  int	main()
-  {
-  char *s = "Lorem ipsum dolor sit amet consectetur adipiscing elit";
-  unsigned int start = 6;
-  size_t len = 10;
-
-  char *ret = ft_substr(s, start, len);
-  printf("%s\n", ret);
-  free(ret);
-  }
-*/
-

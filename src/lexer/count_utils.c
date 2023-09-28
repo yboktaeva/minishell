@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:09:52 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 19:49:35 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:53:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static int	count_quotes_token(char **start, char **quote_start);
 
 void	init_var_count_tokens(char *line, int *count, char **start, \
-	char **quote_start)
+		char **quote_start)
 {
 	*count = 0;
 	*start = line;

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:34 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/24 13:22:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:22:47 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 # include "struct.h"
 /*ENV*/
-t_env   *init_env_list(char **envp);
+t_env	*init_env_list(char **envp);
 /*LEXER*/
 int		count_quotes(char *s);
 int		count_tokens(char *line);
 void	init_var_count_tokens(char *line, int *count, char **start, \
-			char **quote_start);
+		char **quote_start);
 void	check_and_handle_redir(char **curr, char operator);
 int		check_and_handle_quotes(char **start, char **quote_start, int *count);
 void	token_quotes(char **start, char **quote_start, \
-			t_token *tokens, int *j);
+		t_token *tokens, int *j);
 void	token_redirection(char **start, char **end, \
-			t_token *tokens, int *j);
+		t_token *tokens, int *j);
 void	token_pipe(char **start, t_token *tokens, int *j);
 void	token_word(char **start, char **end, t_token *tokens, int *j);
-void			print_tokens(t_token *tokens, int n_tokens);
+void	print_tokens(t_token *tokens, int n_tokens);
 t_token	*split_tokens(char *line, t_token *tokens);
 t_token	*tokenize_input(t_env *env, char *line, t_table *main);
 char	*if_dollar(t_env *env, char *expand_str);

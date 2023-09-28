@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 13:47:47 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 15:19:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,25 @@ void	shell_loop(t_env *env, char *line, t_table *main)
 		if (main->tokens == NULL)
 			is_null(line, main);
 		else
-		{
-			// print_tokens(tokens, main->n_tokens);
 			main->parse_list = parsing_tokens(main->tokens, main->n_tokens);
-			// print_parse_list(parse_list);
-		}
 		if (main->parse_list == NULL)
 			is_null(line, main);
 		else
 		{
 			cmd_execution(main->parse_list, main);
 			add_history(line);
-			free_loop(main);
+			free_cmd_args(main);
+			//free_all(main, main->n_tokens);
 		}
 	}
 }
 
 int	main(int ac, char **argv, char **envp)
 {
-	char *prompt;
-	t_table main;
-	t_env *env;
-	t_arg arg;
+	char	*prompt;
+	t_table	main;
+	t_env	*env;
+	t_arg	arg;
 
 	if (ac > 2 || argv[1] != NULL)
 	{

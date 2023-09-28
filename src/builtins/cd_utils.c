@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 11:47:56 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:35:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+void	no_home_set(t_one_cmd *one_cmd, t_env *env, int ret)
+{
+	if (!one_cmd)
+	{
+		ret = specific_path(env, "HOME");
+		if (ret == 0)
+			perror("cd: HOME not set");
+	}
+}
 
 void	change_path(t_env *env)
 {

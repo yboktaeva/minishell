@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:22:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/08/14 17:53:51 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:07:20 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,3 @@ char	*ft_strtrim(char const *s, char const *set)
 	new_s[i] = '\0';
 	return (new_s);
 }
-/*int					main()
-{
-	ft_putendl_fd(ft_strtrim("lorem ipsum dolor sit am", "sit am"), 1);
-	return (0);
-}
-*/
-

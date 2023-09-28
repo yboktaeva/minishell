@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:58:28 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/21 19:47:31 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:25:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,7 @@ int	cmd_unset(t_one_cmd *one_cmd, t_env *env)
 {
 	while (one_cmd)
 	{
-		if (!ft_strcmp(one_cmd->str, "env"))  /*case if we unset env*/
-		{
-			//free_env(&env); /*free un fake env???*/
-		}
-		else
-			unset_variable(one_cmd->str, env);
+		unset_variable(one_cmd->str, env);
 		one_cmd = one_cmd->next;
 	}
 	return (0);

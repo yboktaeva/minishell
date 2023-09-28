@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 17:20:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:59:59 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ char	**duplicate_envp(t_env *env)
 
 char	*get_path_from_envp(t_env *env)
 {
-	char *path;
-	t_env *head;
-	
+	char	*path;
+	t_env	*head;
+
 	path = NULL;
 	if (!env)
 		return (NULL);
@@ -99,7 +99,7 @@ char	*get_path_from_envp(t_env *env)
 			if (head->str)
 				path = head->str;
 			else
-				path = ft_strdup("\0");	
+				path = ft_strdup("\0");
 		}
 		head = head->next;
 	}

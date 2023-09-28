@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 19:26:00 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 11:04:18 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:52:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	dollar_sign(char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			if (str[i] == '?'|| str[i] == '_' || ft_isalpha(str[i]) || ft_isdigit(str[i]))
+			if (str[i] == '?' || str[i] == '_' || ft_isalpha(str[i])
+				|| ft_isdigit(str[i]))
 				return (1);
 			else if (str[i] == '\0')
 				return (0);

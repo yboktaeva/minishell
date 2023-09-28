@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 16:16:44 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:53:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_env	*init_env_list(char **envp)
 {
 	t_env	*new;
 	char	**default_env;
-	
+
 	default_env = (char *[]){"PATH=/bin:/usr/bin", NULL};
 	new = malloc(sizeof(t_env));
 	if (!new)
@@ -35,7 +35,7 @@ t_env	*init_env_list(char **envp)
 	new->str = NULL;
 	new->next = NULL;
 	new->exported = -1;
- 	if (!envp || !*envp)
+	if (!envp || !*envp)
 		set_env_list(new, default_env);
 	else
 		set_env_list(new, envp);
@@ -45,6 +45,7 @@ t_env	*init_env_list(char **envp)
 static void	set_env_list(t_env *head, char **envp)
 {
 	int	i;
+
 	i = 0;
 	while (envp[i])
 	{
@@ -123,4 +124,3 @@ static t_env	*add_env_node(char *str)
 	new->next = NULL;
 	return (new);
 }
-

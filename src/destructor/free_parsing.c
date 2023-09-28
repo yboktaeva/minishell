@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/28 13:32:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:41:40 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	free_one_cmd_list(t_one_cmd *head)
 	while (head)
 	{
 		tmp = head->next;
-		//free(head->str);
 		free(head);
 		head = tmp;
 	}

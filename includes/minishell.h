@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 19:05:39 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:21:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	*init_execve_args(t_arg *arg, t_env *env);
 void	*init_main_table(t_table *main);
 void	shell_loop(t_env *env, char *line, t_table *main);
 /*SIGNAL*/
-void    default_sigint(int sig);
-void    sig_here_doc(int sig);
-void    sig_parent(int sig);
-void    handle_sig(int state);
+void	default_sigint(int sig);
+void	sig_here_doc(int sig);
+void	sig_parent(int sig);
+void	handle_sig(int state);
 /*ERRORS*/
 void	*quote_error(void);
 void	*syntax_error(char *str);
@@ -40,8 +40,8 @@ void	free_parse_list(t_parse_list *head);
 void	free_env(t_env **head);
 void	free_env_node(t_env *head);
 void	free_fake_envp(t_table *main);
-void    free_cmd_args(t_table *main);
-void    safe_exit(t_table *main);
-void    free_loop(t_table *main);
+void	free_cmd_args(t_table *main);
+void	safe_exit(t_table *main);
+void	free_loop(t_table *main);
 
 #endif

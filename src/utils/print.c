@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 17:41:43 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 13:49:05 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:57:39 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	print_env_list(t_env *env)
 {
 	t_env	*head;
-	
+
 	if (!env)
 		exit (1);
 	head = env->next;

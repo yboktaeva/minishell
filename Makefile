@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/27 19:01:26 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/28 15:13:24 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INC_DIR 	=	includes/
 LIBFT_PATH	=	libft/
 READLINE_LIB	=	-lreadline -lhistory -L/usr/local/lib
 
-SRC_FILES	=	main/minishell.c main/main.c main/signals.c init/init_all.c \
+SRC_FILES	=	main/minishell.c main/signals.c init/init_all.c \
 				lexer/get_env.c lexer/check_quotes.c lexer/count_tokens.c \
 				lexer/count_utils.c lexer/create_tokens.c lexer/create_utils.c \
 				lexer/expand_token.c lexer/expand_utils.c lexer/lex_analyse.c \

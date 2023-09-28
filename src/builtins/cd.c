@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:07:13 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/27 11:56:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:36:40 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@ int	cmd_cd(t_one_cmd *one_cmd, t_env *env)
 	head = one_cmd->next;
 	curr = env->next;
 	init_cmd_cd(&path, &ret);
-	if (!head)
-	{
-		ret = specific_path(curr, "HOME");
-		if (ret == 0)
-			perror("cd: HOME not set");
-	}
+	no_home_set(head, curr, ret);
 	while (head)
 	{
 		ret = handle_tilde_and_dash(head, curr);

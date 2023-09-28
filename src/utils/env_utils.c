@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 18:53:58 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 10:09:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 15:06:36 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*env_var_value(t_env *env, char *var_name)
 
 t_env	*get_last(t_env *env)
 {
-	t_env *head;
+	t_env	*head;
 
 	if (!env)
 		return (NULL);

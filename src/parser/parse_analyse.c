@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 16:52:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 15:34:24 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:56:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	if_word_token(t_token *tokens, t_parse_list *parse_list, int *j)
 }
 
 void	*if_pipe_token(t_token *tokens, t_parse_list *parse_list, \
-				int *j, int end)
+		int *j, int end)
 {
 	t_parse_list	*node;
 
@@ -42,7 +42,7 @@ void	*if_pipe_token(t_token *tokens, t_parse_list *parse_list, \
 }
 
 void	*if_redir_token(t_token *tokens, t_parse_list *parse_list, \
-				int *j, int end)
+		int *j, int end)
 {
 	t_redir	*node;
 
@@ -65,9 +65,9 @@ static void	*syntax_pipe(t_token *tokens, int *j, int end)
 		else
 			return (syntax_error(tokens[*j].value));
 	}
-	else if (count_pipes_token(tokens, end) == 3 && tokens[*j].type == PIPE 
+	else if (count_pipes_token(tokens, end) == 3 && tokens[*j].type == PIPE
 		&& tokens[*j + 1].type == PIPE)
-			return (syntax_error(tokens[*j].value));
+		return (syntax_error(tokens[*j].value));
 	else
 		return (SUCCES);
 }
