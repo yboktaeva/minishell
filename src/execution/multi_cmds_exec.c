@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/27 19:06:38 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:23:46 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,10 @@ static int execute_command(t_parse_list *parse_list, const char *path, t_table *
 {
     pid_t pid;
     int res;
-    int *fdc;
+    int fdc[2];
     int status;
     
     res = -1;
-    fdc = malloc(sizeof(int) * 2);
     res = pipe(fdc);
     create_args(parse_list, main->arg);
     if (res == -1)
@@ -112,7 +111,8 @@ static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc
         ft_close(fdc[0]);
         ft_close(fdc[1]);
     }
-    cmd_info->fd = fdc;
+    cmd_info->fd[0] = fdc[0];
+    cmd_info->fd[1] = fdc[1];
     return (status);
 }
 

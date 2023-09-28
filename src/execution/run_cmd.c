@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/27 11:21:24 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:22:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ void	one_builtin(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 static void	init_cmd_info(t_cmd_info *cmd_info, t_env *env,
 		t_parse_list *parse_list)
 {
-    cmd_info->fd = malloc(sizeof(int) * 2);
-	if (!cmd_info->fd)
-		perror("fd: malloc failed");
     cmd_info->fd[0] = -1;
     cmd_info->fd[1] = -1;
 	cmd_info->path = get_path_from_envp(env);
