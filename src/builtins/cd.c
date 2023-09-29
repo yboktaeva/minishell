@@ -6,13 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:07:13 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/28 14:36:40 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:17:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
 #include "builtin.h"
 #include "minishell.h"
-#include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -32,7 +32,7 @@ int	cmd_cd(t_one_cmd *one_cmd, t_env *env)
 	head = one_cmd->next;
 	curr = env->next;
 	init_cmd_cd(&path, &ret);
-	no_home_set(head, curr, ret);
+	no_home_set(head, curr, &ret);
 	while (head)
 	{
 		ret = handle_tilde_and_dash(head, curr);

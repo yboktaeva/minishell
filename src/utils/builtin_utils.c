@@ -6,12 +6,18 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:33:26 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 15:01:16 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:28:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
+#include "builtin.h"
+#include "minishell.h"
 #include "utils.h"
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int	str_check(char *str1, char *str2)
 {
@@ -39,4 +45,25 @@ int	char_check(char *str, char c)
 		i += 1;
 	}
 	return (0);
+}
+
+int	specific_path_home(t_env *env, char *str)
+{
+	char	*tmp;
+	int		ret;
+
+	tmp = find_path(str, env);
+	if (tmp == NULL)
+	{
+		return (-1);
+	}
+	ret = chdir(tmp);
+	if (ret != 0)
+	{
+		chdir_error(tmp);
+	
+		return (ret);
+	}
+	change_path(env);
+	return (ret);
 }

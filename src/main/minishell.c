@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 11:09:50 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 21:35:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ void	shell_loop(t_env *env, char *line, t_table *main)
 			cmd_execution(main->parse_list, main);
 			add_history(line);
 			free_parse_list(main->parse_list);
-			if (!main->arg->argv)
-			{
+			if (main->arg->argv)
+				free_cmd_args(main->arg->argv);
+			else if (main->tokens)
 				free_token(main->tokens, main->n_tokens);
-				main->tokens = NULL;
-			}
 		}
 	}
 }
@@ -87,6 +86,7 @@ int	main(int ac, char **argv, char **envp)
 	while (1)
 	{
 		free(prompt);
+		handle_sig(SIG_DEFAULT);
 		prompt = readline("minishell$> ");
 		shell_loop(main.env, prompt, &main);
 	}

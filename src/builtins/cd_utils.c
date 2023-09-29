@@ -6,23 +6,23 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 20:43:57 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:28:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
 #include "builtin.h"
 #include "minishell.h"
-#include "../libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-void	no_home_set(t_one_cmd *one_cmd, t_env *env, int ret)
+void	no_home_set(t_one_cmd *one_cmd, t_env *env, int *ret)
 {
 	if (!one_cmd)
 	{
-		ret = specific_path(env, "HOME");
-		if (ret == 0)
+		*ret = specific_path_home(env, "HOME");
+		if (*ret == -1)
 		{
 			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 			g_status = 1;

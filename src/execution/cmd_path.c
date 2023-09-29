@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/27 17:20:12 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:54:10 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "minishell.h"
 #include "../libft/libft.h"
 #include <stdbool.h>
 #include <stdio.h>

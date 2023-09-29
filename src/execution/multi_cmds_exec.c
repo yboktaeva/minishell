@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 14:17:34 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 21:31:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,13 @@
 #include <fcntl.h>
 #include <signal.h>
 
-static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc);
+static int execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc);
 static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_arg *arg);
-static int execute_command(t_parse_list *parse_list, const char *path, t_table *main, pid_t *pids);
-static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main, pid_t *pids);
+static int execute_command(t_parse_list *parse_list, const char *path, t_table *main);
+static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main);
 
 int multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 {
-    pid_t *pids;
-
-    pids = NULL;
-    t_parse_list *tmp;
-    tmp = parse_list;
-    while (tmp)
-    {
-        main->arg->n_args = num_args(tmp->one_cmd);
-        tmp = tmp->next;
-    }
-    //printf("%d\n", main->arg->n_args);
-    pids = malloc(sizeof(int) * main->arg->n_args);
-    ft_bzero(pids, main->arg->n_args);
     cmd_info->index_cmd = 1;
     while (parse_list)
     {
@@ -54,49 +41,48 @@ int multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_inf
 		        path_null(parse_list->one_cmd->str);
             else
             {
-                g_status = exec_cmd(parse_list, cmd_info, main, pids);
-                if(!g_status)
+                cmd_info->executable_path = get_executable_path(parse_list->one_cmd->str, cmd_info->path);
+                if (cmd_info->executable_path == NULL)
                 {
-                    free(pids);
-                    return (0);
+                    close_fd_cmd(cmd_info);
+                }
+                else
+                {
+                    g_status = exec_cmd(parse_list, cmd_info, main);
+                    if(!g_status)
+                    {
+                        return (0);
+                    }
                 }
             }
         }
         parse_list = parse_list->next;
         cmd_info->index_cmd++;
     }
-    free(pids);
     return (g_status);
 }
 
-static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main, pid_t *pids)
+static int exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main)
 {
     int status;
 
     status = 0;
     reset_cmd_info(cmd_info);
-    cmd_info->executable_path = get_executable_path(parse_list->one_cmd->str, cmd_info->path);
-    if (cmd_info->executable_path == NULL)
-    {
-        //command_not_found(parse_list->one_cmd->str);
-        free(cmd_info->executable_path);
-        //return (0);
-    }
     status = handle_redirections(parse_list, main->here_doc, &(main->cmd_info)->in, &(main->cmd_info)->out);
     if (status)
-        status = execute_command(parse_list, main->cmd_info->executable_path, main, pids);
+        status = execute_command(parse_list, main->cmd_info->executable_path, main);
     reset_cmd_info(main->cmd_info);
     free(cmd_info->executable_path);
     return (status);
 }
 
-static int execute_command(t_parse_list *parse_list, const char *path, t_table *main, pid_t *pids)
+static int execute_command(t_parse_list *parse_list, const char *path, t_table *main)
 {
     pid_t pid;
     int res;
     int *fdc;
     int status;
-    
+
     res = -1;
     fdc = malloc(sizeof(int) * 2);
     res = pipe(fdc);
@@ -117,23 +103,22 @@ static int execute_command(t_parse_list *parse_list, const char *path, t_table *
         create_args(parse_list, main->arg);
         execute_child(main->cmd_info, fdc, path, main->arg);
     }
-    status = execute_parent(main->cmd_info, pid, pids, fdc);
+    status = execute_parent(main->cmd_info, pid, fdc);
     return (status);
 }
 
-static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc)
+static int execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc)
 {
     int status;
 
     status = 1;
     handle_sig(SIG_PARENT);
     close_fd_cmd(cmd_info);
-    pids[cmd_info->index_cmd - 1] = pid;
     if (cmd_info->index_cmd == cmd_info->nb_cmds)
     {
         ft_close(fdc[0]);
         ft_close(fdc[1]);
-        status = wait_all_pid(cmd_info, pid, pids);
+        status = wait_all_pid(cmd_info, pid);
         check_free(fdc);
         check_free(cmd_info->fd);
        
@@ -166,9 +151,5 @@ static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_ar
         dup2(fdc[1], STDOUT_FILENO);
         ft_close(fdc[1]);
     }
-    if (execve(path, arg->argv, arg->envp) == -1)
-    {
-        printf("%s\n", path);
-        exec_fail(*arg->argv);
-    }
+    execve(path, arg->argv, arg->envp);
 }

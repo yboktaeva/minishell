@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:54:25 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/29 11:46:03 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 21:09:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,37 @@ void close_fd_cmd(t_cmd_info *cmd_info)
         ft_close(cmd_info->out);
 }
 
-int wait_all_pid(t_cmd_info *cmd_info, pid_t pid, pid_t *pids)
+int wait_all_pid(t_cmd_info *cmd_info, pid_t pid)
 {
+    (void)cmd_info;
     int save_status;
     int status;
-    int wpid;
-    int i;
+    //int wpid;
+    //int i;
     
     save_status = 0;
-    status = 1;
-    wpid = 0;
-    i = 0;
-    while (i < cmd_info->nb_cmds)
+    //status = 1;
+    //wpid = 0;
+    //i = 0;
+    pid = waitpid(-1, &status, 0);
+    while (pid > 0)
     {
-        wpid = waitpid(pids[i], &status, 0);
-        if (pid == wpid)
+        pid = waitpid(-1, &status, 0);
             save_status = status;
-        i++;
     }
+    // while (i < cmd_info->nb_cmds)
+    // {
+    //     wpid = waitpid(pids[i], &status, 0);
+    //     if (wpid == -1)
+    //     {
+    //         close_fd_cmd(cmd_info);
+    //         free(pids);
+    //     }
+    //     if (pid == wpid)
+    //         save_status = status;
+    //     i++;
+    //     //printf("%d\n", wpid);
+    // }
     if (WIFSIGNALED(status))
         status = 128 + WTERMSIG(save_status);
     else if (WIFEXITED(save_status))

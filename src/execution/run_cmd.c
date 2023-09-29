@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/29 13:04:16 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static void	init_cmd_info(t_cmd_info *cmd_info, t_env *env,
     cmd_info->fd[0] = -1;
     cmd_info->fd[1] = -1;
 	cmd_info->path = get_path_from_envp(env);
-	//cmd_info->nb_cmds = num_args(parse_list->one_cmd);
 	cmd_info->nb_cmds = cmd_size(parse_list);
 	cmd_info->in = 0;
 	cmd_info->out = 1;

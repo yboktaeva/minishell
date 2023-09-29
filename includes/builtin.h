@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:08:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 20:40:48 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:15:33 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		is_builtin(t_one_cmd *one_cmd);
 void	builtin_exec(t_one_cmd *one_cmd, t_env *env,
 			t_num_cmd num_of_cmd, t_table *main);
 int		cmd_cd(t_one_cmd *one_cmd, t_env *env);
-void	no_home_set(t_one_cmd *one_cmd, t_env *env, int ret);
+void	no_home_set(t_one_cmd *one_cmd, t_env *env, int *ret);
+int		specific_path_home(t_env *env, char *str);
 int		specific_path(t_env *env, char *str);
 char	*find_path(char *str, t_env *env);
 void	change_path(t_env *env);

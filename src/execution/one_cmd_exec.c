@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/29 12:37:39 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 21:32:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 	else
 	{
 		g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
-		if (g_status == 0)
-			free(cmd_info->executable_path);
-		else
-			free_cmd_args(main->arg->argv);
+		// if (g_status == 0)
+		// else
+		// 	free_cmd_args(main->arg->argv);
 		if(cmd_info->fd != NULL)
 		{
 			free(cmd_info->fd);
 			cmd_info->fd = NULL;
 		}
 	}
+	//free(cmd_info->executable_path);
 	return (g_status);
 }
 
@@ -71,6 +71,7 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_
 	pid_t	pid;
 	int		status;
 	
+	status = 0;
 	handle_sig(SIG_PARENT);
 	pid = fork();
 	if (pid == -1)
@@ -85,7 +86,11 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main, t_
     	handle_redirections(parse_list, main->here_doc, &cmd_info->in, &cmd_info->out);
 		exec_comd(path, main->arg, cmd_info);
 	}
-	status = wait_and_get_exit_status(pid);
+	else
+	{
+		status = wait_and_get_exit_status(pid);
+	}
+	handle_sig(SIG_PARENT);
 	return (status);
 }
 
