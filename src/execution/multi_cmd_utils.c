@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:54:25 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/28 21:45:18 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 11:46:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ int wait_all_pid(t_cmd_info *cmd_info, pid_t pid, pid_t *pids)
     int i;
     
     save_status = 0;
-    //status = 1;
+    status = 1;
     wpid = 0;
     i = 0;
-    (void)pids;
     while (i < cmd_info->nb_cmds)
     {
         wpid = waitpid(pids[i], &status, 0);

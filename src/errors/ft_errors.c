@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:44:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:44:46 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:05:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,5 @@ void	*chdir_error(char *str)
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	g_status = 2;
-	return (NULL);
-}
-
-void	*command_not_found(char *str)
-{
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
-	g_status = 127;
 	return (NULL);
 }

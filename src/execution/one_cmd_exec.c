@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/28 22:54:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:37:39 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,22 @@ int	one_cmd_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_info)
 		}
 		return (g_status);
 	}
-	g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
-	if (g_status == 0)
-		free(cmd_info->executable_path);
+	if (cmd_info->path == NULL)
+    {
+        path_null(parse_list->one_cmd->str);
+    }
 	else
-		free_cmd_args(main->arg->argv);
-	if(cmd_info->fd != NULL)
 	{
-		free(cmd_info->fd);
-		cmd_info->fd = NULL;
+		g_status = one_cmd(cmd_info->executable_path, parse_list, main, cmd_info);
+		if (g_status == 0)
+			free(cmd_info->executable_path);
+		else
+			free_cmd_args(main->arg->argv);
+		if(cmd_info->fd != NULL)
+		{
+			free(cmd_info->fd);
+			cmd_info->fd = NULL;
+		}
 	}
 	return (g_status);
 }

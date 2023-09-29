@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 22:14:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 12:08:28 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*quote_error(void);
 void	*syntax_error(char *str);
 void	*open_error(char *str, t_type type);
 void	*chdir_error(char *str);
-void	*command_not_found(char *str);
+void	*path_null(char *str);
 int 	exec_fail(char *str);
 /*DESTRUCTOR*/
 void	free_all(t_table *main, int n_tokens);

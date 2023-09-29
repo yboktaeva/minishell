@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:59:59 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 13:13:41 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	cmd_size(t_parse_list *parse_list)
 
 	len = 0;
 	tmp = parse_list;
-	while (tmp != NULL)
+	while (tmp)
 	{
 		len++;
 		tmp = tmp->next;

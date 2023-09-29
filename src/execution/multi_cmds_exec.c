@@ -6,10 +6,11 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 23:07:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/29 14:17:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
 #include "exec.h"
 #include "parser.h"
 #include "builtin.h"
@@ -34,17 +35,31 @@ int multi_cmds_exec(t_parse_list *parse_list, t_table *main, t_cmd_info *cmd_inf
     pid_t *pids;
 
     pids = NULL;
-    pids = malloc(sizeof(int) * cmd_info->nb_cmds);
+    t_parse_list *tmp;
+    tmp = parse_list;
+    while (tmp)
+    {
+        main->arg->n_args = num_args(tmp->one_cmd);
+        tmp = tmp->next;
+    }
+    //printf("%d\n", main->arg->n_args);
+    pids = malloc(sizeof(int) * main->arg->n_args);
+    ft_bzero(pids, main->arg->n_args);
     cmd_info->index_cmd = 1;
-    while (parse_list && cmd_info->path)
+    while (parse_list)
     {
         if (parse_list->one_cmd)
         {
-            g_status = exec_cmd(parse_list, cmd_info, main, pids);
-            if(g_status > 0)
+            if (!cmd_info->path)
+		        path_null(parse_list->one_cmd->str);
+            else
             {
-                free(pids);
-                return (0);
+                g_status = exec_cmd(parse_list, cmd_info, main, pids);
+                if(!g_status)
+                {
+                    free(pids);
+                    return (0);
+                }
             }
         }
         parse_list = parse_list->next;
@@ -122,7 +137,9 @@ static int execute_parent(t_cmd_info *cmd_info, pid_t pid, pid_t *pids, int *fdc
         check_free(fdc);
         check_free(cmd_info->fd);
        
-    }else{
+    }
+    else
+    {
         check_free(cmd_info->fd);
         cmd_info->fd = fdc;
     }
@@ -151,6 +168,7 @@ static void execute_child(t_cmd_info *cmd_info, int *fdc, const char *path, t_ar
     }
     if (execve(path, arg->argv, arg->envp) == -1)
     {
+        printf("%s\n", path);
         exec_fail(*arg->argv);
     }
 }
