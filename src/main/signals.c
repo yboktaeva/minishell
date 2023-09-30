@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:07:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/29 21:00:18 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 18:25:44 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	handle_sig(int state)
 {
 	if (state == SIG_DEFAULT)
 	{
+		g_status = 130;
 		signal(SIGINT, default_sigint);
 		signal(SIGQUIT, SIG_IGN);
 	}

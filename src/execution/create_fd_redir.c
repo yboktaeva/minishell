@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 10:34:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 10:59:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:01:34 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in)
 				return (0);
 			}
 		}
-		file_next(input, fd_in);
+		file_next(&input, fd_in);
 	}
 	return (1);
 }
@@ -85,7 +85,7 @@ static int	open_output(t_redir *out, int *fd_out)
 				return (0);
 			}
 		}
-		file_next(out, fd_out);
+		file_next(&out, fd_out);
 	}
 	return (1);
 }

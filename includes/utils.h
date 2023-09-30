@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:24:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:15:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 15:10:31 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		ft_isspace(char c);
 void	skip_single_quote(char *str, int *i);
 char	*pass_white_space(char *s);
 char	*my_strncpy(char *dest, const char *src, size_t n);
-char	*ft_strndup(const char *s, size_t n);
 t_type	type_of_redir(t_type type);
 int		is_redir(t_type type);
 int		is_word(t_type type);

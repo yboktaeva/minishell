@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 11:30:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 13:07:05 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "struct.h"
 
 void		create_args(t_parse_list *parse_list, t_arg *arg);
-int			handle_redirections(t_parse_list *parse_list,
-				t_here_doc *here_doc, int *fd_in, int *fd_out);
+int			handle_redirections(t_parse_list *parse_list, t_here_doc *here_doc,
+				int *fd_in, int *fd_out);
 void		cmd_execution(t_parse_list *parse_list, t_table *main);
 void		one_builtin(t_parse_list *parse_list, t_table *main,
 				t_cmd_info *cmd_info);
@@ -41,7 +41,11 @@ int			wait_all_pid(t_cmd_info *cmd_info, pid_t pid);
 void		reset_cmd_info(t_cmd_info *cmd_info);
 void		check_fd_in(t_redir *file, int *fd_in);
 void		check_fd_out(t_redir *file, int *fd_out);
-void		file_next(t_redir *file, int *fd);
-int			handle_io_redirections(t_parse_list *s, t_table *main,
-				t_cmd_info *cmd_info, int *tmp_fd);
+void		file_next(t_redir **file, int *fd);
+int			exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info,
+				t_table *main);
+int			handle_io_redir(t_parse_list *s, t_table *main,
+				t_cmd_info *cmd_info);
+int			if_exec_path(t_parse_list *s, t_table *main, t_cmd_info *cmd_info);
+
 #endif

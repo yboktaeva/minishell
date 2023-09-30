@@ -6,31 +6,29 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 11:05:41 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 18:41:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include "exec.h"
-#include "parser.h"
 #include "builtin.h"
-#include "utils.h"
+#include "exec.h"
 #include "minishell.h"
+#include "parser.h"
+#include "utils.h"
+#include <fcntl.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <fcntl.h>
-#include <signal.h>
+#include <unistd.h>
 
 static int	execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc);
-static void	execute_child(t_cmd_info *cmd_info, int *fdc,
-				const char *path, t_arg *arg);
-static int	execute_command(t_parse_list *parse_list,
-				const char *path, t_table *main);
-static int	exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info,
+static void	execute_child(t_table *main, t_cmd_info *cmd_info, int *fdc,
+				const char *path);
+static int	execute_command(t_parse_list *parse_list, const char *path,
 				t_table *main);
 
 int	multi_cmds_exec(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
@@ -43,27 +41,17 @@ int	multi_cmds_exec(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
 			if (!cmd_info->path)
 				path_null(s->one_cmd->str);
 			else
-			{
-				cmd_info->executable_path = get_executable_path
-					(s->one_cmd->str, cmd_info->path);
-				if (cmd_info->executable_path == NULL)
-					close_fd_cmd(cmd_info);
-				else
-				{
-					g_status = exec_cmd(s, cmd_info, main);
-					if (!g_status)
-						return (0);
-				}
-			}
+				if_exec_path(s, main, cmd_info);
 		}
 		s = s->next;
 		cmd_info->index_cmd++;
 	}
+	if (!cmd_info->path)
+		check_free(cmd_info->fd);
 	return (g_status);
 }
 
-static int	exec_cmd(t_parse_list *parse_list,
-				t_cmd_info *cmd_info, t_table *main)
+int	exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main)
 {
 	int	status;
 
@@ -72,25 +60,22 @@ static int	exec_cmd(t_parse_list *parse_list,
 	status = handle_redirections(parse_list, main->here_doc,
 			&(main->cmd_info)->in, &(main->cmd_info)->out);
 	if (status)
-		status = execute_command(parse_list,
-				main->cmd_info->executable_path, main);
+		status = execute_command(parse_list, main->cmd_info->executable_path,
+				main);
 	reset_cmd_info(main->cmd_info);
 	free(cmd_info->executable_path);
 	return (status);
 }
 
-static int	execute_command(t_parse_list *parse_list,
-				const char *path, t_table *main)
+static int	execute_command(t_parse_list *parse_list, const char *path,
+		t_table *main)
 {
 	pid_t	pid;
-	int		res;
 	int		*fdc;
 	int		status;
 
-	res = -1;
 	fdc = malloc(sizeof(int) * 2);
-	res = pipe(fdc);
-	if (res == -1)
+	if (pipe(fdc))
 		exit(1);
 	pid = fork();
 	if (pid == -1)
@@ -103,7 +88,7 @@ static int	execute_command(t_parse_list *parse_list,
 		status = 0;
 		handle_sig(SIG_CHILD);
 		create_args(parse_list, main->arg);
-		execute_child(main->cmd_info, fdc, path, main->arg);
+		execute_child(main, main->cmd_info, fdc, path);
 	}
 	status = execute_parent(main->cmd_info, pid, fdc);
 	return (status);
@@ -132,8 +117,8 @@ static int	execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc)
 	return (status);
 }
 
-static void	execute_child(t_cmd_info *cmd_info, int *fdc,
-				const char *path, t_arg *arg)
+static void	execute_child(t_table *main, t_cmd_info *cmd_info, int *fdc,
+				const char *path)
 {
 	if (cmd_info->in != STDIN_FILENO)
 	{
@@ -153,5 +138,6 @@ static void	execute_child(t_cmd_info *cmd_info, int *fdc,
 		dup2(fdc[1], STDOUT_FILENO);
 		ft_close(fdc[1]);
 	}
-	execve(path, arg->argv, arg->envp);
+	if (execve(path, main->arg->argv, main->arg->envp) == -1)
+		exec_fail(main, *main->arg->argv);
 }

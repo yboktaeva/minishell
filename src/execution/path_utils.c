@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yuliaboktaeva <yuliaboktaeva@student.42    +#+  +:+       +#+        */
+/*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 10:59:35 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/30 10:31:35 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 19:01:30 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "../libft/libft.h"
+#include "exec.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -56,4 +57,35 @@ char	*ft_strjoin_free(char *s1, char const *s2, int free_s1)
 	if (free_s1)
 		free(s1);
 	return (res);
+}
+
+static int	exec_fail_parent(char *str)
+{
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
+	g_status = 127;
+	return (g_status);
+}
+
+int	if_exec_path(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
+{
+	if (ft_strchr(s->one_cmd->str, '/'))
+		cmd_info->executable_path = ft_strdup(s->one_cmd->str);
+	cmd_info->executable_path = get_executable_path(s->one_cmd->str,
+			cmd_info->path);
+	if (cmd_info->executable_path == NULL)
+		cmd_info->executable_path = ft_strdup(s->one_cmd->str);
+	if (cmd_info->executable_path == NULL)
+	{
+		close_fd_cmd(cmd_info);
+		exec_fail_parent(s->one_cmd->str);
+		return (g_status);
+	}
+	else
+	{
+		g_status = exec_cmd(s, cmd_info, main);
+		if (!g_status)
+			return (0);
+	}
+	return (g_status);
 }

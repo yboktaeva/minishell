@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:07:49 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 19:52:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 18:09:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,12 @@ void	free_cmd_args(char **argv)
 	i = 0;
 	if (argv == NULL)
 		return ;
-	else if (argv != NULL && *(argv) != NULL)
+	while (argv[i] != NULL)
 	{
-		while (argv[i] != NULL)
-		{
-			free(argv[i]);
-			i++;
-		}
-		free(argv);
-		argv = NULL;
+		free(argv[i]);
+		argv[i] = NULL;
+		i++;
 	}
+	free(argv);
+	argv = NULL;
 }

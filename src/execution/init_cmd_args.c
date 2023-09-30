@@ -6,12 +6,13 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:01:44 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 10:23:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 18:13:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -44,7 +45,7 @@ static char	**convert_parse_list(t_one_cmd *head)
 	i = 0;
 	while (i < size)
 	{
-		arr[i] = curr_cmd->str;
+		arr[i] = ft_strdup(curr_cmd->str);
 		i++;
 		curr_cmd = curr_cmd->next;
 	}

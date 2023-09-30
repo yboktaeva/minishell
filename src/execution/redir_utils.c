@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:48:16 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/30 11:33:45 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 16:40:42 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ void	check_fd_out(t_redir *file, int *fd_out)
 		ft_close (*fd_out);
 }
 
-void	file_next(t_redir *file, int *fd)
+void	file_next(t_redir **file, int *fd)
 {
-	if (file->next)
+	if ((*file)->next)
 		ft_close(*fd);
-	file = file->next;
+	*file = (*file)->next;
 }
 
-static int	handle_io_redirections(t_parse_list *s, t_table *main,
-				t_cmd_info *cmd_info, int *tmp_fd)
+int	handle_io_redir(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
 {
 	int	flag_redir;
 
@@ -54,12 +53,12 @@ static int	handle_io_redirections(t_parse_list *s, t_table *main,
 			if (cmd_info->in != STDIN_FILENO)
 			{
 				dup2(cmd_info->in, STDIN_FILENO);
-				close(cmd_info->in);
+				ft_close(cmd_info->in);
 			}
 			if (cmd_info->out != STDOUT_FILENO)
 			{
 				dup2(cmd_info->out, STDOUT_FILENO);
-				close(cmd_info->out);
+				ft_close(cmd_info->out);
 			}
 		}
 	}
