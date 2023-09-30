@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 18:56:25 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:45:22 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void	free_fake_envp(t_table *main)
 	{
 		while (main->arg->envp[i] != NULL)
 		{
-			// free(main->arg->envp[i]);
-			 i++;
+			i++;
 		}
 		free(main->arg->envp);
 		main->arg->envp = NULL;

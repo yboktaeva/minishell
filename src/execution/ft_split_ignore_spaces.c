@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 16:00:45 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/08 18:16:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 10:20:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ static void	free_word_array(char **words, int count)
 
 char	**ft_split_ignore_spaces(const char *s, char c)
 {
-	char **result;
-	int word_count;
-	int i;
-	int j;
+	char	**result;
+	int		word_count;
+	int		i;
+	int		j;
 
 	if (!s)
 		return (NULL);

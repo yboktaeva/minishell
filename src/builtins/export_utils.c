@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 16:46:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 20:40:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:42:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@ void	find_exported(t_env *env, char *var_name)
 	}
 }
 
-t_env *find_env_var(t_env *env, const char *name)
+t_env	*find_env_var(t_env *env, const char *name)
 {
-	t_env *current;
+	t_env	*current;
 
-    if (name == NULL || env == NULL)
-        return (NULL);
-    current = env->next;
-    while (current)
-    {
-        if (current->var_name && ft_strcmp(current->var_name, name) == 0)
-            return (current);
-        current = current->next;
-    }
-    return (NULL);
+	if (name == NULL || env == NULL)
+		return (NULL);
+	current = env->next;
+	while (current)
+	{
+		if (current->var_name && ft_strcmp(current->var_name, name) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
 }

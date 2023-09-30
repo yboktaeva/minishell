@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:03:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/29 19:54:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:49:41 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static char			*find_executable(char **dirs, const char *cmd);
 
 char	*get_executable_path(const char *cmd, const char *path)
 {
-	char **dirs;
-	char *executable_path;
+	char	**dirs;
+	char	*executable_path;
 
 	path = prepare_path(path);
 	if (path == NULL)

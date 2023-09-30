@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 21:35:19 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 11:32:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	is_null(char *line, t_table *main)
 	return ;
 }
 
-void	shell_loop(t_env *env, char *line, t_table *main)
+static void	free_line(char *line, t_table *main)
 {
 	if (!line)
 	{
@@ -41,7 +41,21 @@ void	shell_loop(t_env *env, char *line, t_table *main)
 		safe_exit(main);
 		exit(g_status);
 	}
-	else if (line[0] != 0)
+}
+
+static void	error_msg(int ac, char **argv)
+{
+	if (ac > 2 || argv[1] != NULL)
+	{
+		ft_putendl_fd("Program does not accept any arguments", 1);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	shell_loop(t_env *env, char *line, t_table *main)
+{
+	free_line(line, main);
+	if (line[0] != 0)
 	{
 		main->tokens = tokenize_input(env, line, main);
 		if (main->tokens == NULL)
@@ -70,11 +84,7 @@ int	main(int ac, char **argv, char **envp)
 	t_env	*env;
 	t_arg	arg;
 
-	if (ac > 2 || argv[1] != NULL)
-	{
-		ft_putendl_fd("Program does not accept any arguments", 1);
-		exit(EXIT_FAILURE);
-	}
+	error_msg(ac, argv);
 	g_status = 0;
 	env = init_env_list(envp);
 	prompt = NULL;

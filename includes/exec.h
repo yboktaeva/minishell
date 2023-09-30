@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:14:16 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 21:08:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 11:30:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,9 @@ void		check_free(int *fd);
 void		close_fd_cmd(t_cmd_info *cmd_info);
 int			wait_all_pid(t_cmd_info *cmd_info, pid_t pid);
 void		reset_cmd_info(t_cmd_info *cmd_info);
+void		check_fd_in(t_redir *file, int *fd_in);
+void		check_fd_out(t_redir *file, int *fd_out);
+void		file_next(t_redir *file, int *fd);
+int			handle_io_redirections(t_parse_list *s, t_table *main,
+				t_cmd_info *cmd_info, int *tmp_fd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 12:08:28 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:37:24 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*syntax_error(char *str);
 void	*open_error(char *str, t_type type);
 void	*chdir_error(char *str);
 void	*path_null(char *str);
-int 	exec_fail(char *str);
+int		exec_fail(char *str);
 /*DESTRUCTOR*/
 void	free_all(t_table *main, int n_tokens);
 void	free_token(t_token *tokens, int n_tokens);

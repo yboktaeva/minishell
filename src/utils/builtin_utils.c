@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:33:26 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 22:28:01 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:48:06 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	specific_path_home(t_env *env, char *str)
 	if (ret != 0)
 	{
 		chdir_error(tmp);
-	
 		return (ret);
 	}
 	change_path(env);

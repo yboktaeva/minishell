@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 10:34:17 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 19:49:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 10:59:53 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 #include <stdlib.h>
 
 static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in);
-static int	open_output(t_redir *output, int *fd_out);
+static int	open_output(t_redir *out, int *fd_out);
 
-int	handle_redirections(t_parse_list *parse_list, t_here_doc *here_doc, int *fd_in, int *fd_out)
+int	handle_redirections(t_parse_list *parse_list, t_here_doc *here_doc,
+				int *fd_in, int *fd_out)
 {
 	int	status;
 
@@ -33,16 +34,13 @@ int	handle_redirections(t_parse_list *parse_list, t_here_doc *here_doc, int *fd_
 
 static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in)
 {
-	if (!input || !fd_in)
-		return (0);
-	if (*fd_in != 0)
-		close(*fd_in);
+	check_fd_in(input, fd_in);
 	while (input)
 	{
 		if (input->type == REDIR_IN)
 		{
 			*fd_in = open(input->file_name, O_RDONLY);
-			if (*fd_in == -1) 
+			if (*fd_in == -1)
 			{
 				open_error(input->file_name, REDIR_IN);
 				return (0);
@@ -52,48 +50,42 @@ static int	open_input(t_redir *input, t_here_doc *here_doc, int *fd_in)
 		{
 			*fd_in = here_doc->read_fd;
 			here_doc = here_doc->next;
-			if (*fd_in == -1) 
+			if (*fd_in == -1)
 			{
 				open_error(input->file_name, HEREDOC);
 				return (0);
-			}   
+			}
 		}
-		if (input->next)
-			close(*fd_in);
-		input = input->next;
+		file_next(input, fd_in);
 	}
 	return (1);
 }
 
-static int	open_output(t_redir *output, int *fd_out)
+static int	open_output(t_redir *out, int *fd_out)
 {
-	if (!output || !fd_out)
-		return (0);
-	if (*fd_out != 1)
-		close(*fd_out);
-	while (output)
+	check_fd_out(out, fd_out);
+	while (out)
 	{
-		if (output->type == REDIR_OUT)
+		if (out->type == REDIR_OUT)
 		{
-			*fd_out = open(output->file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			if (*fd_out == -1) 
+			*fd_out = open(out->file_name,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (*fd_out == -1)
 			{
-				open_error(output->file_name, REDIR_OUT);
+				open_error(out->file_name, REDIR_OUT);
 				return (0);
 			}
 		}
-		else if (output->type == APPEND)
+		else if (out->type == APPEND)
 		{
-			*fd_out = open(output->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			if (*fd_out == -1) 
+			*fd_out = open(out->file_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (*fd_out == -1)
 			{
-				open_error(output->file_name, APPEND);
+				open_error(out->file_name, APPEND);
 				return (0);
 			}
 		}
-		if (output->next)
-			close(*fd_out);
-		output = output->next;
+		file_next(out, fd_out);
 	}
 	return (1);
 }

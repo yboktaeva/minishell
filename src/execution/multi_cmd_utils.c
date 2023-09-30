@@ -6,10 +6,9 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:54:25 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/29 21:09:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 10:30:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "exec.h"
 #include "parser.h"
@@ -23,71 +22,53 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-void exec_comds(const char *path, t_arg *arg)
+void	exec_comds(const char *path, t_arg *arg)
 {
-    execve(path, arg->argv, arg->envp);
-    perror("Erreur lors de l'exécution de la commande");
-    exit(EXIT_FAILURE);
+	execve(path, arg->argv, arg->envp);
+	perror("Erreur lors de l'exécution de la commande");
+	exit(EXIT_FAILURE);
 }
 
-void ft_close(int fd)
+void	ft_close(int fd)
 {
-    if (fd > 0)
-        close(fd);
+	if (fd > 0)
+		close(fd);
 }
 
-void close_fd_cmd(t_cmd_info *cmd_info)
+void	close_fd_cmd(t_cmd_info *cmd_info)
 {
-    ft_close(cmd_info->fd[1]);
-    ft_close(cmd_info->fd[0]);
-    if (cmd_info->in != STDIN_FILENO)
-        ft_close(cmd_info->in);
-    if (cmd_info->out != STDOUT_FILENO)
-        ft_close(cmd_info->out);
+	ft_close(cmd_info->fd[1]);
+	ft_close(cmd_info->fd[0]);
+	if (cmd_info->in != STDIN_FILENO)
+		ft_close(cmd_info->in);
+	if (cmd_info->out != STDOUT_FILENO)
+		ft_close(cmd_info->out);
 }
 
-int wait_all_pid(t_cmd_info *cmd_info, pid_t pid)
+int	wait_all_pid(t_cmd_info *cmd_info, pid_t pid)
 {
-    (void)cmd_info;
-    int save_status;
-    int status;
-    //int wpid;
-    //int i;
-    
-    save_status = 0;
-    //status = 1;
-    //wpid = 0;
-    //i = 0;
-    pid = waitpid(-1, &status, 0);
-    while (pid > 0)
-    {
-        pid = waitpid(-1, &status, 0);
-            save_status = status;
-    }
-    // while (i < cmd_info->nb_cmds)
-    // {
-    //     wpid = waitpid(pids[i], &status, 0);
-    //     if (wpid == -1)
-    //     {
-    //         close_fd_cmd(cmd_info);
-    //         free(pids);
-    //     }
-    //     if (pid == wpid)
-    //         save_status = status;
-    //     i++;
-    //     //printf("%d\n", wpid);
-    // }
-    if (WIFSIGNALED(status))
-        status = 128 + WTERMSIG(save_status);
-    else if (WIFEXITED(save_status))
-        status = WEXITSTATUS(save_status);
-    else
-        status = save_status;
-    return (status);
+	int	save_status;
+	int	status;
+
+	(void)cmd_info;
+	save_status = 0;
+	pid = waitpid(-1, &status, 0);
+	while (pid > 0)
+	{
+			pid = waitpid(-1, &status, 0);
+			save_status = status;
+	}
+	if (WIFSIGNALED(status))
+			status = 128 + WTERMSIG(save_status);
+	else if (WIFEXITED(save_status))
+			status = WEXITSTATUS(save_status);
+	else
+			status = save_status;
+	return (status);
 }
 
-void reset_cmd_info(t_cmd_info *cmd_info)
+void	reset_cmd_info(t_cmd_info *cmd_info)
 {
-    cmd_info->out = STDOUT_FILENO;
-    cmd_info->in = STDIN_FILENO;
+	cmd_info->out = STDOUT_FILENO;
+	cmd_info->in = STDIN_FILENO;
 }

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:21:40 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 19:28:30 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:43:12 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	builtin_exec(t_one_cmd *one_cmd, t_env *env,
 
 static void	check_fd_free(t_table *main)
 {
-	if(main->cmd_info->fd != NULL)
+	if (main->cmd_info->fd != NULL)
 	{
 		free(main->cmd_info->fd);
 		main->cmd_info->fd = NULL;

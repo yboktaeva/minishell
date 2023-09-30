@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/29 19:04:07 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/09/30 10:43:49 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_FILES	=	main/minishell.c main/signals.c init/init_all.c \
 				parser/add_parse_node.c parser/build_parse.c parser/parse_analyse.c \
 				execution/cmd_path.c execution/path_utils.c execution/one_cmd_exec.c \
 				execution/multi_cmds_exec.c execution/multi_cmd_utils.c \
-				execution/create_fd_redir.c execution/create_heredoc.c\
+				execution/create_fd_redir.c execution/create_heredoc.c execution/redir_utils.c\
 				execution/init_cmd_args.c execution/run_cmd.c execution/ft_split_ignore_spaces.c \
 				execution/heredoc_utils.c builtins/builtin.c builtins/echo.c builtins/cd.c \
 				builtins/cd_utils.c builtins/pwd.c builtins/export.c builtins/export_utils.c  \

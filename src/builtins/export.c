@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/28 20:42:32 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:43:44 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ static void	add_env_var(t_env **env, const char *name, const char *value)
 	t_env	*last;
 
 	var = find_env_var(*env, name);
-    if (var)
-    {
-        free(var->var_value);
-        var->var_value = ft_strdup(value);
-    }
-    else
-    {
+	if (var)
+	{
+		free(var->var_value);
+		var->var_value = ft_strdup(value);
+	}
+	else
+	{
 		new_var = create_env_var(name, value);
 		if (*env == NULL)
 			*env = new_var;

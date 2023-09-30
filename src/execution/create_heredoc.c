@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 12:30:10 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/25 18:33:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:56:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,91 +19,89 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc, t_cmd_info *cmd_info);
-static int write_heredoc(int *tmp_fd, char *sep);
+static t_here_doc	*run_heredoc(t_redir *input,
+						t_here_doc *here_doc, t_cmd_info *cmd_info);
+static int			write_heredoc(int *tmp_fd, char *sep);
 
-t_here_doc    *open_heredoc(t_parse_list *parse_list, t_cmd_info *cmd_info)
+t_here_doc	*open_heredoc(t_parse_list *parse_list, t_cmd_info *cmd_info)
 {
-    t_here_doc *here_doc;
-    t_redir *curr;
-    
-    here_doc = malloc(sizeof(t_here_doc));
-    if (!here_doc)
-    {
+	t_here_doc	*here_doc;
+	t_redir		*curr;
+
+	here_doc = malloc(sizeof(t_here_doc));
+	if (!here_doc)
+	{
 		perror("Malloc failure in open heredoc");
 		return (NULL);
 	}
-    here_doc->read_fd = 0;
-    here_doc->next = NULL;
-    while (parse_list)
-    {
-        curr = parse_list->input;
-        if (curr != NULL)
-        {
-            if (!run_heredoc(curr, here_doc, cmd_info))
-                return (NULL);
-        }
-        parse_list = parse_list->next;
-    }
-    return (here_doc);
+	here_doc->read_fd = 0;
+	here_doc->next = NULL;
+	while (parse_list)
+	{
+		curr = parse_list->input;
+		if (curr != NULL)
+		{
+			if (!run_heredoc(curr, here_doc, cmd_info))
+				return (NULL);
+		}
+		parse_list = parse_list->next;
+	}
+	return (here_doc);
 }
 
-static t_here_doc  *run_heredoc(t_redir *input, t_here_doc *here_doc, t_cmd_info *cmd_info)
+static t_here_doc	*run_heredoc(t_redir *input, t_here_doc *here_doc,
+						t_cmd_info *cmd_info)
 {
 	pid_t	pid;
-    int status;
-    // int fd[2];
-    
-    // fd[0] = 0;
-    // fd[1] = 1;
-    while (input != NULL)
-    {
-        if (input->type == HEREDOC)
-        {
-            pid = fork();
-            if (pid == 0)
-            {   cmd_info->fd[0] = 0;
-                cmd_info->fd[1] = 1;
-                write_heredoc(cmd_info->fd, input->file_name);
-            }
-            else
-            {
-                //close(fd[1]);
-                wait(&status);
-                add_back_heredoc(here_doc, cmd_info->in);
-            }
-        }
-        input = input->next;
-    }
-    return (here_doc);
+	int		status;
+
+	while (input != NULL)
+	{
+		if (input->type == HEREDOC)
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				cmd_info->fd[0] = 0;
+				cmd_info->fd[1] = 1;
+				write_heredoc(cmd_info->fd, input->file_name);
+			}
+			else
+			{
+				wait(&status);
+				add_back_heredoc(here_doc, cmd_info->in);
+			}
+		}
+		input = input->next;
+	}
+	return (here_doc);
 }
 
-static int write_heredoc(int *tmp_fd, char *sep)
+static int	write_heredoc(int *tmp_fd, char *sep)
 {
-    char    *input;
-    
-    *tmp_fd = open(sep, O_WRONLY | O_CREAT | O_APPEND, 0600);
-    handle_sig(SIG_HEREDOC);
-    while (1)
-    {
-        input = readline(">");
-        if (!input)
-            break ;
-        else
-        {
-            if (ft_strncmp(sep, input, ft_strlen(sep)))
-            {
-                //ft_putendl_fd(input, tmp_fd[1]);
-                write(tmp_fd[0], input, ft_strlen(input));
-                write(tmp_fd[0], "\n", 1);
-                free(input);
-            }
-            else
-                break ;
-        }
-    }
-    free(input);
-    close(tmp_fd[0]);
-    close(tmp_fd[1]);
-    exit(0);
+	char	*input;
+
+	*tmp_fd = open(sep, O_WRONLY | O_CREAT | O_APPEND, 0600);
+	handle_sig(SIG_HEREDOC);
+	while (1)
+	{
+		input = readline(">");
+		if (!input)
+			break ;
+		else
+		{
+			if (ft_strncmp(sep, input, ft_strlen(sep)))
+			{
+				write(tmp_fd[0], input, ft_strlen(input));
+				write(tmp_fd[0], "\n", 1);
+				free(input);
+			}
+			else
+				break ;
+		}
+	}
+	free(input);
+	close(tmp_fd[0]);
+	close(tmp_fd[1]);
+	exit(0);
 }

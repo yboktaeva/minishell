@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:07:41 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 14:49:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/09/30 09:40:43 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	single_exit(t_table *main)
 	safe_exit(main);
 	free_all(main, main->n_tokens);
 	free_n_close_heredoc(main->here_doc, main->cmd_info->fd[0]);
-	if(main->cmd_info->fd != NULL)
+	if (main->cmd_info->fd != NULL)
 	{
 		free(main->cmd_info->fd);
 		main->cmd_info->fd = NULL;
