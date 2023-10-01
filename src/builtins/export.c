@@ -6,11 +6,12 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/30 09:43:44 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:18:14 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "lexer.h"
 #include "utils.h"
 #include "exec.h"
 #include "../libft/libft.h"
@@ -23,15 +24,14 @@ static void		add_env_var_if_find(t_env *env, char *name, char *value);
 static t_env	*create_env_var(const char *name, const char *value);
 static void		add_env_var(t_env **env, const char *name, const char *value);
 
+
 int	cmd_export(t_one_cmd *one_cmd, t_env *env)
 {
 	int	exit_status;
 
 	exit_status = 0;
 	if (one_cmd->next == NULL)
-	{
 		return (print_export(env));
-	}
 	while (one_cmd)
 	{
 		exit_status = procces_cmd(one_cmd, env);

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:14:53 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 18:05:29 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:03:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_env(t_env **head);
 void	free_env_node(t_env *head);
 void	free_fake_envp(t_table *main);
 void	free_cmd_args(char **argv);
+void	free_execution(t_table *main);
 void	safe_exit(t_table *main);
 
 #endif

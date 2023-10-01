@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:57:27 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/29 18:55:09 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:52:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_one_cmd	*init_one_cmd(char *str)
 	new = malloc(sizeof(t_one_cmd));
 	if (!new)
 		return (NULL);
-	new->str = str;
+	new->str = ft_strdup(str);
 	new->next = NULL;
 	return (new);
 }

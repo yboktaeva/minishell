@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 15:31:10 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:15:03 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ static void	is_null(char *line, t_table *main)
 	return ;
 }
 
-static void	free_line(char *line, t_table *main)
+static void	free_line(void)
 {
-	if (!line)
-	{
-		ft_putendl_fd("exit", STDOUT_FILENO);
-		safe_exit(main);
-		exit(g_status);
-	}
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	rl_clear_history();
+	exit(g_status);
 }
 
 static void	error_msg(int ac, char **argv)
@@ -54,28 +51,29 @@ static void	error_msg(int ac, char **argv)
 
 void	shell_loop(t_env *env, char *line, t_table *main)
 {
-	free_line(line, main);
-	if (line[0] != 0)
+	if (!line)
+	{
+		free_env(&env);
+		free_line();
+	}
+	else if (line[0] != 0)
 	{
 		main->tokens = tokenize_input(env, line, main);
+		//print_tokens(main->tokens, main->n_tokens);
 		if (main->tokens == NULL)
 			is_null(line, main);
 		else
+		{
 			main->parse_list = parsing_tokens(main->tokens, main->n_tokens);
+			//print_parse_list(main->parse_list);
+		}
 		if (main->parse_list == NULL)
 			is_null(line, main);
 		else
 		{
 			cmd_execution(main->parse_list, main);
 			add_history(line);
-			if (main->parse_list)
-			{
-				free_parse_list(main->parse_list);
-				if (main->arg->argv)
-					free_cmd_args(main->arg->argv);
-				else
-					free_token(main->tokens, main->n_tokens);
-			}
+			free_execution(main);
 		}
 	}
 }

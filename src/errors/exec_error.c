@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 18:59:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 18:28:22 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 18:43:09 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@
 int	exec_fail(t_table *main, char *str)
 {
 	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
+	ft_putendl_fd(" : command not found", STDERR_FILENO);
 	g_status = 127;
-	safe_exit(main);
-	free_all(main, main->n_tokens);
+	free_execution(main);
+	free_env(&main->env);
 	free(main->cmd_info->executable_path);
 	free_n_close_heredoc(main->here_doc, main->cmd_info->fd[0]);
-	free_cmd_args(main->arg->argv);
-	check_free(main->cmd_info->fd);
+	ft_close(main->cmd_info->fd[0]);
+	ft_close(main->cmd_info->fd[1]);
+	//check_free(main->cmd_info->fd);
 	exit(g_status);
 }
 

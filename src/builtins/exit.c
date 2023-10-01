@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:07:41 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 09:40:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 19:26:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "utils.h"
 #include "minishell.h"
 #include "../libft/libft.h"
+#include <readline/history.h>
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -53,13 +55,6 @@ static void	single_exit(t_table *main)
 {
 	ft_putendl_fd("exit", 1);
 	safe_exit(main);
-	free_all(main, main->n_tokens);
-	free_n_close_heredoc(main->here_doc, main->cmd_info->fd[0]);
-	if (main->cmd_info->fd != NULL)
-	{
-		free(main->cmd_info->fd);
-		main->cmd_info->fd = NULL;
-	}
 	exit(g_status);
 }
 

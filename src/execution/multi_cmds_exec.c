@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 18:41:04 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 20:54:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,20 @@ static int	execute_command(t_parse_list *parse_list, const char *path,
 
 int	multi_cmds_exec(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
 {
+	cmd_info->path = get_path_from_envp(main->env);
+	if (cmd_info->path == NULL)
+	{
+		path_null(s->one_cmd->str);
+		return (g_status);
+	}
 	cmd_info->index_cmd = 1;
 	while (s)
 	{
 		if (s->one_cmd)
-		{
-			if (!cmd_info->path)
-				path_null(s->one_cmd->str);
-			else
-				if_exec_path(s, main, cmd_info);
-		}
+			if_exec_path(s, main, cmd_info);
 		s = s->next;
 		cmd_info->index_cmd++;
 	}
-	if (!cmd_info->path)
-		check_free(cmd_info->fd);
 	return (g_status);
 }
 
@@ -58,12 +57,13 @@ int	exec_cmd(t_parse_list *parse_list, t_cmd_info *cmd_info, t_table *main)
 	status = 0;
 	reset_cmd_info(cmd_info);
 	status = handle_redirections(parse_list, main->here_doc,
-			&(main->cmd_info)->in, &(main->cmd_info)->out);
+		&(main->cmd_info)->in, &(main->cmd_info)->out);
 	if (status)
 		status = execute_command(parse_list, main->cmd_info->executable_path,
-				main);
+			main);
 	reset_cmd_info(main->cmd_info);
 	free(cmd_info->executable_path);
+	cmd_info->executable_path = NULL;
 	return (status);
 }
 
@@ -71,16 +71,19 @@ static int	execute_command(t_parse_list *parse_list, const char *path,
 		t_table *main)
 {
 	pid_t	pid;
-	int		*fdc;
+	int		fdc[2];
 	int		status;
+	int		res;
 
-	fdc = malloc(sizeof(int) * 2);
-	if (pipe(fdc))
+	res = -1;
+	res = pipe(fdc);
+	if (res == -1)
 		exit(1);
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("Fork failed");
+		safe_exit(main);
 		return (EXIT_FAILURE);
 	}
 	else if (pid == 0)
@@ -103,22 +106,32 @@ static int	execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc)
 	close_fd_cmd(cmd_info);
 	if (cmd_info->index_cmd == cmd_info->nb_cmds)
 	{
+		status = wait_all_pid(cmd_info, pid);
 		ft_close(fdc[0]);
 		ft_close(fdc[1]);
-		status = wait_all_pid(cmd_info, pid);
-		check_free(fdc);
-		check_free(cmd_info->fd);
+		ft_close(cmd_info->fd[0]);
+		ft_close(cmd_info->fd[1]);
 	}
 	else
 	{
-		check_free(cmd_info->fd);
-		cmd_info->fd = fdc;
+		cmd_info->fd[0] = dup(fdc[0]);
+		cmd_info->fd[1] = dup(fdc[1]);
+		ft_close(fdc[0]);
+		ft_close(fdc[1]);
+		ft_close(cmd_info->fd[0]);
+		ft_close(cmd_info->fd[1]);
 	}
+	// printf("FDC 0: %d\n", fdc[0]);
+	// printf("FDC 1: %d\n", fdc[1]);
+	// printf("FD 0: %d\n", cmd_info->fd[0]);
+	// printf("FD 1: %d\n", cmd_info->fd[1]);
+	// printf("IN: %d\n", cmd_info->in);
+	// printf("OUT: %d\n", cmd_info->out);
 	return (status);
 }
 
 static void	execute_child(t_table *main, t_cmd_info *cmd_info, int *fdc,
-				const char *path)
+		const char *path)
 {
 	if (cmd_info->in != STDIN_FILENO)
 	{
@@ -129,6 +142,7 @@ static void	execute_child(t_table *main, t_cmd_info *cmd_info, int *fdc,
 	{
 		dup2(cmd_info->fd[0], STDIN_FILENO);
 		ft_close(cmd_info->fd[1]);
+		ft_close(fdc[0]);
 	}
 	if (cmd_info->out != STDOUT_FILENO)
 		dup2(cmd_info->out, STDOUT_FILENO);
@@ -138,6 +152,8 @@ static void	execute_child(t_table *main, t_cmd_info *cmd_info, int *fdc,
 		dup2(fdc[1], STDOUT_FILENO);
 		ft_close(fdc[1]);
 	}
-	if (execve(path, main->arg->argv, main->arg->envp) == -1)
-		exec_fail(main, *main->arg->argv);
+	execve(path, main->arg->argv, main->arg->envp);
+	ft_close(fdc[1]);
+	ft_close(fdc[0]);
+	exec_fail(main, *main->arg->argv);
 }

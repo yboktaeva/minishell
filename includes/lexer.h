@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:55:34 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:22:47 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:08:48 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "struct.h"
 /*ENV*/
 t_env	*init_env_list(char **envp);
+void	get_env(t_env *head, char *str);
 /*LEXER*/
 int		count_quotes(char *s);
 int		count_tokens(char *line);

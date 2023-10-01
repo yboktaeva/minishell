@@ -6,13 +6,15 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:07:01 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/30 18:25:44 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:26:49 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "exec.h"
 #include "../libft/libft.h"
 #include <unistd.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -29,8 +31,11 @@ void	default_sigint(int sig)
 
 void	sig_here_doc(int sig)
 {
-	(void)sig;
-	close(0);
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", STDERR_FILENO);
+		close(0);
+	}
 }
 
 void	sig_parent(int sig)

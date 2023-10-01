@@ -6,7 +6,7 @@
 #    By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/18 14:08:18 by yuboktae          #+#    #+#              #
-#    Updated: 2023/09/30 10:43:49 by yuboktae         ###   ########.fr        #
+#    Updated: 2023/10/01 11:51:36 by yuboktae         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ $(NAME): $(OBJ) $(LIBFT)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -MMD -MP -o $@ -c $<
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -MMD -MP -o $@ -c $<
 	
 -include $(DEP)
 

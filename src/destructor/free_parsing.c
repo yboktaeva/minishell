@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 19:23:38 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/30 18:28:58 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:59:06 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	free_token(t_token *tokens, int n_tokens)
 	while (i < n_tokens)
 	{
 		free(tokens[i].value);
+		tokens[i].value = NULL;
 		i++;
 	}
 	free(tokens);
@@ -67,6 +68,8 @@ void	*free_one_cmd_list(t_one_cmd *head)
 	while (head)
 	{
 		tmp = head->next;
+		free(head->str);
+		head->str = NULL;
 		free(head);
 		head = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:35:48 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/30 09:58:49 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:44:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	free_n_close_heredoc(t_here_doc *head, int fd)
 	t_here_doc	*stock;
 
 	if (fd != 0)
-		close(fd);
+		ft_close(fd);
 	curr = head;
 	while (curr)
 	{
 		stock = curr->next;
 		if (curr->read_fd != 0)
-			close(curr->read_fd);
+			ft_close(curr->read_fd);
 		free(curr);
 		curr = stock;
 	}

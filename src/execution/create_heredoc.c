@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 12:30:10 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 09:56:23 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 17:22:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ static int	write_heredoc(int *tmp_fd, char *sep)
 {
 	char	*input;
 
-	*tmp_fd = open(sep, O_WRONLY | O_CREAT | O_APPEND, 0600);
 	handle_sig(SIG_HEREDOC);
+	*tmp_fd = open(sep, O_WRONLY | O_CREAT | O_APPEND, 0600);
 	while (1)
 	{
 		input = readline(">");
@@ -100,6 +100,7 @@ static int	write_heredoc(int *tmp_fd, char *sep)
 				break ;
 		}
 	}
+	unlink(sep);
 	free(input);
 	close(tmp_fd[0]);
 	close(tmp_fd[1]);

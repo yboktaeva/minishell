@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/09/30 11:44:41 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 19:55:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void	init_cmd_info(t_cmd_info *cmd_info, t_env *env, t_parse_list *s);
+static void	init_cmd_info(t_cmd_info *cmd_info, t_parse_list *s);
 static void	execute_exit(t_parse_list *s, t_table *main);
 static void	execute_command(t_parse_list *s, t_table *main,
 				int flag_redir, int *tmp_fd);
@@ -28,7 +28,7 @@ void	cmd_execution(t_parse_list *parse_list, t_table *main)
 	t_here_doc	*here_doc;
 	t_cmd_info	cmd_info;
 
-	init_cmd_info(&cmd_info, main->env, parse_list);
+	init_cmd_info(&cmd_info, parse_list);
 	main->cmd_info = &cmd_info;
 	here_doc = open_heredoc(parse_list, &cmd_info);
 	main->here_doc = here_doc;
@@ -58,15 +58,10 @@ void	one_builtin(t_parse_list *parse_list,
 	execute_command(parse_list, main, flag_redir, tmp_fd);
 }
 
-static void	init_cmd_info(t_cmd_info *cmd_info, t_env *env,
-		t_parse_list *s)
+static void	init_cmd_info(t_cmd_info *cmd_info, t_parse_list *s)
 {
-	cmd_info->fd = malloc(sizeof(int) * 2);
-	if (!cmd_info->fd)
-		perror("fd: malloc failed");
 	cmd_info->fd[0] = -1;
 	cmd_info->fd[1] = -1;
-	cmd_info->path = get_path_from_envp(env);
 	cmd_info->nb_cmds = cmd_size(s);
 	cmd_info->in = 0;
 	cmd_info->out = 1;

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/30 18:31:57 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 19:27:08 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	free_cmd_info(t_cmd_info *cmd_info);
 static int	one_cmd(const char *path, t_parse_list *s, t_table *main,
 				t_cmd_info *cmd_info);
 static void	exec_comd(t_table *main, const char *path, t_arg *arg,
@@ -32,6 +31,12 @@ static int	wait_and_get_exit_status(pid_t pid);
 
 int	one_cmd_exec(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
 {
+	cmd_info->path = get_path_from_envp(main->env);
+	if (cmd_info->path == NULL)
+	{
+		path_null(s->one_cmd->str);
+		return (g_status);
+	}
 	if (s->one_cmd == NULL)
 		return (0);
 	if (ft_strchr(s->one_cmd->str, '/'))
@@ -41,30 +46,10 @@ int	one_cmd_exec(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
 				cmd_info->path);
 	if (cmd_info->executable_path == NULL)
 		cmd_info->executable_path = ft_strdup(s->one_cmd->str);
-	if (cmd_info->executable_path == NULL)
-		return (g_status);
-	if (cmd_info->path == NULL)
-	{
-		path_null(s->one_cmd->str);
-		check_free(cmd_info->fd);
-	}
-	else
-	{
-		g_status = one_cmd(cmd_info->executable_path, s, main,
-				cmd_info);
-		free_cmd_info(cmd_info);
-	}
+	g_status = one_cmd(cmd_info->executable_path, s, main,
+			cmd_info);
 	free(cmd_info->executable_path);
 	return (g_status);
-}
-
-static void	free_cmd_info(t_cmd_info *cmd_info)
-{
-	if (cmd_info->fd != NULL)
-	{
-		free(cmd_info->fd);
-		cmd_info->fd = NULL;
-	}
 }
 
 static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main,
@@ -79,6 +64,7 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main,
 	if (pid == -1)
 	{
 		perror("Fork failed");
+		safe_exit(main);
 		return (EXIT_FAILURE);
 	}
 	else if (pid == 0)
@@ -90,9 +76,7 @@ static int	one_cmd(const char *path, t_parse_list *parse_list, t_table *main,
 		exec_comd(main, path, main->arg, cmd_info);
 	}
 	else
-	{
 		status = wait_and_get_exit_status(pid);
-	}
 	handle_sig(SIG_PARENT);
 	return (status);
 }

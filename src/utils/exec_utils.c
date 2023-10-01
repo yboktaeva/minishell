@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 17:56:18 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/29 18:54:30 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:23:18 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**duplicate_envp(t_env *env)
 	}
 	while (head)
 	{
-		fake_envp[i] = head->str;
+		fake_envp[i] = ft_strdup(head->str);
 		i++;
 		head = head->next;
 	}

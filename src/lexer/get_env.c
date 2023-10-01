@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 10:08:15 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 13:31:31 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:41:57 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <stdio.h>
 
 static void		set_env_list(t_env *head, char **envp);
-static void		get_env(t_env *head, char *str);
 static t_env	*add_env_node(char *str);
 static t_env	*copy_env(t_env *env, char *str);
 
@@ -49,7 +48,7 @@ static void	set_env_list(t_env *head, char **envp)
 	}
 }
 
-static void	get_env(t_env *head, char *str)
+void	get_env(t_env *head, char *str)
 {
 	t_env	*start;
 	t_env	*copy;

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:54:25 by asekmani          #+#    #+#             */
-/*   Updated: 2023/09/30 10:30:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/01 18:01:52 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ int	wait_all_pid(t_cmd_info *cmd_info, pid_t pid)
 	pid = waitpid(-1, &status, 0);
 	while (pid > 0)
 	{
-			pid = waitpid(-1, &status, 0);
-			save_status = status;
+		pid = waitpid(-1, &status, 0);
+		save_status = status;
 	}
 	if (WIFSIGNALED(status))
-			status = 128 + WTERMSIG(save_status);
+		status = 128 + WTERMSIG(save_status);
 	else if (WIFEXITED(save_status))
-			status = WEXITSTATUS(save_status);
+		status = WEXITSTATUS(save_status);
 	else
-			status = save_status;
+		status = save_status;
 	return (status);
 }
 
