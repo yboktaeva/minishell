@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/10/01 19:27:08 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:49:13 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ static void	exec_comd(t_table *main, const char *path, t_arg *arg,
 		dup2(cmd_info->out, STDOUT_FILENO);
 		ft_close(cmd_info->out);
 	}
-	if (execve(path, arg->argv, arg->envp) == -1)
-		exec_fail(main, *arg->argv);
+	execve(path, arg->argv, arg->envp);
+	exec_fail(main, *arg->argv);
 }

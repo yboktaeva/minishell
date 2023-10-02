@@ -6,13 +6,14 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:09:52 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/28 14:53:53 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 19:21:58 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
 #include "minishell.h"
+#include "../libft/libft.h"
 #include <stddef.h>
 
 static int	count_quotes_token(char **start, char **quote_start);
@@ -37,12 +38,12 @@ void	check_and_handle_redir(char **curr, char operator)
 
 int	check_and_handle_quotes(char **start, char **quote_start, int *count)
 {
-	if (count_quotes(*start) != 0)
-	{
-		quote_error();
-		return (-1);
-	}
-	else
+	// if (count_quotes(*start) != 0)
+	// {
+	// 	quote_error();
+	// 	return (-1);
+	// }
+	// else
 		*count += count_quotes_token(start, quote_start);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:07:49 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/10/01 17:58:43 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:41:42 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	safe_exit(t_table *main)
 	rl_clear_history();
 	free_env(&main->env);
 	free_execution(main);
-	free_n_close_heredoc(main->here_doc, 0);
+	free_n_close_heredoc(&main->here_doc, 0);
 }
 
 void	free_execution(t_table *main)

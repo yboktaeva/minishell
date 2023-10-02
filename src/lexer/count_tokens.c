@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:32:08 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/08 19:49:11 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 18:08:29 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int	count_tokens(char *line)
 			break ;
 		if (*start == '\'' || *start == '\"')
 		{
-			if (check_and_handle_quotes(&start, &quote_start, &count) == -1)
-				return (-1);
+			// if (check_and_handle_quotes(&start, &quote_start, &count) == -1)
+			// 	return (-1);
+			check_and_handle_quotes(&start, &quote_start, &count);
+			
 		}
 		else if (quote_start == NULL)
 		{

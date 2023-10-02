@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/10/01 17:15:03 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 19:07:17 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ void	shell_loop(t_env *env, char *line, t_table *main)
 	if (!line)
 	{
 		free_env(&env);
+		free_fake_envp(main);
 		free_line();
 	}
 	else if (line[0] != 0)
 	{
 		main->tokens = tokenize_input(env, line, main);
-		//print_tokens(main->tokens, main->n_tokens);
+		print_tokens(main->tokens, main->n_tokens);
 		if (main->tokens == NULL)
 			is_null(line, main);
 		else

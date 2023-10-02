@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/10/01 19:55:18 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:24:15 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ static void	execute_command(t_parse_list *s, t_table *main,
 
 void	cmd_execution(t_parse_list *parse_list, t_table *main)
 {
-	t_here_doc	*here_doc;
 	t_cmd_info	cmd_info;
 
 	init_cmd_info(&cmd_info, parse_list);
 	main->cmd_info = &cmd_info;
-	here_doc = open_heredoc(parse_list, &cmd_info);
-	main->here_doc = here_doc;
+	open_heredoc(main, parse_list, &cmd_info);
 	if (cmd_info.nb_cmds == 1)
 	{
 		if (is_builtin(parse_list->one_cmd))
@@ -41,8 +39,19 @@ void	cmd_execution(t_parse_list *parse_list, t_table *main)
 	}
 	else
 		multi_cmds_exec(parse_list, main, &cmd_info);
-	free_n_close_heredoc(here_doc, 0);
+	free_n_close_heredoc(&main->here_doc, 0);
+	free(main->here_doc);
+	main->here_doc = NULL;
 	return ;
+}
+
+static void	init_cmd_info(t_cmd_info *cmd_info, t_parse_list *s)
+{
+	cmd_info->fd[0] = -1;
+	cmd_info->fd[1] = -1;
+	cmd_info->nb_cmds = cmd_size(s);
+	cmd_info->in = 0;
+	cmd_info->out = 1;
 }
 
 void	one_builtin(t_parse_list *parse_list,
@@ -56,15 +65,6 @@ void	one_builtin(t_parse_list *parse_list,
 	tmp_fd[1] = dup(STDOUT_FILENO);
 	flag_redir = handle_io_redir(parse_list, main, cmd_info);
 	execute_command(parse_list, main, flag_redir, tmp_fd);
-}
-
-static void	init_cmd_info(t_cmd_info *cmd_info, t_parse_list *s)
-{
-	cmd_info->fd[0] = -1;
-	cmd_info->fd[1] = -1;
-	cmd_info->nb_cmds = cmd_size(s);
-	cmd_info->in = 0;
-	cmd_info->out = 1;
 }
 
 static void	execute_exit(t_parse_list *s, t_table *main)

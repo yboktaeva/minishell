@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:08:13 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/10/01 20:54:52 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/02 14:37:38 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ static int	execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc)
 		status = wait_all_pid(cmd_info, pid);
 		ft_close(fdc[0]);
 		ft_close(fdc[1]);
-		ft_close(cmd_info->fd[0]);
-		ft_close(cmd_info->fd[1]);
 	}
 	else
 	{
@@ -118,15 +116,7 @@ static int	execute_parent(t_cmd_info *cmd_info, pid_t pid, int *fdc)
 		cmd_info->fd[1] = dup(fdc[1]);
 		ft_close(fdc[0]);
 		ft_close(fdc[1]);
-		ft_close(cmd_info->fd[0]);
-		ft_close(cmd_info->fd[1]);
 	}
-	// printf("FDC 0: %d\n", fdc[0]);
-	// printf("FDC 1: %d\n", fdc[1]);
-	// printf("FD 0: %d\n", cmd_info->fd[0]);
-	// printf("FD 1: %d\n", cmd_info->fd[1]);
-	// printf("IN: %d\n", cmd_info->in);
-	// printf("OUT: %d\n", cmd_info->out);
 	return (status);
 }
 
@@ -142,15 +132,24 @@ static void	execute_child(t_table *main, t_cmd_info *cmd_info, int *fdc,
 	{
 		dup2(cmd_info->fd[0], STDIN_FILENO);
 		ft_close(cmd_info->fd[1]);
-		ft_close(fdc[0]);
 	}
 	if (cmd_info->out != STDOUT_FILENO)
+	{
 		dup2(cmd_info->out, STDOUT_FILENO);
+		ft_close(cmd_info->out);
+	}
 	else if (cmd_info->index_cmd != cmd_info->nb_cmds)
 	{
 		ft_close(fdc[0]);
 		dup2(fdc[1], STDOUT_FILENO);
 		ft_close(fdc[1]);
+	}
+	if (cmd_info->index_cmd == cmd_info->nb_cmds)
+	{
+		ft_close(fdc[0]);
+		ft_close(fdc[1]);
+		ft_close(cmd_info->fd[0]);
+		ft_close(cmd_info->fd[1]);
 	}
 	execve(path, main->arg->argv, main->arg->envp);
 	ft_close(fdc[1]);
