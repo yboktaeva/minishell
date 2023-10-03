@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:06:08 by yuliaboktae       #+#    #+#             */
-/*   Updated: 2023/10/02 17:24:15 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:40:57 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	cmd_execution(t_parse_list *parse_list, t_table *main)
 	init_cmd_info(&cmd_info, parse_list);
 	main->cmd_info = &cmd_info;
 	open_heredoc(main, parse_list, &cmd_info);
+	if (parse_list->input || parse_list->output)
+	{
+		handle_redirections(parse_list, main->here_doc, &main->cmd_info->in, &main->cmd_info->out);
+		ft_close(main->cmd_info->in);
+		ft_close(main->cmd_info->out);
+	}
 	if (cmd_info.nb_cmds == 1)
 	{
 		if (is_builtin(parse_list->one_cmd))

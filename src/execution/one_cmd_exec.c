@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 11:57:21 by asekmani          #+#    #+#             */
-/*   Updated: 2023/10/02 11:49:13 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 16:20:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <errno.h>
 
 static int	one_cmd(const char *path, t_parse_list *s, t_table *main,
 				t_cmd_info *cmd_info);
 static void	exec_comd(t_table *main, const char *path, t_arg *arg,
 				t_cmd_info *cmd_info);
 static int	wait_and_get_exit_status(pid_t pid);
+static void	execve_slash_error(t_arg *arg, t_table *main);
 
 int	one_cmd_exec(t_parse_list *s, t_table *main, t_cmd_info *cmd_info)
 {
@@ -110,5 +112,22 @@ static void	exec_comd(t_table *main, const char *path, t_arg *arg,
 		ft_close(cmd_info->out);
 	}
 	execve(path, arg->argv, arg->envp);
+	execve_slash_error(arg, main);
+}
+
+static void	execve_slash_error(t_arg *arg, t_table *main)
+{
+	if (errno == EACCES)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		perror(arg->argv[0]);
+		free_execution(main);
+		free_env(&main->env);
+		free(main->cmd_info->executable_path);
+		free_n_close_heredoc(&main->here_doc, main->cmd_info->fd[0]);
+		ft_close(main->cmd_info->fd[0]);
+		ft_close(main->cmd_info->fd[1]);
+		exit(126);
+	}
 	exec_fail(main, *arg->argv);
 }
