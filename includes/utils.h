@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:24:21 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 15:10:31 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:10:19 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ char	*env_var_value(t_env *env, char *key);
 t_env	*get_last(t_env *env);
 int		str_check(char *str1, char *str2);
 int		char_check(char *str, char c);
+t_env	*create_env_var(const char *name, const char *value);
+
 #endif

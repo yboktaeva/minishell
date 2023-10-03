@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 15:33:26 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 09:48:06 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:10:04 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,21 @@ int	specific_path_home(t_env *env, char *str)
 	}
 	change_path(env);
 	return (ret);
+}
+
+t_env	*create_env_var(const char *name, const char *value)
+{
+	t_env	*new_var;
+
+	new_var = malloc(sizeof(t_env));
+	if (new_var == NULL)
+	{
+		perror("export: malloc failed");
+		exit(1);
+	}
+	new_var->var_name = ft_strdup(name);
+	new_var->var_value = ft_strdup(value);
+	new_var->exported = 1;
+	new_var->next = NULL;
+	return (new_var);
 }

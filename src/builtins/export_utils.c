@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 16:46:37 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/09/30 09:42:03 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 10:51:23 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	print_export(t_env *env)
 	tmp = env->next;
 	while (tmp)
 	{
-		if (tmp->exported)
+		if (tmp->exported && tmp->var_value)
 			printf("declare -x %s=\"%s\"\n", tmp->var_name, tmp->var_value);
+		else
+			printf("declare -x %s\n", tmp->var_name);
 		tmp = tmp->next;
 	}
 	return (0);
@@ -40,7 +42,7 @@ int	valid_id(char *str)
 	while (str[i] && str[i] != '=')
 	{
 		if (ft_isdigit(str[i]) || str[i] == '!' || str[i] == '@'
-			|| str[i] == '{' || str[i] == '}' || str[i] == '-')
+			|| str[i] == '{' || str[i] == '}')
 			return (0);
 		i += 1;
 	}

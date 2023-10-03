@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 17:33:23 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/10/02 19:07:17 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:06:01 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	shell_loop(t_env *env, char *line, t_table *main)
 		else
 		{
 			main->parse_list = parsing_tokens(main->tokens, main->n_tokens);
-			//print_parse_list(main->parse_list);
+			print_parse_list(main->parse_list);
 		}
 		if (main->parse_list == NULL)
 			is_null(line, main);
@@ -88,9 +88,9 @@ int	main(int ac, char **argv, char **envp)
 
 	error_msg(ac, argv);
 	g_status = 0;
-	env = init_env_list(envp);
 	prompt = NULL;
 	handle_sig(SIG_DEFAULT);
+	env = init_env_list(envp);
 	init_main_table(&main);
 	main.env = env;
 	init_execve_args(&arg, main.env);

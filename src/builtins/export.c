@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 15:59:02 by asekmani          #+#    #+#             */
-/*   Updated: 2023/10/01 12:18:14 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:39:02 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 
 static int		procces_cmd(t_one_cmd *one_cmd, t_env *env);
 static void		add_env_var_if_find(t_env *env, char *name, char *value);
-static t_env	*create_env_var(const char *name, const char *value);
 static void		add_env_var(t_env **env, const char *name, const char *value);
-
+static char		*get_value(const char *str);
 
 int	cmd_export(t_one_cmd *one_cmd, t_env *env)
 {
@@ -42,29 +41,43 @@ int	cmd_export(t_one_cmd *one_cmd, t_env *env)
 
 static int	procces_cmd(t_one_cmd *one_cmd, t_env *env)
 {
-	int		exit_status;
 	char	*name;
 	char	*value;
 
-	exit_status = 0;
+	value = NULL;
 	if (!valid_id(one_cmd->str))
-		exit_status = export_bad_id(one_cmd->str);
+		return (export_bad_id(one_cmd->str));
 	else if (char_check(one_cmd->str, '='))
 	{
 		name = one_cmd->str;
-		value = ft_strchr(name, '=');
+		value = get_value(name);
 		if (value)
-		{
-			*value = '\0';
-			value++;
 			add_env_var_if_find(env, name, value);
-		}
 		else
-			exit_status = export_bad_id(one_cmd->str);
+			return (export_bad_id(one_cmd->str));
+	}
+	else if (!char_check(one_cmd->str, '=') && ft_strcmp("export", one_cmd->str))
+	{
+		name = one_cmd->str;
+		if (!value)
+			add_env_var_if_find(env, name, value);
 	}
 	else
 		find_exported(env, one_cmd->str);
-	return (exit_status);
+	return (0);
+}
+
+static char	*get_value(const char *str)
+{
+	char	*value;
+	
+	value = ft_strchr(str, '=');
+	if (value)
+	{
+		*value = '\0';
+		value++;
+	}
+	return (value);
 }
 
 static void	add_env_var_if_find(t_env *env, char *name, char *value)
@@ -97,21 +110,4 @@ static void	add_env_var(t_env **env, const char *name, const char *value)
 			new_var->next = NULL;
 		}
 	}
-}
-
-static t_env	*create_env_var(const char *name, const char *value)
-{
-	t_env	*new_var;
-
-	new_var = malloc(sizeof(t_env));
-	if (new_var == NULL)
-	{
-		perror("export: malloc failed");
-		exit(1);
-	}
-	new_var->var_name = ft_strdup(name);
-	new_var->var_value = ft_strdup(value);
-	new_var->exported = 1;
-	new_var->next = NULL;
-	return (new_var);
 }

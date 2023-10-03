@@ -6,7 +6,7 @@
 /*   By: yuboktae <yuboktae@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:50:19 by yuboktae          #+#    #+#             */
-/*   Updated: 2023/10/02 16:55:40 by yuboktae         ###   ########.fr       */
+/*   Updated: 2023/10/03 11:01:56 by yuboktae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	free_env_node(t_env *head)
 			head->var_name = NULL;
 			free(head->var_value);
 			head->var_value = NULL;
+		}
+		else if (head->var_name && !head->var_value)
+		{
+			free(head->var_name);
+			head->var_name = NULL;
 		}
 	}
 	free(head);
